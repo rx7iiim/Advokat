@@ -1,0 +1,17 @@
+# Ignore Node.js dependencies
+node_modules/
+dist/
+.tmp/
+
+# Ignore environment variables
+.env
+.env.local
+
+# Ignore build files
+.nyc_output/
+coverage/
+.DS_Store
+
+# Ignore logs
+npm-debug.log*
+
