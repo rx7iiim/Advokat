@@ -1,28 +1,38 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { Case } from '../../case/entities/case.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { LawFirm } from '../../law-firm/entities/law-firm.entity';
 import { Subscription } from '../../subscription/entities/subscription.entity';
-export enum UserRole {
-  LAWYER = 'lawyer',
-  ADMIN = 'admin',
-  MANAGER ="manager",
-}
-@Entity({ name: 'users' })
+
+@Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  user_id: number;
 
   @Column({ unique: true })
   email: string;
 
   @Column()
-  password: string;
+  password_hash: string;
 
-  @Column({ default: 'client' })
-  role: UserRole.LAWYER | UserRole.ADMIN | UserRole.MANAGER;
+  @Column()
+  first_name: string;
 
-  @OneToMany(() => Case, (caseEntity) => caseEntity.client)
-  cases: Case[];
+  @Column()
+  last_name: string;
 
-  @OneToMany(() => Subscription, (subscription) => subscription.user)
-  subscriptions: Subscription[];
+  @Column({ type: 'enum', enum: ['single_lawyer', 'law_firm', 'lawyer_in_firm'] })
+  user_type: string;
+
+  @ManyToOne(() => LawFirm, (lawFirm) => lawFirm.users, { onDelete: 'SET NULL' })
+  @JoinColumn({ name: 'law_firm_id' })
+  law_firm: LawFirm;
+
+  @ManyToOne(() => Subscription, (subscription) => subscription.users, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'subscription_id' })
+  subscription: Subscription;
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  created_at: Date;
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
+  updated_at: Date;
 }
