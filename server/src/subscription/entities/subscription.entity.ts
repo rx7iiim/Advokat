@@ -1,20 +1,23 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
 
-@Entity({ name: 'subscriptions' })
+@Entity()
 export class Subscription {
   @PrimaryGeneratedColumn()
-  id: number;
-
-  @ManyToOne(() => User, (user) => user.subscriptions)
-  user: User;
+  subscription_id: number;
 
   @Column()
-  plan: string;
+  subscription_price: number;
+
+  @Column('jsonb')
+  subscription_type: object;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  startDate: Date;
+  started_at: Date;
 
-  @Column({ nullable: true })
-  endDate: Date;
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  ended_at: Date;
+
+  @OneToMany(() => User, (user) => user.subscription)
+  users: User[];
 }
