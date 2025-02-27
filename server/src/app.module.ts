@@ -6,6 +6,10 @@ import { UserModule } from './user/user.module';
 import { SubscriptionModule } from './subscription/subscription.module';
 import { User } from './user/entities/user.entity';
 import { Lawyer } from './lawyer/entities/lawyer.entity';
+import { File } from './file/entities/file.entity';
+import { Client } from './client/entities/client.entity';
+import { LawFirm } from './law-firm/entities/law-firm.entity';
+import { Schedule } from './schedule/entities/schedule.entity';
 import { Subscription } from './subscription/entities/subscription.entity';
 import { LawFirmModule } from './law-firm/law-firm.module';
 import { LawyerModule } from './lawyer/lawyer.module';
@@ -15,14 +19,36 @@ import { ClientModule } from './client/client.module';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
+
 @Module({
-  imports: [ TypeOrmModule.forRoot({
-    type: 'postgres',
-    url: process.env.DATABASE_URL, 
-    entities:[User,Lawyer,Subscription],
-    synchronize: true, 
-  }), UserModule, SubscriptionModule, LawFirmModule, LawyerModule, FileModule, ScheduleModule, ClientModule,],
+  imports: [
+    LawFirmModule,
+    FileModule,
+    LawyerModule,
+    ScheduleModule,
+    ClientModule,
+    SubscriptionModule,
+    UserModule,
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      url: process.env.DATABASE_URL, 
+      entities:[User, Subscription, LawFirm, Lawyer, Client, File, Schedule],
+      synchronize: true, 
+    }),
+    TypeOrmModule.forFeature([User, Subscription, LawFirm, Lawyer, Client, File, Schedule]),
+  ],
   controllers: [AppController],
-  providers: [AppService],
-})
+  providers: [AppService],})
 export class AppModule {}
+
+
+
+
+
+
+
+
+
+
+
+
