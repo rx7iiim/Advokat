@@ -6,7 +6,6 @@ import { UserModule } from './user/user.module';
 import { SubscriptionModule } from './subscription/subscription.module';
 import { User } from './user/entities/user.entity';
 import { Lawyer } from './lawyer/entities/lawyer.entity';
-import { File } from './file/entities/file.entity';
 import { Client } from './client/entities/client.entity';
 import { LawFirm } from './law-firm/entities/law-firm.entity';
 import { Schedule } from './schedule/entities/schedule.entity';
@@ -32,7 +31,6 @@ dotenv.config();
     TypeOrmModule.forRoot({
       type: 'postgres',
       url: process.env.DATABASE_URL, 
-      entities:[User, Subscription, LawFirm, Lawyer, Client, File, Schedule],
       synchronize: true, 
     }),
     TypeOrmModule.forFeature([User, Subscription, LawFirm, Lawyer, Client, File, Schedule]),

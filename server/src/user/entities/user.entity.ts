@@ -10,8 +10,17 @@ export class User {
   @Column({ unique: true })
   email: string;
 
+  @Column({ default: false })
+  isEmailConfirmed: boolean;
+
+  @Column({ nullable: true })
+  confirmationToken: string;
+
+  @Column({ unique: true })
+  username: string;
+
   @Column()
-  password_hash: string;
+  password: string;
 
   @Column()
   first_name: string;
