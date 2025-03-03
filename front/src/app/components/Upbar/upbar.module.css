@@ -1,0 +1,40 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    width: 90vw;
+    margin: auto;
+    height: 10vh;
+}
+
+.bar{
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    width: 100%;
+
+    justify-content: space-between;
+
+}
+
+.logo{
+    flex-grow: 1;
+}
+
+.goback{
+    display: flex;
+    flex-direction: row;
+    flex: 3;
+    justify-content: end;
+    gap: 20px;
+    
+}
+.goback *{
+    align-self: center;
+}
+.gobackArrow{
+    font-size: 40px;
+}
+.left{
+    display: flex;
+    justify-content: flex-start;
+}

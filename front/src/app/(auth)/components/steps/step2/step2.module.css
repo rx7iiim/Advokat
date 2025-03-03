@@ -1,0 +1,18 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    justify-content: space-around;
+    margin: auto;
+    padding-top: 30px;
+    height: 45vh;
+    align-items: center;
+}
+.formCont{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    
+}

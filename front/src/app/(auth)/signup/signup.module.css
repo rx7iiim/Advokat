@@ -1,0 +1,14 @@
+.textContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 50px;
+    height: 15vh;
+
+}
+
+.title{
+    color: #263238;
+    
+}

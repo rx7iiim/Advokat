@@ -1,0 +1,15 @@
+.container{
+    display: flex;
+    flex-direction: row;
+    width: 254px;
+    justify-content: space-around;
+    border: 1px solid #bebdbd;
+    border-radius: 10px;
+    height: 25%;
+    align-items: center;
+    transition: border-color 0.3s ease;
+}
+
+.container:has(input[type="radio"]:checked) {
+    border: 2px solid blue;
+}
