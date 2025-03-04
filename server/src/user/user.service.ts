@@ -1,13 +1,12 @@
-import { Injectable, NotFoundException,BadRequestException } from '@nestjs/common';
+import { Injectable, NotFoundException,BadRequestException, forwardRef, Inject } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import * as bcrypt from 'bcrypt';
-import { randomBytes } from 'crypto';
 import { EmailService } from 'src/email/email.service';
-
+import { error } from 'console';
+import { AuthService } from 'src/auth/auth.service';
 @Injectable()
 export class UserService {
 
@@ -15,43 +14,45 @@ export class UserService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
     private readonly emailService: EmailService,
+    @Inject(forwardRef(() => AuthService))
+    private readonly authservice :AuthService,
   ) {}
  
-  async createUser(email: string, password: string,first_name:string,last_name:string,username:string): Promise<User> {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const confirmationToken = randomBytes(32).toString('hex');
-    const newUser = this.userRepository.create({ 
-       email,
-       password: hashedPassword ,
-       first_name,
-       last_name,
-       username});
-    return this.userRepository.save(newUser);
-  }
 
-  async sendConfirmationEmail(email: string, token: string) {
-    const confirmLink = `http://localhost:3000/auth/confirm-email?token=${token}`;
-    await this.emailService.sendMail(email, 'Confirm Your Email', `Click here: ${confirmLink}`);
+   async create(createUserDto:CreateUserDto):Promise<User>{
+             const existingUser = await this.userRepository.findOne({
+                where: { email: createUserDto.email },
+              });
+            
+              if (existingUser) {
+                throw new error
+              }
+         
+            const confirmationCode = Math.floor(100000 + Math.random() * 900000).toString();
+           
+            const email=  this.authservice.encryptEmail(createUserDto.email); 
+            const username=createUserDto.username
+            const password = await this.authservice.hashPassword(createUserDto.password);
+            const first_name=createUserDto.first_name
+            const last_name=createUserDto.last_name
     
-  }
+            const newUser = this.userRepository.create({
+            email,
+            username,
+            password,
+            first_name,
+            last_name,
+            confirmationCode,
+            confirmationExpires: new Date(Date.now() + 10 * 60 * 1000), 
+            });
+        
+            const savedUser = await this.userRepository.save(newUser);
+        
+            await this.emailService.sendConfirmationEmail(createUserDto.email, confirmationCode);
+        
+            return savedUser;
 
-  async confirmEmail(token: string): Promise<string> {
-    const user = await this.userRepository.findOne({ where: { confirmationToken: token } });
-    if (!user) {
-      throw new BadRequestException('Invalid or expired token');
-    }
-
-    user.isEmailConfirmed = true;
-    user.confirmationToken = "";
-    await this.userRepository.save(user);
-
-    return 'Email confirmed successfully!';
-  }
-
-
-
-
-
+   }
   findAll() {
     return this.userRepository.find();
 

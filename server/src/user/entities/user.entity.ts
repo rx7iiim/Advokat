@@ -10,11 +10,8 @@ export class User {
   @Column({ unique: true })
   email: string;
 
-  @Column({ default: false })
-  isEmailConfirmed: boolean;
-
   @Column({ nullable: true })
-  confirmationToken: string;
+  confirmationExpires: Date;
 
   @Column({ unique: true })
   username: string;
@@ -28,7 +25,14 @@ export class User {
   @Column()
   last_name: string;
 
-  @Column({ type: 'enum', enum: ['single_lawyer', 'law_firm', 'lawyer_in_firm'] })
+  @Column({ default: false })
+  isEmailConfirmed: boolean;
+
+  @Column({ nullable: true })
+  confirmationCode: string;
+
+
+  @Column({ type: 'enum', enum: ['single_lawyer', 'law_firm', 'lawyer_in_firm'],default:"single_lawyer" })
   user_type: string;
 
   @ManyToOne(() => LawFirm, (lawFirm) => lawFirm.users, { onDelete: 'SET NULL' })

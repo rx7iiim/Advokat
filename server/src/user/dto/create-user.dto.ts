@@ -9,16 +9,14 @@ export class CreateUserDto {
   password: string;
 
   @IsNotEmpty()
-  first_name:String;
+  first_name:string;
 
   @IsNotEmpty()
-  last_name:String;
+  last_name:string;
 
   @IsNotEmpty()
   @MinLength(5)
   username: string;
-
-  
 
 
 }
