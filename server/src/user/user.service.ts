@@ -19,18 +19,17 @@ export class UserService {
   ) {}
  
 
-   async create(createUserDto:CreateUserDto):Promise<User>{
+   async create(createUserDto:CreateUserDto){
+    let email=createUserDto.email
              const existingUser = await this.userRepository.findOne({
-                where: { email: createUserDto.email },
+                where: {email},
               });
             
-              if (existingUser) {
-                throw new error
-              }
+              if (existingUser) throw new BadRequestException('Email already registered');
          
             const confirmationCode = Math.floor(100000 + Math.random() * 900000).toString();
            
-            const email=  this.authservice.encryptEmail(createUserDto.email); 
+            email=  this.authservice.encryptEmail(createUserDto.email); 
             const username=createUserDto.username
             const password = await this.authservice.hashPassword(createUserDto.password);
             const first_name=createUserDto.first_name
@@ -46,11 +45,11 @@ export class UserService {
             confirmationExpires: new Date(Date.now() + 10 * 60 * 1000), 
             });
         
-            const savedUser = await this.userRepository.save(newUser);
+            //const savedUser = await this.userRepository.save(newUser);
         
-            await this.emailService.sendConfirmationEmail(createUserDto.email, confirmationCode);
+            await this.emailService.sendVerificationEmail(createUserDto.email, confirmationCode);
         
-            return savedUser;
+            return { message: 'Verification code sent. Please check your email.' };
 
    }
   findAll() {
@@ -63,6 +62,10 @@ export class UserService {
       throw new NotFoundException(`User with ID ${email} not found`);
     }
     return user
+  }
+
+  async findOneByUsername(username:string) :Promise<User|null>{
+    return this.userRepository.findOne({where:{ username }});
   }
 
   async findOne(user_id: number) :Promise<User|null>{

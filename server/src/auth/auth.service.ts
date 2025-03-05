@@ -28,7 +28,7 @@ export class AuthService {
         private readonly emailService: EmailService,
     ){}
 
-         async signup(req : Request , createUserDto: CreateUserDto): Promise<User> {
+         async signup(createUserDto: CreateUserDto){
 
             const user = this.userService.create(createUserDto);
             return user
