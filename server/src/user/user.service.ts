@@ -45,10 +45,11 @@ export class UserService {
             confirmationExpires: new Date(Date.now() + 10 * 60 * 1000), 
             });
         
-            //const savedUser = await this.userRepository.save(newUser);
+           const savedUser = await this.userRepository.save(newUser);
         
             await this.emailService.sendVerificationEmail(createUserDto.email, confirmationCode);
-        
+          
+           
             return { message: 'Verification code sent. Please check your email.' };
 
    }
