@@ -35,7 +35,7 @@ export class AuthService {
           }
         
           async verifyEmail(email: string, code: string): Promise<string|null> {
-            const user = await this.userService.findUserByEmail(email);
+            const user = await this.userService.findUserByEmail(this.encryptEmail(email));
         
             if (!user) throw new Error('User not found');
         
@@ -86,7 +86,15 @@ export class AuthService {
     return decrypted;
   }
             
+  async validateUser(username: string, pass: string): Promise<any> {
+    const user = await this.userService.findOneByUsername(username)
+    if (!user) return null;
 
+    const isMatch = await bcrypt.compare(pass, user.username);
+    if (!isMatch) return null;
+
+    return { id: user.user_id, username: user.username }; 
+  }
 
 
 

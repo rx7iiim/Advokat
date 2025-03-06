@@ -1,21 +1,19 @@
 import { Injectable, Logger } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
-import * as dotenv from 'dotenv';
-dotenv.config()
-
+import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class EmailService {
   private readonly logger = new Logger(EmailService.name);
   private transporter;
 
-  constructor() {
+  constructor(private configService: ConfigService,) {
     this.transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com', // Change for other providers (e.g., Outlook, Yahoo)
       port: 587, // 465 for SSL, 587 for TLS
       secure: false, // Set to true for SSL
       auth: {
-        user: "advocatdev@gmail.com",
-        pass: "advocatadvocat",
+        user: this.configService.get<string>('EMAIL_USER'),
+        pass: this.configService.get<string>('EMAIL_PASS'),
       },
     });
 
