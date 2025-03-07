@@ -73,6 +73,15 @@ export class UserService {
     return this.userRepository.findOne({where:{ user_id }});
   }
 
+  async findByEmailOrUsername(email?: string, username?: string): Promise<User | null> {
+    return this.userRepository.findOne({
+      where: [
+        { email: email || '' },
+        { username: username || '' },
+      ],
+    });
+  }
+
   update(user_id: number, updateUserDto: UpdateUserDto) {
     return `This action updates a #${user_id} user`;
   }

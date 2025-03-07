@@ -1,14 +1,10 @@
 import {
-    BadRequestException,
     forwardRef,
-    HttpStatus,
     Inject,
     Injectable,
-    Logger,
     UnauthorizedException,
   } from '@nestjs/common';
 import { CreateUserDto } from '../user/dto/create-user.dto';
-import { UpdateUserDto } from '../user/dto/update-user.dto';
 import { User } from '../user/entities/user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -16,7 +12,9 @@ import { EmailService } from 'src/email/email.service';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
-import { error } from 'console';
+import { loginUserDto } from 'src/user/dto/login-user.dto';
+import { Request, Response } from 'express';
+
 
 @Injectable()
 export class AuthService {
@@ -97,16 +95,33 @@ export class AuthService {
   }
 
 
+  async signIn(loginDto: loginUserDto, req: Request& { logIn: any; user?: any }, res: Response) {
+    const { email, username, password } = loginDto;
+
+
+    const user = await this.userService.findByEmailOrUsername(email, username);
+    if (!user) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+  
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+    req.logIn(user, (err) => {
+      if (err) {
+        throw new UnauthorizedException('Login failed');
+      }
+    });
+  
+    return res.json({ message: 'Login successful', user: req.user });
+  }
+  }
 
 
 
 
 
-
-
-
-
-
-
-          }
         
