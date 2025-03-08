@@ -18,7 +18,7 @@ const About = () => {
             <span className="block">Manage Your</span>
             <div className="flex gap-4">
             <span className="block bg-gradient-to-r from-blue-700 to-cyan-300 text-transparent bg-clip-text">
-              Legal Work
+              Legal Work 3FAFAZ
             </span> 
             <span className="block text-black">with</span>
             </div>
