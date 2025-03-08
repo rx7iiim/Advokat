@@ -61,7 +61,7 @@ export class AuthService {
   }
 
 
- encryptEmail(email: string): string {
+ encryptEmail(email): string {
     const cipher = crypto.createCipheriv(
       'aes-256-cbc', 
       Buffer.from(this.secretKey), 
@@ -84,40 +84,26 @@ export class AuthService {
     return decrypted;
   }
             
-  async validateUser(username: string, pass: string): Promise<any> {
-    const user = await this.userService.findOneByUsername(username)
-    if (!user) return null;
+  async validateUser(username: string, pass: string): Promise<User | null> {
+    const user = await this.userRepository.findOne({ where: { username } });
 
-    const isMatch = await bcrypt.compare(pass, user.username);
-    if (!isMatch) return null;
-
-    return { id: user.user_id, username: user.username }; 
-  }
-
-
-  async signIn(loginDto: loginUserDto, req: Request& { logIn: any; user?: any }, res: Response) {
-    const { email, username, password } = loginDto;
-
-
-    const user = await this.userService.findByEmailOrUsername(email, username);
     if (!user) {
-      throw new UnauthorizedException('Invalid credentials');
+        console.log('User not found'); // Debugging
+        return null; 
     }
 
-  
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      throw new UnauthorizedException('Invalid credentials');
+    const isMatch = await bcrypt.compare(pass, user.password);
+
+    if (!isMatch) {
+        console.log('Incorrect password'); // Debugging
+        return null;
     }
 
-    req.logIn(user, (err) => {
-      if (err) {
-        throw new UnauthorizedException('Login failed');
-      }
-    });
-  
-    return res.json({ message: 'Login successful', user: req.user });
-  }
+    console.log('User authenticated'); // Debugging
+    return user;
+}
+
+
   }
 
 
