@@ -3,19 +3,20 @@ import styles from "./step2.module.css";
 import Inpute from './Inpute';
 import Divider from '@mui/material/Divider';
 import GoogleLogin from './GoogleLogin';
-
+import { useForm } from "../../../../components/contexts/FormContext";
 function Step2() {
+     
   const inputs = [
     {
       label: "First Name",
       placeholder: "ex: hamid",
-      name: "firstName",
+      name: "first_name",
       type: "text",
     },
     {
       label: "Last Name",
       placeholder: "ex: boufettah",
-      name: "lastName",
+      name: "last_name",
       type: "text",
     },
     {
@@ -27,7 +28,7 @@ function Step2() {
     {
       label: "Username",
       placeholder: "ex: hamidou",
-      name: "userName",
+      name: "username",
       type: "text",
     },
     {

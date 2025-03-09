@@ -1,35 +1,44 @@
 'use client';
 
-import React, { useState } from "react";
+import React from "react";
 import styles from './input.module.css';
 import TextField from '@mui/material/TextField';
+import { useForm } from "../../../../components/contexts/FormContext"; // ✅ Import useForm
 
+function Inpute({ elem }) {
 
-function Inpute({elem}) {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    userName: "",
-    password: "",
-    confirmPassword: ""
-  });
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    console.log(`Name: ${name}, Value: ${value}`);
+  const { formData, updateFormData,error, setError,errorText,setErrtext } = useForm();
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+  
+    if (name === "email") {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email regex
+      if (!emailRegex.test(value)) {
+        setError(true);
+        setErrtext("Invalid email format");
+      } else {
+        setError(false);// ✅ Clears error when email is valid
+        setErrtext("");
+      }
+    }
+  
+    updateFormData(name, value); // ✅ Always update form data
   };
   
   return (
     <div className={`${styles.elementContainer} w-[30%]`}>
-      
-      <TextField  name={`${elem.name}`} label={elem.label} className='rounded-2xl' type={`${elem.type}`} value={formData[elem.name]} onChange={handleChange} placeholder={`${elem.placeholder}`}  required />
+      <TextField 
+        name={elem.name}
+        label={elem.label}
+
+        className='rounded-2xl'
+        type={elem.type}
+        onChange={handleChange}
+        placeholder={elem.placeholder}
+        required
+      />
     </div>
-  )
+  );
 }
 
-export default Inpute
+export default Inpute;

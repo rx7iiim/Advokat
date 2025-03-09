@@ -17,7 +17,7 @@ function FirmManager({ selectedPlan, handleRadioChange, isDisabled }) {
             key={index}
             elem={ele}
             isSelected={selectedPlan === ele.label}
-            onSelect={() => handleRadioChange(ele.label)}
+            onSelect={() => handleRadioChange("FirmManager", ele.label, ele.price)}
             isDisabled={isDisabled}
           />
         ))}

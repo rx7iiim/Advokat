@@ -18,7 +18,7 @@ function Individ({ selectedPlan, handleRadioChange, isDisabled }) {
             elem={ele}
             key={index}
             isSelected={selectedPlan === ele.label}
-            onSelect={() => handleRadioChange(ele.label)}
+            onSelect={() => handleRadioChange("IndividLawyer", ele.label, ele.price)}
             isDisabled={isDisabled}
           />
         ))}
