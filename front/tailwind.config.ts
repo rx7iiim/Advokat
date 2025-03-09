@@ -11,6 +11,15 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+      "primary": "#0000FF",
+      "secondary": "#",
+      "customGray": "#0000FF",
+      "boxColor": "#E9F2FF",
+      "boxColor2":"#C5D8F6",
+     "fotColor": "#0A0B5C" , 
+     "emailColor" : "#E8F1FF", 
+     "colorGradient": "#01E4FF",
+
       },
       fontFamily : {
         'cinzel' : ['Cinzel Decorative', 'sans-serif'],
