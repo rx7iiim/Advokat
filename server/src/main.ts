@@ -5,7 +5,7 @@ import * as passport from 'passport';
 import { TypeormStore } from 'connect-typeorm';
 import { ValidationPipe } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { SessionEntity } from './user/entities/session.entity';
+import { SessionEntity } from './session/session.entity';
 import * as dotenv from 'dotenv';
 
 dotenv.config();

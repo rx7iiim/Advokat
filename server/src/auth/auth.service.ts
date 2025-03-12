@@ -14,6 +14,10 @@ import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
 import { loginUserDto } from 'src/user/dto/login-user.dto';
 import { Request, Response } from 'express';
+import { LawyerService } from 'src/lawyer/lawyer.service';
+import { CreateLawFirmDto } from 'src/law-firm/dto/create-law-firm.dto';
+import { LawFirmService } from 'src/law-firm/law-firm.service';
+import { LawFirm } from 'src/law-firm/entities/law-firm.entity';
 
 
 @Injectable()
@@ -24,12 +28,22 @@ export class AuthService {
         @Inject(forwardRef(() => UserService))
         private readonly userService:UserService,
         private readonly emailService: EmailService,
+        @InjectRepository(User) private lawFirmRepository: Repository<LawFirm>,
+        @Inject(forwardRef(() => LawFirmService))
+        private readonly lawFirmService:LawFirmService,
+       
     ){}
 
          async signup(createUserDto: CreateUserDto){
 
             const user = this.userService.create(createUserDto);
             return user
+          }
+
+          async signupLawFirm(createLawFirmDto: CreateLawFirmDto){
+
+            const lawFirm = this.lawFirmService.create(createLawFirmDto);
+            return lawFirm
           }
         
           async verifyEmail(email: string, code: string): Promise<string|null> {
@@ -50,6 +64,11 @@ export class AuthService {
             return 'Email confirmed successfully!';
           
           }
+
+
+
+
+          
 
 
           private secretKey = process.env.ENCRYPTION_KEY || '12345678910111213141516889944712'; // Must be 32 characters

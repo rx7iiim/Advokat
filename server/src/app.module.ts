@@ -22,7 +22,7 @@ import { File } from './file/entities/file.entity';
 import { Schedule } from './schedule/entities/schedule.entity';
 import { PassportModule } from '@nestjs/passport';
 import { SessionSerializer } from './auth/guards/session.serializer';
-import { SessionEntity } from './user/entities/session.entity';
+import { SessionEntity } from './session/session.entity'
 
 
 

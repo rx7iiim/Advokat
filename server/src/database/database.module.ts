@@ -7,7 +7,7 @@ import { File } from 'src/file/entities/file.entity';
 import { LawFirm } from 'src/law-firm/entities/law-firm.entity';
 import { Lawyer } from 'src/lawyer/entities/lawyer.entity';
 import { Schedule } from 'src/schedule/entities/schedule.entity';
-import { SessionEntity } from 'src/user/entities/session.entity';
+import { SessionEntity } from 'src/session/session.entity';
 import { User } from 'src/user/entities/user.entity';
 
 @Module({

@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
-import { SessionEntity } from '../user/entities/session.entity';
+import { SessionEntity } from '../session/session.entity';
 import { Subscription } from 'rxjs';
 import { Client } from 'src/client/entities/client.entity';
 import { File } from 'src/file/entities/file.entity';
