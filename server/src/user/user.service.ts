@@ -5,7 +5,6 @@ import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EmailService } from 'src/email/email.service';
-import { error } from 'console';
 import { AuthService } from 'src/auth/auth.service';
 @Injectable()
 export class UserService {
@@ -32,15 +31,17 @@ export class UserService {
             email=  this.authservice.encryptEmail(createUserDto.email); 
             const username=createUserDto.username
             const password = await this.authservice.hashPassword(createUserDto.password);
-            const first_name=createUserDto.first_name
-            const last_name=createUserDto.last_name
+            const firstName=createUserDto.first_name
+            const lastName=createUserDto.last_name
+            const phoneNumber=createUserDto.phoneNumber
     
             const newUser = this.userRepository.create({
             email,
             username,
             password,
-            first_name,
-            last_name,
+            firstName,
+            lastName,
+            phoneNumber,
             confirmationCode,
             confirmationExpires: new Date(Date.now() + 10 * 60 * 1000), 
             });
@@ -69,12 +70,21 @@ export class UserService {
     return this.userRepository.findOne({where:{ username }});
   }
 
-  async findOne(user_id: number) :Promise<User|null>{
-    return this.userRepository.findOne({where:{ user_id }});
+  async findOne(userId: number) :Promise<User|null>{
+    return this.userRepository.findOne({where:{ userId }});
   }
 
-  update(user_id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${user_id} user`;
+  async findByEmailOrUsername(email?: string, username?: string): Promise<User | null> {
+    return this.userRepository.findOne({
+      where: [
+        { email: email || '' },
+        { username: username || '' },
+      ],
+    });
+  }
+
+  update(userId: number, updateUserDto: UpdateUserDto) {
+    return `This action updates a #${userId} user`;
   }
 
   remove(id: number) {

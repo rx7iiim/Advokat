@@ -9,31 +9,31 @@ export class LawFirm {
   lawFirmId: number;
 
   @Column({ unique: true })
-  email: string;
+  Email: string;
 
   @Column()
   password: string;
 
   @Column()
-  lawFirmName: string;
+  LawFirmName: string;
 
   @Column()
   address: string;
 
   @Column()
-  phoneNumber: number;
+  PhoneNumber: number;
 
   @Column()
-  employeesNumber:number;
+  EmployeesNumber:number;
 
   @Column({ default: false })
-  isEmailConfirmed: boolean;
+  IsEmailConfirmed: boolean;
 
   @Column({ nullable: true })
-  confirmationCode: string;
+  ConfirmationCode: string;
 
   @Column({ nullable: true })
-  confirmationExpires: Date; 
+  ConfirmationExpires: Date; 
 
   
   @OneToOne(() => Subscription, (subscription) => subscription.law_firm, { onDelete: 'CASCADE' })

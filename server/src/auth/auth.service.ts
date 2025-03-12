@@ -1,14 +1,10 @@
 import {
-    BadRequestException,
     forwardRef,
-    HttpStatus,
     Inject,
     Injectable,
-    Logger,
     UnauthorizedException,
   } from '@nestjs/common';
 import { CreateUserDto } from '../user/dto/create-user.dto';
-import { UpdateUserDto } from '../user/dto/update-user.dto';
 import { User } from '../user/entities/user.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -16,7 +12,13 @@ import { EmailService } from 'src/email/email.service';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
-import { error } from 'console';
+import { loginUserDto } from 'src/user/dto/login-user.dto';
+import { Request, Response } from 'express';
+import { LawyerService } from 'src/lawyer/lawyer.service';
+import { CreateLawFirmDto } from 'src/law-firm/dto/create-law-firm.dto';
+import { LawFirmService } from 'src/law-firm/law-firm.service';
+import { LawFirm } from 'src/law-firm/entities/law-firm.entity';
+
 
 @Injectable()
 export class AuthService {
@@ -26,12 +28,22 @@ export class AuthService {
         @Inject(forwardRef(() => UserService))
         private readonly userService:UserService,
         private readonly emailService: EmailService,
+        @InjectRepository(User) private lawFirmRepository: Repository<LawFirm>,
+        @Inject(forwardRef(() => LawFirmService))
+        private readonly lawFirmService:LawFirmService,
+       
     ){}
 
          async signup(createUserDto: CreateUserDto){
 
             const user = this.userService.create(createUserDto);
             return user
+          }
+
+          async signupLawFirm(createLawFirmDto: CreateLawFirmDto){
+
+            const lawFirm = this.lawFirmService.create(createLawFirmDto);
+            return lawFirm
           }
         
           async verifyEmail(email: string, code: string): Promise<string|null> {
@@ -54,6 +66,11 @@ export class AuthService {
           }
 
 
+
+
+          
+
+
           private secretKey = process.env.ENCRYPTION_KEY || '12345678910111213141516889944712'; // Must be 32 characters
 
 
@@ -63,7 +80,7 @@ export class AuthService {
   }
 
 
- encryptEmail(email: string): string {
+ encryptEmail(email): string {
     const cipher = crypto.createCipheriv(
       'aes-256-cbc', 
       Buffer.from(this.secretKey), 
@@ -86,27 +103,30 @@ export class AuthService {
     return decrypted;
   }
             
-  async validateUser(username: string, pass: string): Promise<any> {
-    const user = await this.userService.findOneByUsername(username)
-    if (!user) return null;
+  async validateUser(username: string, pass: string): Promise<User | null> {
+    const user = await this.userRepository.findOne({ where: { username } });
 
-    const isMatch = await bcrypt.compare(pass, user.username);
-    if (!isMatch) return null;
+    if (!user) {
+        console.log('User not found'); // Debugging
+        return null; 
+    }
 
-    return { id: user.user_id, username: user.username }; 
+    const isMatch = await bcrypt.compare(pass, user.password);
+
+    if (!isMatch) {
+        console.log('Incorrect password'); // Debugging
+        return null;
+    }
+
+    console.log('User authenticated'); // Debugging
+    return user;
+}
+
+
   }
 
 
 
 
 
-
-
-
-
-
-
-
-
-          }
         

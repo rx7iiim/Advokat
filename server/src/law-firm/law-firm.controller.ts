@@ -7,7 +7,7 @@ import { UpdateLawFirmDto } from './dto/update-law-firm.dto';
 export class LawFirmController {
   constructor(private readonly lawFirmService: LawFirmService) {}
 
-  @Post()
+  @Post("sign up")
   create(@Body() createLawFirmDto: CreateLawFirmDto) {
     return this.lawFirmService.create(createLawFirmDto);
   }
