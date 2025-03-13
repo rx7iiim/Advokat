@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './path.module.css';
-import {Stepper , Step , StepLabel} from '@mui/material';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
 
 
 const Path = ({step}) => {
