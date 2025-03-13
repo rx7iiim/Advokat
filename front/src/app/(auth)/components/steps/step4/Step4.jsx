@@ -119,7 +119,7 @@ const Step4 = () => {
           updateFormData("planPrice", selectedOption[1]); // Plan Price
         }}
       >
-        { formData.role === 'IndividLawyer' && 
+        { formData.role === 'Individual Lawyer' && 
           (<>
           <option value="Basic|2,500">Basic (2,500 DZD/mo)</option>
           <option value="Pro|5,500">Pro (5,500 DZD/mo)</option>
@@ -127,7 +127,7 @@ const Step4 = () => {
           </>
           )
         }
-         { formData.role === 'FirmManager' && 
+         { formData.role === 'Firm Manager' && 
           (<>
           <option value="Starter|15,000">Starter (15,000 DZD/mo)</option>
           <option value="Growth|30,000">Growth (30,000 DZD/mo)</option>

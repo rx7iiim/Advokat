@@ -12,6 +12,9 @@ import { FormProvider } from "@/app/components/contexts/FormContext";
 import { useForm } from "../../components/contexts/FormContext";
 import Alert from '@mui/material/Alert';
 import axios from 'axios';
+import Created from '../components/steps/created/Created';
+import Payment from '../components/payment/Payment';
+import Receipt from '../components/receipt/Receipt';
 
 
 
@@ -84,8 +87,9 @@ const SignUpContent = () => {
 
   return (
     <div className='flex flex-col justify-center'>
-      <Upbar />
       
+      <Upbar />
+      {step <= 3 && ( <>
       <div className={styles.textContainer}>
       {error && (
         <Alert variant="outlined" severity="error">
@@ -97,21 +101,27 @@ const SignUpContent = () => {
           Already have an account?<span className='font-mona underline p-1'>Log in</span>
         </p>
       </div>
+
+      
       <Path step={step} />
+      </>
+    )}
       {step === 0 && <Step1 />}
       {step === 1 && <Step2 />}
       {step === 2 && <Step3 />}
       {step === 3 && <Step4 />}
-      
-      <Buttons onNext={handleNext} onPrev={handlePrev} step={step} />
+      {step === 4 &&<Created />}
+      {step <= 4 && <Buttons onNext={handleNext} onPrev={handlePrev} step={step} />}
+      {step === 5 && <Payment step={step} setStep={setStep}/>}
+      {step === 6 && <div className="flex justify-center items-center"><Receipt /></div>}
     </div>
   );
 }
 
 const SignUp = () => {
   return (
-    <FormProvider> {/* ✅ Wrap only the child component */}
-      <SignUpContent /> {/* Now this can safely use useForm() */}
+    <FormProvider> 
+      <SignUpContent /> 
     </FormProvider>
   );
 };

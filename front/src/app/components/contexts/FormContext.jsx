@@ -17,6 +17,14 @@ export const FormProvider = ({ children }) => {
     password: '',
     username: '',
     confirmedPassword: '',
+    payment : {
+      paymentMethod: 'CIB',
+      CardNumber: null,
+      CardExpiration: null,
+      CardCVV: null,
+      CardName: '',
+    }
+    
   });
 
   const [error, setError] = useState(false);
