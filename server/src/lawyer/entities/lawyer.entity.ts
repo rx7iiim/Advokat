@@ -11,25 +11,17 @@ export class Lawyer {
   lawyer_id: number;
 
   @Column()
-  user_id: number;
-
-  @Column()
   address: string;
 
   @Column()
   phone_number: string;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  created_at: Date;
-
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
-  updated_at: Date;
 
   @OneToOne(() => User, { nullable: false, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @ManyToOne(() => LawFirm, (lawFirm) => lawFirm.lawyers, { onDelete: 'SET NULL' })
+  @ManyToOne(() => LawFirm, (lawFirm) => lawFirm.lawyers, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'law_firm_id' })
   law_firm: LawFirm;
 

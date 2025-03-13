@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Subscription } from 'rxjs';
+import { Subscription } from '../subscription/entities/subscription.entity';
 import { Client } from 'src/client/entities/client.entity';
 import { File } from 'src/file/entities/file.entity';
 import { LawFirm } from 'src/law-firm/entities/law-firm.entity';
 import { Lawyer } from 'src/lawyer/entities/lawyer.entity';
 import { Schedule } from 'src/schedule/entities/schedule.entity';
+import { SessionEntity } from 'src/session/session.entity';
 import { User } from 'src/user/entities/user.entity';
 
 @Module({
@@ -17,7 +18,7 @@ import { User } from 'src/user/entities/user.entity';
         useFactory: (configService: ConfigService) =>({
             type: 'postgres',
             url: configService.get<string>('DATABASE_URL'),
-            entities:[User,Schedule,Subscription,LawFirm,Lawyer,Client,File,Schedule],
+            entities:[User,Subscription,LawFirm,Lawyer,Client,File,Schedule,SessionEntity],
             autoLoadEntities: true,
             synchronize: true,
         }),}),

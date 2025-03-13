@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne, JoinColumn } from 'typeorm';
 import { User } from '../../user/entities/user.entity';
+import { LawFirm } from 'src/law-firm/entities/law-firm.entity';
 
 @Entity()
 export class Subscription {
@@ -9,8 +10,8 @@ export class Subscription {
   @Column()
   subscription_price: number;
 
-  @Column('jsonb')
-  subscription_type: object;
+  @Column({type:'enum',enum:["law firm","single lawyer"]})
+  subscription_type: string;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   started_at: Date;
@@ -18,6 +19,11 @@ export class Subscription {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   ended_at: Date;
 
-  @OneToMany(() => User, (user) => user.subscription)
-  users: User[];
+  @OneToOne(() => User, (user) => user.subscription)
+  @JoinColumn()
+  user: User;
+
+  @OneToOne(() => LawFirm, (lawfirm) => lawfirm.subscription)
+  @JoinColumn()
+  law_firm: LawFirm;
 }

@@ -1,17 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
-import { LawFirm } from '../../law-firm/entities/law-firm.entity';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne, OneToMany } from 'typeorm';
 import { Subscription } from '../../subscription/entities/subscription.entity';
+import { Lawyer } from 'src/lawyer/entities/lawyer.entity';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  user_id: number;
+  userId: number;
 
   @Column({ unique: true })
   email: string;
-
-  @Column({ nullable: true })
-  confirmationExpires: Date;
 
   @Column({ unique: true })
   username: string;
@@ -20,10 +17,13 @@ export class User {
   password: string;
 
   @Column()
-  first_name: string;
+  firstName: string;
 
   @Column()
-  last_name: string;
+  lastName: string;
+
+  @Column()
+  phoneNumber:number;
 
   @Column({ default: false })
   isEmailConfirmed: boolean;
@@ -31,21 +31,18 @@ export class User {
   @Column({ nullable: true })
   confirmationCode: string;
 
+  @Column({ nullable: true })
+  confirmationExpires: Date;
 
-  @Column({ type: 'enum', enum: ['single_lawyer', 'law_firm', 'lawyer_in_firm'],default:"single_lawyer" })
-  user_type: string;
 
-  @ManyToOne(() => LawFirm, (lawFirm) => lawFirm.users, { onDelete: 'SET NULL' })
-  @JoinColumn({ name: 'law_firm_id' })
-  law_firm: LawFirm;
+  @Column({ type: 'enum', enum: ['manager', 'single lawyer','lawyer'],default:"single lawyer" })
+  role: string;
 
-  @ManyToOne(() => Subscription, (subscription) => subscription.users, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'subscription_id' })
+ 
+
+  @OneToOne(() => Subscription, (subscription) => subscription.user, { onDelete: 'CASCADE' })
   subscription: Subscription;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  created_at: Date;
-
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
-  updated_at: Date;
+  @OneToOne(()=>Lawyer,(lawyer)=>lawyer.user,{onDelete:"CASCADE"} )
+  lawyerId:Lawyer;
 }

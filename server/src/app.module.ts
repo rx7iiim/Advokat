@@ -20,6 +20,9 @@ import { Lawyer } from './lawyer/entities/lawyer.entity';
 import { Client } from './client/entities/client.entity';
 import { File } from './file/entities/file.entity';
 import { Schedule } from './schedule/entities/schedule.entity';
+import { PassportModule } from '@nestjs/passport';
+import { SessionSerializer } from './auth/guards/session.serializer';
+import { SessionEntity } from './session/session.entity'
 
 
 
@@ -38,9 +41,11 @@ import { Schedule } from './schedule/entities/schedule.entity';
     UserModule,
     EmailModule, 
     DatabaseModule,
+    PassportModule.register({ session: true }),
+    TypeOrmModule.forFeature([SessionEntity]),
   ],
   controllers: [AppController],
-  providers: [AppService],})
+  providers: [AppService,SessionSerializer],})
 export class AppModule {}
 
 

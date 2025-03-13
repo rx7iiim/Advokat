@@ -1,33 +1,44 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { User } from '../../user/entities/user.entity';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne } from 'typeorm';
 import { Lawyer } from '../../lawyer/entities/lawyer.entity';
+import { Subscription } from 'src/subscription/entities/subscription.entity';
 
 @Entity()
 export class LawFirm {
+
   @PrimaryGeneratedColumn()
-  law_firm_id: number;
+  lawFirmId: number;
+
+  @Column({ unique: true })
+  email: string;
 
   @Column()
-  firm_name: string;
+  password: string;
+
+  @Column()
+  lawFirmName: string;
 
   @Column()
   address: string;
 
   @Column()
-  phone_number: string;
+  phoneNumber: number;
 
-  @Column('jsonb')
-  roles: object;
+  @Column()
+  employeesNumber:number;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  created_at: Date;
+  @Column({ default: false })
+  isEmailConfirmed: boolean;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
-  updated_at: Date;
+  @Column({ nullable: true })
+  confirmationCode: string;
 
-  @OneToMany(() => User, (user) => user.law_firm)
-  users: User[];
+  @Column({ nullable: true })
+  confirmationExpires: Date; 
+
+  
+  @OneToOne(() => Subscription, (subscription) => subscription.law_firm, { onDelete: 'CASCADE' })
+  subscription: Subscription;
 
   @OneToMany(() => Lawyer, (lawyer) => lawyer.lawyer_id)
-  lawyers: Lawyer[];
+  lawyers: Lawyer[];  
 }

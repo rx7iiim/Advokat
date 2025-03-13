@@ -6,6 +6,7 @@ import { User } from './entities/user.entity';
 import { EmailModule } from '../email/email.module';
 import { AuthModule } from 'src/auth/auth.module';
 
+
 @Module({
   imports: [EmailModule ,forwardRef(() => AuthModule),TypeOrmModule.forFeature([User])],
   providers: [UserService],
