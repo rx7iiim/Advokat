@@ -6,7 +6,7 @@ body{
 }
 
 html, body {
-    overflow-x: hidden; /* إخفاء التمرير الأفقي */
+    overflow-x: hidden; 
     width: 100%;
   }
   
