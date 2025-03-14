@@ -34,7 +34,9 @@ const About = () => {
              <span className="block">lawyers and law firms. Manage your cases, clients, and tasks</span> 
              <span className="block">efficiently-so you can focus on winning.</span>
           </p>
-          
+          <button className="mt-6 px-6 py-3 text-white font-semibold bg-customGray rounded-3xl shadow-lg hover:bg-blue-600 transition-colors">
+  Get Started
+</button>
  
         </div>
 
@@ -54,9 +56,7 @@ const About = () => {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-0 max-w-screen-lg">
-      <button className="mt-6 px-6 py-3 text-white font-semibold bg-customGray rounded-3xl shadow-lg hover:bg-blue-600 transition-colors">
-  Get Started
-</button>
+     
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-12  ">
           {/* 🟦 Clients & Cases */}
           <div className="bg-white shadow-lg rounded-xl p-6 flex items-start gap-8 border w-full md:w-[500px] h-[240px] mx-auto hover:border-b-2 hover:border-blue-600 transition duration-200 pb-1">

@@ -17,11 +17,11 @@ export class Lawyer {
   phone_number: string;
 
 
-  @OneToOne(() => User, { nullable: false, onDelete: 'CASCADE' })
+  @OneToOne(() => User, { nullable: false, onDelete: 'CASCADE', cascade: true})
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @ManyToOne(() => LawFirm, (lawFirm) => lawFirm.lawyers, { onDelete: 'CASCADE' })
+  @ManyToOne(() => LawFirm, (lawFirm) => lawFirm.lawyers, { nullable: false, onDelete: 'CASCADE', cascade: true})
   @JoinColumn({ name: 'law_firm_id' })
   law_firm: LawFirm;
 

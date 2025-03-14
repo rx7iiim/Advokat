@@ -15,14 +15,15 @@ import axios from 'axios';
 import Created from '../components/steps/created/Created';
 import Payment from '../components/payment/Payment';
 import Receipt from '../components/receipt/Receipt';
-
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 
 const SignUpContent = () => {
   const [step, setStep] = useState(0);
   const { formData, updateFormData, error, setError,errorText,setErrtext } = useForm(); // ✅ Now useForm() works because it's inside FormProvider
 
-  const API_URL = 'http://localhost:3005';
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
   let response;
 
   const handleNext = async() => {
@@ -48,21 +49,27 @@ const SignUpContent = () => {
           return;
         }
         setError(false);
-        // try {
-        //   const response = await axios.post(`${API_URL}/auth/signup`, {
-        //     email: formData.email,
-        //     password: formData.password,
-        //     first_name: formData.first_name,
-        //     last_name: formData.last_name,
-        //     username: formData.username
-        //   });
-        //   console.log(response);
-        // } catch (error) {
-        //   console.error("Error verifying email:", error);
-        //   setError(true);
-        //   setErrtext("Email verification failed.");
-        //   return;
-        // }
+        let planSelector=null
+        if (!formData.firmPlan){planSelector =formData.individPlan}else{planSelector=formData.firmPlan}
+        axios.defaults.withCredentials = true;
+        try {
+           const response = await axios.post(`${API_URL}/auth/signup`, { 
+            firmLawyer:formData.firmLawyer,
+            plan:planSelector,
+            email: formData.email,
+            password: formData.password,
+            first_name: formData.first_name,
+            last_name: formData.last_name,
+            username: formData.username,
+            role:formData.role,
+          });
+          console.log(response);
+         } catch (error) {
+           console.error("Error verifying email:", error);
+           setError(true);
+           setErrtext("Email verification failed.");
+           return;
+         }
         break;
   
       case 2: 

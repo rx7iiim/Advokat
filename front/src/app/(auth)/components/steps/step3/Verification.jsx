@@ -29,22 +29,22 @@ const Verification = () => {
     const code = otp.join("");
     const email = formData.email;
 
-    // try {
-    //   const response = await axios.post("http://localhost:3005/auth/verify-email", {
-    //     email,
-    //     code,
-    //   });
+    try {
+    const response = await axios.post("http://localhost:5008/auth/verify-email", {
+    email,
+     code,
+      });
 
-    //   if (response.data.success) {
-    //     alert("Email verified successfully!");
-    //   } else {
-    //     setError(true);
-    //     setErrtext(response.data.message || "Verification failed");
-    //   }
-    // } catch (error) {
-    //   setError(true);
-    //   setErrtext(error.response?.data?.message || "An error occurred while verifying the email.");
-    // }
+    if (response.data.success) {
+       alert("Email verified successfully!");
+     } else {
+         setError(true);
+         setErrtext(response.data.message || "Verification failed");
+      }
+     } catch (error) {
+       setError(true);
+       setErrtext(error.response?.data?.message || "An error occurred while verifying the email.");
+     }
   };
 
   return (

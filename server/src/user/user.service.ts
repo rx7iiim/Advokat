@@ -29,19 +29,23 @@ export class UserService {
             const confirmationCode = Math.floor(100000 + Math.random() * 900000).toString();
            
             email=  this.authservice.encryptEmail(createUserDto.email); 
+            const firmLawyer=createUserDto.firmLawyer
+            const role=createUserDto.role
+            const plan=createUserDto.plan
+
             const username=createUserDto.username
             const password = await this.authservice.hashPassword(createUserDto.password);
             const firstName=createUserDto.first_name
             const lastName=createUserDto.last_name
-            const phoneNumber=createUserDto.phoneNumber
-    
             const newUser = this.userRepository.create({
+            firmLawyer,
+            plan,
+            role,
             email,
             username,
             password,
             firstName,
             lastName,
-            phoneNumber,
             confirmationCode,
             confirmationExpires: new Date(Date.now() + 10 * 60 * 1000), 
             });

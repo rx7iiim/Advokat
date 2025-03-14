@@ -22,8 +22,11 @@ export class User {
   @Column()
   lastName: string;
 
-  @Column()
+  @Column({ nullable: true })
   phoneNumber:number;
+
+  @Column()
+  firmLawyer: boolean;
 
   @Column({ default: false })
   isEmailConfirmed: boolean;
@@ -35,11 +38,13 @@ export class User {
   confirmationExpires: Date;
 
 
-  @Column({ type: 'enum', enum: ['manager', 'single lawyer','lawyer'],default:"single_lawyer" })
+  @Column({ type: 'enum', enum: ['Firm Manager', 'single lawyer','lawyer'],default:"single lawyer" })
   role: string;
 
- 
+  @Column()
+  plan:string;
 
+ 
   @OneToOne(() => Subscription, (subscription) => subscription.user, { onDelete: 'CASCADE' })
   subscription: Subscription;
 

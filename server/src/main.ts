@@ -7,23 +7,27 @@ import { ValidationPipe } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { SessionEntity } from './session/session.entity';
 import * as dotenv from 'dotenv';
-
+import * as cors from 'cors';
 dotenv.config();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   // Enable CORS
-  app.enableCors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
-    credentials: true,
-  });
+
 
   // Use global validation pipes
   app.useGlobalPipes(new ValidationPipe());
 
   // Get TypeORM DataSource instance
   const dataSource = app.get(DataSource);
+ app.use(
+ cors({
+      origin: ['http://localhost:3000', '*'], // Allow multiple origins
+      credentials: true, // Allow cookies & session authentication
+      methods: ['GET', 'POST', 'PUT', 'DELETE'],
+      allowedHeaders: ['Content-Type', 'Authorization'],})
+  );
 
   // Configure session management with TypeORM Store
   app.use(

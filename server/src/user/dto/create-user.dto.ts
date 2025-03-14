@@ -1,10 +1,14 @@
-import { IsEmail, IsEnum, isNotEmpty, IsNotEmpty, MinLength } from 'class-validator';
+import { IsEmail, IsEnum, isNotEmpty, IsNotEmpty, IsOptional, MinLength } from 'class-validator';
 
 
 
 export class CreateUserDto {
+  
+  @IsNotEmpty()
+  plan:'string';
 
-   @IsEmail()
+
+  @IsEmail()
   email: string;
 
   @IsNotEmpty()
@@ -18,13 +22,14 @@ export class CreateUserDto {
   last_name:string;
 
   @IsNotEmpty()
+  role:string;
+
+  @IsNotEmpty()
   @MinLength(5)
   username: string;
 
   @IsNotEmpty()
-  @MinLength(10)
-  phoneNumber:number;
-
+  firmLawyer:boolean;
 
 
 }
