@@ -35,7 +35,7 @@ export class User {
   confirmationExpires: Date;
 
 
-  @Column({ type: 'enum', enum: ['manager', 'single lawyer','lawyer'],default:"single lawyer" })
+  @Column({ type: 'enum', enum: ['manager', 'single lawyer','lawyer'],default:"single_lawyer" })
   role: string;
 
  
