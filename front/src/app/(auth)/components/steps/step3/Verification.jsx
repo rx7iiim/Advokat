@@ -1,6 +1,8 @@
 import { useState, useRef } from "react";
 import { useForm } from "../../../../components/contexts/FormContext";
 import axios from "axios";
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 const Verification = () => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
@@ -28,9 +30,10 @@ const Verification = () => {
   const handleVerify = async () => {
     const code = otp.join("");
     const email = formData.email;
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
     try {
-    const response = await axios.post("http://localhost:5008/auth/verify-email", {
+    const response = await axios.post(`${API_URL}/auth/verify-email`, {
     email,
      code,
       });

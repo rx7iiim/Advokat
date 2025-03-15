@@ -1,0 +1,120 @@
+.sidebar {
+    width: 260px;
+    background: white;
+    height: screen;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 9px;
+    border-radius: 16px;
+  }
+  
+  /* Logo */
+  .logoContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .logoText {
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+  }
+  
+  .logoAccent {
+    color: gray;
+  }
+  
+  /* Menu */
+  .menuTitle {
+    font-size: 12px;
+    font-weight: bold;
+    color: #7d7d7d;
+    margin-bottom: 12px;
+    padding-left: 12px;
+  }
+  
+  .menuList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Menu Items */
+  .menuItem {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+  }
+  
+  .menuItem img {
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* Hover & Active */
+  .menuItem:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+  
+  .active {
+    background: rgba(0, 0, 0, 0.1);
+    color: black;
+  }
+  
+  /* Upgrade Card */
+  .upgradeCard {
+    background: linear-gradient(135deg, #0048ff, #00d4ff);
+    color: white;
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 10px;
+    text-align: left;
+    margin: 20px 10px;
+  }
+  
+  .upgradeCard p {
+    margin: 5px 0;
+  }
+  
+  /* Profile Section */
+  .profileSection {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+    background: #f8f8f8;
+    margin: 10px;
+  }
+  
+  .profileAvatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+  }
+  
+  .profileDetails {
+    margin-left: 10px;
+  }
+  
+  .profileName {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .profileRole {
+    font-size: 12px;
+    color: gray;
+  }
+  
