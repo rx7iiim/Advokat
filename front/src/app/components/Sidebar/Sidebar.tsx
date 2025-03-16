@@ -16,7 +16,7 @@ export default function Sidebar() {
       <h2 className={styles.menuTitle}>MAIN MENU</h2>
         <ul className={styles.menuList}>
         <li>
-          <Link href="/" className={styles.menuItem}>
+          <Link href="/Home" className={styles.menuItem}>
             <Image src="/Vector.png" alt="Home" width={20} height={20} />
             <span>Home</span>
           </Link>

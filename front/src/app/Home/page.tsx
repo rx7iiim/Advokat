@@ -42,7 +42,7 @@ export default function Index() {
                 <Calendar />
                 <h2 className="text-xl font-semibold mb-2 ml-2">Tasks</h2>
                 <TaskList tasks={tasks} setTasks={setTasks} />
-                </div>
+          </div>
              
             </div>
           </div>

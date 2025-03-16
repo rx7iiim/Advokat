@@ -1,0 +1,46 @@
+/* Make the calendar background white */
+.custom-calendar{
+    min-height:100vh;
+    min-width: 100vh;
+}
+
+
+.react-datepicker {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border: none;
+  }
+  
+  /* Header (Month and Year) */
+  .react-datepicker__header {
+    background-color: white;
+    border-bottom: none;
+    padding: 10px;
+  }
+  
+  /* Selected Day (Circle + Gradient Background) */
+  .react-datepicker__day--selected {
+    background: linear-gradient(135deg, #0048ff, #00d4ff) !important;
+    color: white !important;
+    border-radius: 50%;
+  }
+  
+  /* Hover Effect */
+  .react-datepicker__day:hover {
+    background: #e5e7eb;
+    border-radius: 50%;
+  }
+  
+  /* Current Day Highlight */
+  .react-datepicker__day--today {
+    font-weight: bold;
+    color: #2563eb;
+  }
+  
+  /* Weekday Names */
+  .react-datepicker__day-names {
+    color: #6b7280;
+    font-size: 14px;
+  }
+  
