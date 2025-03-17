@@ -7,15 +7,17 @@ import Calendar from '../../../components/calander/Calendar';
 import TaskList from './TaskList';
 import Task from "./taskInterface";
 
-interface PageProps {
-  params: {
-    username: string;
-  };
+interface PageProps{
+  params :Promise <{username:string}>
+}
+interface FileProps {
+  params: { username: string }; // params is an object, not a Promise
 }
 
-export default function Homepage({ params }:PageProps) {
+async function HomePage({ params }:PageProps) {
+  const {username}=await params
   const router = useRouter();
-  const [username, setUsername] = useState<string | null>(null);
+  const [user, setUser] = useState<string | null>(null);
   const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
@@ -24,10 +26,10 @@ export default function Homepage({ params }:PageProps) {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (!data.authenticated || !data.username) {
+        if (!data.authenticated || !data.user) {
           router.push("/login"); 
         } else {
-          setUsername(data.username);
+          setUser(data.user);
         }
       })
       .catch((error) => {
@@ -36,7 +38,7 @@ export default function Homepage({ params }:PageProps) {
       });
   }, [router]);
   
-  if (!username) return <p>Loading...</p>;
+  if (!user) return <p>Loading...</p>;
 
    
 
@@ -62,7 +64,7 @@ export default function Homepage({ params }:PageProps) {
       {/* Main content */}
       <main className="flex-1 p-2 ml-60">
         <div className="bg-white shadow-md rounded-xl p-2  grid grid-cols-1  mt-0 mb-3 ">
-          <h1 className="text-2xl ml-10 font-semibold">Good Morning, ${params.username}</h1>
+          <h1 className="text-2xl ml-10 font-semibold">Good Morning, ${username}</h1>
           <p className="text-gray-500 text-xs mb-3 ml-10 text-lg">What do you plan to do today?</p>
           </div>
           {/* Content Sections */}
@@ -91,3 +93,4 @@ export default function Homepage({ params }:PageProps) {
     </div>
   );
 }
+export default HomePage

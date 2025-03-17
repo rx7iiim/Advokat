@@ -4,17 +4,19 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Client from './clientInterface';
 import Sidebar from '../../../components/sidebar/Sidebar';
-interface UserCardsProps {
-  params: {
-    username: string;
-  };
-}
- 
 
-const UserCards: React.FC<UserCardsProps> = ({ params }) => {
+interface PageProps{
+  params :Promise <{username:string}>
+}
+interface ClientsProps {
+  params: { username: string }; // params is an object, not a Promise
+}
+
+async function UserCards({ params }:PageProps) {
+  const {username}=await params
   const router = useRouter();
   const [Client, setClient] = useState<Client[]>([]);
-  const [username, setUsername] = useState<string | null>(null);
+  const [user, setUser] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchClient = async () => {
@@ -61,10 +63,10 @@ useEffect(() => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (!data.authenticated || !data.username) {
+        if (!data.authenticated || !data.user) {
           router.push("/login"); 
         } else {
-          setUsername(data.username);
+          (data.user);
         }
       })
       .catch((error) => {
@@ -73,7 +75,7 @@ useEffect(() => {
       });
   }, [router]);
   
-  if (!username) return <p>Loading...</p>;
+  if (!user) return <p>Loading...</p>;
 
 
 

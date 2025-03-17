@@ -10,15 +10,18 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 
-interface UserCardsProps {
-  params: {
-    username: string;
-  };
+
+interface PageProps{
+  params :Promise <{username:string}>
+}
+interface FileProps {
+  params: { username: string }; // params is an object, not a Promise
 }
 
-const FileUploadTable: React.FC<UserCardsProps> = ({ params }) => {
+async function FileUploadTable({ params }:PageProps) {
+  const {username}= await params
   const router = useRouter();
-   const [username, setUsername] = useState<string | null>(null);
+   const [user, setUser] = useState<string | null>(null);
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
     const [fileData, setFileData] = useState<FileData[]>([]);
@@ -118,7 +121,7 @@ const handleDownload = async (fileId: string, fileName: string) => {
         if (!data.authenticated || !data.username) {
           router.push("/login"); 
         } else {
-          setUsername(data.username);
+          setUser(data.username);
         }
       })
       .catch((error) => {
