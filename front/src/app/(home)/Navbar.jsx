@@ -66,9 +66,9 @@ const Navbar = () => {
           <Link href='/signup' className="px-4 py-2 text-blue-600 border border-blue-600 rounded-3xl">
             Sign Up
           </Link>
-          <button className="px-4 py-2 bg-blue-600 text-white rounded-3xl hover:text-white hover:bg-indigo-600">
+          <Link href='/login'  className="px-4 py-2 bg-blue-600 text-white rounded-3xl hover:text-white hover:bg-indigo-600">
             Sign In
-          </button>
+          </Link>
         </div>
 
         {/* ✅ Mobile Menu Button */}
@@ -95,9 +95,9 @@ const Navbar = () => {
             ))}
             {/* ✅ Mobile Buttons */}
             <div className="flex flex-col gap-3 w-full items-center mt-4">
-            <a  href="/signup" className="px-6 py-2 text-blue-600 border border-blue-600 rounded-3xl w-32">
+            <Link  href="/signup" className="px-6 py-2 text-blue-600 border border-blue-600 rounded-3xl w-32">
                Sign Up
-            </a>
+            </Link>
               <Link href='/login' className="px-6 py-2 bg-blue-600 text-white rounded-3xl w-32 hover:text-white hover:bg-indigo-600">
                 Sign In
               </Link>

@@ -122,7 +122,9 @@ export class AuthService {
     return user;
 }
 
-
+async findUserById(id: string) {
+  return this.userService.findOne(Number(id));
+}
   }
 
 

@@ -1,9 +1,9 @@
-import { Controller, Post, Body, Req, Res, UseGuards, Request, UnauthorizedException } from '@nestjs/common';
+import { Controller, Post, Body, Req, Res, UseGuards, UnauthorizedException, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { LocalAuthGuard, AuthenticatedGuard } from './guards/auth.guard';
 import { loginUserDto } from 'src/user/dto/login-user.dto';
-import { Response} from 'express';
+import { Response, Request} from 'express';
 
 
 @Controller('auth')
@@ -22,12 +22,21 @@ export class AuthController {
   }
   @UseGuards(LocalAuthGuard) 
   @Post('login')
-  async login(@Request() req, @Res() res: Response) {
+  async login(@Req() req, @Res() res: Response) {
   req.logIn(req.user, (err) => {
     if (err) {
       throw new UnauthorizedException('Login failed');
     }
-    res.json({ message: 'Login successful', user: req.user });
+    res.json({ message: 'Login successful', user: req.user , username:req.user.username});
   });
+  }
+
+  @Get('session')
+  getSession(@Req() req: Request) {
+    if (req.isAuthenticated()) {
+      return { authenticated: true, username: req.user.username }; // Adjust based on your user model
+    } else {
+      return { authenticated: false };
+    }
   }
 }

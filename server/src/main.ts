@@ -1,33 +1,46 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import * as session from 'express-session';
-import * as passport from 'passport';
+import session from 'express-session';
 import { TypeormStore } from 'connect-typeorm';
 import { ValidationPipe } from '@nestjs/common';
 import { DataSource } from 'typeorm';
+import { Pool } from 'pg';
+import PgSession from 'connect-pg-simple';
+import ConnectPgSimple from 'connect-pg-simple';
 import { SessionEntity } from './session/session.entity';
 import * as dotenv from 'dotenv';
-import * as cors from 'cors';
+import cors from 'cors';
+import passport from 'passport';
+
+import { url } from 'inspector';
 dotenv.config();
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
-  // Enable CORS
-
-
-  // Use global validation pipes
+  
+  const PgStore = ConnectPgSimple(session);
+ 
+  const pgPool = new Pool({
+    connectionString: process.env.DATABASE_URL, // Correct property name
+  });
+   
   app.useGlobalPipes(new ValidationPipe());
 
   // Get TypeORM DataSource instance
   const dataSource = app.get(DataSource);
- app.use(
- cors({
-      origin: ['http://localhost:3000', '*'], // Allow multiple origins
-      credentials: true, // Allow cookies & session authentication
-      methods: ['GET', 'POST', 'PUT', 'DELETE'],
-      allowedHeaders: ['Content-Type', 'Authorization'],})
-  );
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      callback(null, true); // Accepts all origins
+    },
+    credentials: true, // Allow cookies & session authentication
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+
 
   // Configure session management with TypeORM Store
   app.use(
@@ -35,10 +48,10 @@ async function bootstrap() {
       secret: process.env.SESSION_SECRET || 'supersecret',
       resave: false,
       saveUninitialized: false,
-      store: new TypeormStore({
-        cleanupLimit: 2,
-        ttl: 86400, // 1 day
-      }).connect(dataSource.getRepository(SessionEntity)),
+      store: new PgStore({
+        pool: pgPool, // Use the existing PostgreSQL connection pool
+        createTableIfMissing: true, // Optional: specify a custom table name
+      }),
       cookie: {
         maxAge: 86400000, // 1 day
         httpOnly: true,
