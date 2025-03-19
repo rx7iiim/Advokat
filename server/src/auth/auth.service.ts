@@ -55,7 +55,7 @@ export class AuthService {
         
             if (user.confirmationCode !== code) throw new Error('Invalid confirmation code');
         
-            if (new Date() > user.confirmationExpires) throw new Error('Code expired');
+            //if (new Date() > user.confirmationExpires) throw new Error('Code expired');
         
             user.isEmailConfirmed = true;
             user.confirmationCode = "";

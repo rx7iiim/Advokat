@@ -1,8 +1,34 @@
 import React from "react";
 import {useForm} from '../../../components/contexts/FormContext';
+import { useRouter } from "next/navigation";
 
 function Receipt() {
-    const { formData, updateFormData } = useForm();
+  const router = useRouter();
+  const { formData, updateFormData } = useForm();
+  const username=formData.username
+  const password=formData.password
+    async function login (){try {
+    const response = await fetch(`http://localhost:5008/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include", // ✅ Ensures cookies are sent/received
+      body: JSON.stringify({username,password }),
+    });
+
+    if (response.ok) {
+      const userData = await response.json();
+      document.cookie = `username=${userData.username}; path=/;`; // ✅ Set username cookie
+      router.push(`/user/${userData.username}/home`);
+    } else {
+      setError("Invalid username or password");
+    }
+  } catch (err) {
+    console.error("Login failed:", err);
+    setError("An error occurred. Please try again.");
+  } finally {
+    setLoading(false);
+  }}
+
   return (
     <div className="flex flex-col w-1/3 h-[80vh] items-center justify-around">
         <h2 className="text-3xl font-bold font-mona">Purchase Confirmed</h2>
@@ -36,7 +62,7 @@ function Receipt() {
       <button className="text-gray-500">Download receipt</button>
       </div>
       </div>
-      <button>Access my profile</button>
+      <button onClick={login}>Access my profile</button>
     </div>
   );
 }

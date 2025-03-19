@@ -33,7 +33,7 @@ const Verification = () => {
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
     try {
-    const response = await axios.post(`${API_URL}/auth/verify-email`, {
+    const response = await axios.post(`http://localhost:5008/auth/verify-email`, {
     email,
      code,
       });
