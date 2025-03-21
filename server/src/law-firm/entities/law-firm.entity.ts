@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, OneToOne } from 'typeorm';
-import { Lawyer } from '../../lawyer/entities/lawyer.entity';
 import { Subscription } from 'src/subscription/entities/subscription.entity';
+import { User } from 'src/user/entities/user.entity';
 
 @Entity()
 export class LawFirm {
@@ -39,6 +39,6 @@ export class LawFirm {
   @OneToOne(() => Subscription, (subscription) => subscription.law_firm, { onDelete: 'CASCADE' })
   subscription: Subscription;
 
-  @OneToMany(() => Lawyer, (lawyer) => lawyer.lawyer_id)
-  lawyers: Lawyer[];  
+  @OneToMany(() => User, (user) => user.userId)
+  lawyers: User[];  
 }

@@ -2,14 +2,18 @@
 
 import { useState } from "react";
 import Task from "./taskInterface";
+import { useStore } from "zustand";
 
 type TaskListProps = {
   tasks: Task[];
   setTasks: (tasks: Task[]) => void;
+  username:string
 };
 
-export default function TaskList({ tasks, setTasks }: TaskListProps) {
+export default function TaskList({ tasks, setTasks ,username}: TaskListProps) {
   const [newTask, setNewTask] = useState("");
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+ 
 
   // ✅ Toggle Task Completion
   const toggleTaskCompletion = (id: number) => {
@@ -22,7 +26,7 @@ export default function TaskList({ tasks, setTasks }: TaskListProps) {
   // ✅ Delete Task from Backend
   const deleteTask = async (taskId: number) => {
     try {
-      const response = await fetch(`/api/tasks/${taskId}`, {
+      const response = await fetch(`${API_URL}/task?id=${taskId}`, {
         method: "DELETE",
       });
 
@@ -41,17 +45,19 @@ export default function TaskList({ tasks, setTasks }: TaskListProps) {
     if (!newTask.trim()) return;
 
     try {
-      const response = await fetch("/api/tasks", {
+      const response = await fetch(`${API_URL}/task`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title: newTask }),
+        body: JSON.stringify(
+          { description: newTask,username:username}),
       });
 
       if (response.ok) {
         const createdTask = await response.json();
-        setTasks([...tasks, createdTask]); // ✅ Add New Task to UI
+        setTasks([...tasks, createdTask]);
         setNewTask(""); // ✅ Clear Input Field
       } else {
+        console.log(username)
         console.error("Failed to create task");
       }
     } catch (error) {
@@ -72,7 +78,7 @@ export default function TaskList({ tasks, setTasks }: TaskListProps) {
         />
         <button
           onClick={createTask}
-          className="bg-blue-500 text-white px-4 py-2 rounded-lg text-sm shadow-sm hover:bg-blue-600 transition"
+          className="bg-blue-500 text-white px-3 py-2 rounded-lg text-sm shadow-sm hover:bg-blue-600 transition"
         >
           Add Task
         </button>
@@ -91,14 +97,14 @@ export default function TaskList({ tasks, setTasks }: TaskListProps) {
               checked={task.completed}
               onChange={() => toggleTaskCompletion(task.id)}
               className="w-4 h-4 text-blue-500 border-gray-300 rounded focus:ring-blue-500"
-              aria-label={`Mark task "${task.title}" as ${task.completed ? "incomplete" : "complete"}`}
+              aria-label={`Mark task "${task.description}" as ${task.completed ? "incomplete" : "complete"}`}
             />
             <span
               className={`ml-3 text-sm text-gray-700 ${
                 task.completed ? "line-through text-gray-400" : ""
               }`}
             >
-              {task.title}
+              {task.description}
             </span>
           </div>
 

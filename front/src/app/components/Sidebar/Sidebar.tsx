@@ -1,25 +1,26 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import Image from 'next/image';
-import { usePathname } from 'next/navigation'; // ✅ Get current URL
-import styles from './sidebar.module.css'; 
-import UpgradePlanBanner from '../UpgradePlanBanner';
+import { useMemo } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation"; // ✅ Get current URL
+import styles from "./sidebar.module.css";
+import UpgradePlanBanner from "../UpgradePlanBanner";
 
 export default function Sidebar() {
   const pathname = usePathname(); // ✅ Get current path
 
-  // ✅ Extract the username from the path
-  const pathSegments = pathname.split('/'); // Split by "/"
-  const usernameIndex = pathSegments.indexOf('user') + 1; // Get index after "user"
-  const username = usernameIndex > 0 && pathSegments.length > usernameIndex ? pathSegments[usernameIndex] : null;
+  // ✅ Extract the username from the path efficiently
+  const username = useMemo(() => {
+    const pathSegments = pathname.split("/"); // Split by "/"
+    const usernameIndex = pathSegments.indexOf("user") + 1;
+    return usernameIndex > 0 && pathSegments.length > usernameIndex ? pathSegments[usernameIndex] : null;
+  }, [pathname]);
 
-  if (!username) {
-    return <p>Loading Sidebar...</p>; // Handle missing username
-  }
+  if (!username) return <p>Loading Sidebar...</p>; // ✅ Handle missing username
 
   return (
-    <div className='fixed'>
+    <div className="fixed">
       <aside className={styles.sidebar}>
         {/* Logo Section */}
         <div className={styles.left}>
@@ -31,56 +32,40 @@ export default function Sidebar() {
         {/* Menu Section */}
         <h2 className={styles.menuTitle}>MAIN MENU</h2>
         <ul className={styles.menuList}>
-          <li>
-            <Link 
-              href={`/user/${username}/home`} 
-              className={`${styles.menuItem} ${pathname === `/user/${username}/home` ? styles.active : ''}`}
-            >
-              <Image src="/Vector.png" alt="Home" width={20} height={20} />
-              <span>Home</span>
-            </Link>
-          </li>
-          <li>
-            <Link 
-              href={`/user/${username}/agenda`} 
-              className={`${styles.menuItem} ${pathname === `/user/${username}/agenda` ? styles.active : ''}`}
-            >
-              <Image src="/Vectoragenda.png" alt="Agenda" width={20} height={20} />
-              <span>Agenda</span>
-            </Link>
-          </li>
-          <li>
-            <Link 
-              href={`/user/${username}/clients`} 
-              className={`${styles.menuItem} ${pathname === `/user/${username}/clients` ? styles.active : ''}`}
-            >
-              <Image src="/Vectorclients.png" alt="Clients" width={20} height={20} />
-              <span>Clients</span>
-            </Link>
-          </li>
-          <li>
-            <Link 
-              href={`/user/${username}/files`} 
-              className={`${styles.menuItem} ${pathname === `/user/${username}/files` ? styles.active : ''}`}
-            >
-              <Image src="/Vectorfiles.png" alt="Files" width={20} height={20} />
-              <span>Files</span>
-            </Link>
-          </li>
+          {[
+            { href: "home", icon: "/Vector.png", label: "Home" },
+            { href: "agenda", icon: "/Vectoragenda.png", label: "Agenda" },
+            { href: "clients", icon: "/Vectorclients.png", label: "Clients" },
+            { href: "files", icon: "/Vectorfiles.png", label: "Files" },
+          ].map(({ href, icon, label }) => (
+            <li key={href}>
+              <Link
+                href={`/user/${username}/${href}`}
+                className={`${styles.menuItem} ${
+                  pathname.startsWith(`/user/${username}/${href}`) ? styles.active : ""
+                }`}
+              >
+                <Image src={icon} alt={label} width={20} height={20} />
+                <span>{label}</span>
+              </Link>
+            </li>
+          ))}
         </ul>
 
         {/* Opened Files Section */}
         <h2 className={styles.menuTitle}>OPENED FILES</h2>
 
         {/* Upgrade Card using UpgradePlanBanner Component */}
-        <div className={styles.upgradeCard}><UpgradePlanBanner /></div>
+        <div className={styles.upgradeCard}>
+          <UpgradePlanBanner />
+        </div>
 
         {/* Profile Section */}
         <div className={styles.profileSection}>
           <Image src="/sofia.png" alt="User Avatar" width={35} height={35} className={styles.profileAvatar} />
           <div className={styles.profileDetails}>
-            <p className={styles.profileName}>John Doe</p>
-            <p className={styles.profileRole}>Independent Lawyer</p>
+            <p className={styles.profileName}>{username}</p>
+            <p className={styles.profileRole}>Independet lawyer</p>
           </div>
         </div>
       </aside>

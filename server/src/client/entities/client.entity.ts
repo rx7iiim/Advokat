@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne,JoinColumn, OneToOne, OneToMany } from 'typeorm';
-import { Lawyer } from '../../lawyer/entities/lawyer.entity';
+
 import { File } from 'src/file/entities/file.entity';
+import { User } from 'src/user/entities/user.entity';
 
 @Entity()
 export class Client {
@@ -22,9 +23,9 @@ export class Client {
   @Column()
   address: string;
 
-  @ManyToOne(() => Lawyer, (lawyer) => lawyer.clients, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.clients, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'lawyer_id' })
-  lawyer: Lawyer;
+  lawyer: User;
 
   @OneToMany(()=>File,(file)=>file.client,({onDelete:"CASCADE"}))
   file:File;

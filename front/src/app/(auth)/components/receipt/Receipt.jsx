@@ -11,7 +11,7 @@ function Receipt() {
     const response = await fetch(`http://localhost:5008/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      credentials: "include", // ✅ Ensures cookies are sent/received
+      credentials: "include",
       body: JSON.stringify({username,password }),
     });
 
@@ -25,8 +25,6 @@ function Receipt() {
   } catch (err) {
     console.error("Login failed:", err);
     setError("An error occurred. Please try again.");
-  } finally {
-    setLoading(false);
   }}
 
   return (

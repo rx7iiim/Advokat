@@ -1,6 +1,10 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne, OneToMany } from 'typeorm';
 import { Subscription } from '../../subscription/entities/subscription.entity';
-import { Lawyer } from 'src/lawyer/entities/lawyer.entity';
+import { LawFirm } from '../../law-firm/entities/law-firm.entity';
+import { Client } from '../../client/entities/client.entity'
+import { File } from '../../file/entities/file.entity';
+import { Schedule } from '../../schedule/entities/schedule.entity';
+import { Task } from '../../task/entities/task.entity';
 
 @Entity()
 export class User {
@@ -28,6 +32,10 @@ export class User {
   @Column()
   firmLawyer: boolean;
 
+
+  @Column({ nullable: true })
+  phone_number: string;
+
   @Column({ default: false })
   isEmailConfirmed: boolean;
 
@@ -47,7 +55,20 @@ export class User {
  
   @OneToOne(() => Subscription, (subscription) => subscription.user, { onDelete: 'CASCADE' })
   subscription: Subscription;
+  
+  @OneToMany(() => Task, (task)=>task.user ,{ nullable: true })
+  tasks: Task[];
 
-  @OneToOne(()=>Lawyer,(lawyer)=>lawyer.user,{onDelete:"CASCADE"} )
-  lawyerId:Lawyer;
+  @ManyToOne(() => LawFirm, (lawFirm) => lawFirm.lawyers, { nullable: true, onDelete: 'CASCADE', cascade: true})
+  @JoinColumn({ name: 'law_firm_id' })
+  law_firm: LawFirm;
+
+  @OneToMany(() => Client, (client) => client.lawyer,{ nullable: true })
+  clients: Client[];
+
+  @OneToMany(() => File, (file) => file.user,{ nullable: true })
+  files: File[];
+
+  @OneToMany(() => Schedule, (schedule) => schedule.user,{ nullable: true })
+  schedules: Schedule[];
 }
