@@ -119,9 +119,17 @@ export class AuthService {
 }
 
 async findUserById(id: string) {
-  return this.userService.findOne(Number(id));
+  return this.userService.findOneById(Number(id));
 }
-  }
+
+
+async checkUserValid(userId: number) {
+  console.log(userId)
+  const user_obj = await this.userService.findOneById(userId);
+  return true;
+}
+}
+  
 
 
 

@@ -13,38 +13,45 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  // Vérifier si l'utilisateur est déjà connecté (cookie-based authentication)
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+  // ✅ Check if the user is already logged in (Avoid infinite loop)
+  document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
   useEffect(() => {
     const storedUsername = Cookies.get("username");
-    if (storedUsername) {
-      router.push(`/user/${storedUsername}/home`);
+    if (storedUsername && window.location.pathname !== `/user/${storedUsername}/home`) {
+      router.replace(`/user/${storedUsername}/home`);
     }
   }, [router]);
 
-  // 🔥 Fonction de connexion
+  // 🔥 Login function with fixed redirects
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
     try {
-      const response = await fetch("http://localhost:5008/auth/login", {
+      const response = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include", // ✅ Important pour gérer les cookies côté serveur
+        credentials: "include", // ✅ Ensures cookies are included
         body: JSON.stringify({ username, password }),
       });
 
       if (response.ok) {
         const userData = await response.json();
-        Cookies.set("username", userData.username, { path: "/" }); // ✅ Stockage sécurisé du cookie
-        router.push(`/user/${userData.username}/home`);
-      } else if (response.status === 401) {
-        setError("Nom d'utilisateur ou mot de passe incorrect.");
-      } else if (response.status === 500) {
-        setError("Erreur serveur. Réessayez plus tard.");
+        Cookies.set("id", userData.user.userId, {
+          path: "/",
+          secure: process.env.NODE_ENV === "production", 
+          sameSite: "Strict",
+        });
+
+        // ✅ Only redirect if the user is not already there
+        if (window.location.pathname !== `/user/${userData.username}/home`) {
+          router.replace(`/user/${userData.username}/home`);
+        }
       } else {
-        setError("Une erreur inattendue s'est produite.");
+        setError(response.status === 401 ? "Nom d'utilisateur ou mot de passe incorrect." : "Erreur serveur. Réessayez plus tard.");
       }
     } catch (err) {
       console.error("Échec de la connexion :", err);

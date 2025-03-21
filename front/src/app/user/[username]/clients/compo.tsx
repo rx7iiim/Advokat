@@ -55,7 +55,8 @@ function UserCards() {
   }]
 
 useEffect(() => {
-    fetch("http://localhost:5008/auth/session", {
+(async function loaddata(){
+    await fetch("http://localhost:5008/auth/session", {
       credentials: "include",
     })
       .then((res) => res.json())
@@ -70,7 +71,7 @@ useEffect(() => {
         console.error("Error fetching session:", error);
         router.push("/login");
       });
-  }, [router]);
+  })()} ,[router]);
   
   if (!username) return <p>Loading...</p>;
 

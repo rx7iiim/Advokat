@@ -13,7 +13,7 @@ import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
-import { SessionSerializer } from './auth/guards/session.serializer';
+import { SessionSerializer } from './auth/session.serializer';
 import { SessionEntity } from './session/session.entity'
 import { TaskModule } from './task/task.module';
 

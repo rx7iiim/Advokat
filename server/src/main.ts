@@ -1,18 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import session from 'express-session';
-import { TypeormStore } from 'connect-typeorm';
 import { ValidationPipe } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { Pool } from 'pg';
-import PgSession from 'connect-pg-simple';
 import ConnectPgSimple from 'connect-pg-simple';
-import { SessionEntity } from './session/session.entity';
 import * as dotenv from 'dotenv';
 import cors from 'cors';
 import passport from 'passport';
-
-import { url } from 'inspector';
 dotenv.config();
 
 async function bootstrap() {
@@ -21,7 +16,7 @@ async function bootstrap() {
   const PgStore = ConnectPgSimple(session);
  
   const pgPool = new Pool({
-    connectionString: process.env.DATABASE_URL, // Correct property name
+    connectionString: process.env.DATABASE_URL, 
   });
    
   app.useGlobalPipes(new ValidationPipe());
@@ -49,13 +44,14 @@ app.use(
       resave: false,
       saveUninitialized: false,
       store: new PgStore({
-        pool: pgPool, // Use the existing PostgreSQL connection pool
-        createTableIfMissing: true, // Optional: specify a custom table name
+        pool: pgPool,
+        createTableIfMissing: true,
       }),
       cookie: {
         maxAge: 86400000, // 1 day
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production', // Set to true in production
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Set to 'none' in prod
       },
     }),
   );

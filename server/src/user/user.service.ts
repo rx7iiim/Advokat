@@ -74,7 +74,7 @@ export class UserService {
     return this.userRepository.findOne({where:{ username }});
   }
 
-  async findOne(userId: number) :Promise<User|null>{
+  async findOneById(userId: number) :Promise<User|null>{
     return this.userRepository.findOne({where:{ userId }});
   }
 
