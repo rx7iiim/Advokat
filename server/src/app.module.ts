@@ -11,7 +11,6 @@ import { AuthModule} from './auth/auth.module';
 import { EmailModule } from './email/email.module';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 import { SessionSerializer } from './auth/session.serializer';
 import { TaskModule } from './task/task.module';

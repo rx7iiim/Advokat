@@ -9,7 +9,6 @@ import * as dotenv from 'dotenv';
 import cors from 'cors';
 import passport from 'passport';
 dotenv.config();
-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   

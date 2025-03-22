@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { SubscriptionController } from './subscription.controller';
 import { SubscriptionService } from './subscription.service';
-
 describe('SubscriptionController', () => {
   let controller: SubscriptionController;
 

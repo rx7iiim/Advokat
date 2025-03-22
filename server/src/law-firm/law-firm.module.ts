@@ -5,7 +5,6 @@ import { LawFirm } from './entities/law-firm.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EmailModule } from 'src/email/email.module';
 import { AuthModule } from 'src/auth/auth.module';
-
 @Module({
   imports:[TypeOrmModule.forFeature([LawFirm]),EmailModule,forwardRef(() =>AuthModule )],
   controllers: [LawFirmController],

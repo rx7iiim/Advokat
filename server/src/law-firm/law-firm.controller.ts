@@ -2,7 +2,6 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { LawFirmService } from './law-firm.service';
 import { CreateLawFirmDto } from './dto/create-law-firm.dto';
 import { UpdateLawFirmDto } from './dto/update-law-firm.dto';
-
 @Controller('law-firm')
 export class LawFirmController {
   constructor(private readonly lawFirmService: LawFirmService) {}

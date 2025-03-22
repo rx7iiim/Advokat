@@ -1,4 +1,4 @@
-import 'reflect-metadata';
+
 import { DataSource } from 'typeorm';
 import { Subscription } from 'rxjs';
 import { Client } from 'src/client/entities/client.entity';

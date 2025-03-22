@@ -1,5 +1,4 @@
 import { IsEmail, IsNotEmpty, IsString, ValidateIf } from 'class-validator';
-
 export class loginUserDto {
   @ValidateIf(o => !o.username)
   @IsEmail({}, { message: 'Invalid email format' })

@@ -6,7 +6,6 @@ import { Repository } from 'typeorm';
 import { EmailService } from 'src/email/email.service';
 import { AuthService } from 'src/auth/auth.service';
 import { InjectRepository } from '@nestjs/typeorm';
-
 @Injectable()
 export class LawFirmService {
 
