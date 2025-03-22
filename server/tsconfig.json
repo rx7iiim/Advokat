@@ -19,4 +19,6 @@
     "noFallthroughCasesInSwitch": false,
     "esModuleInterop": true
   }
+    "include": ["src/**/*"],
+  "exclude": ["node_modules", "test", "dist"]
 }
