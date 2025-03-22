@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
-import { SessionEntity } from '../session/session.entity';
+
 import { Subscription } from 'rxjs';
 import { Client } from 'src/client/entities/client.entity';
 import { File } from 'src/file/entities/file.entity';
@@ -12,6 +12,6 @@ dotenv.config();
 export const AppDataSource = new DataSource({
   type: 'postgres',
   url: process.env.DATABASE_URL,
-  entities: [SessionEntity,User,Schedule,Client,File,LawFirm,Subscription],
+  entities: [User,Schedule,Client,File,LawFirm,Subscription],
   synchronize: true, 
 });

@@ -6,7 +6,7 @@ import { Client } from 'src/client/entities/client.entity';
 import { File } from 'src/file/entities/file.entity';
 import { LawFirm } from 'src/law-firm/entities/law-firm.entity';
 import { Schedule } from 'src/schedule/entities/schedule.entity';
-import { SessionEntity } from 'src/session/session.entity';
+
 import { User } from 'src/user/entities/user.entity';
 
 @Module({
@@ -17,7 +17,7 @@ import { User } from 'src/user/entities/user.entity';
         useFactory: (configService: ConfigService) =>({
             type: 'postgres',
             url: configService.get<string>('DATABASE_URL'),
-            entities:[User,Subscription,LawFirm,Client,File,Schedule,SessionEntity],
+            entities:[User,Subscription,LawFirm,Client,File,Schedule],
             autoLoadEntities: true,
             synchronize: true,
         }),}),

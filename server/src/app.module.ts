@@ -14,7 +14,6 @@ import { DatabaseModule } from './database/database.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PassportModule } from '@nestjs/passport';
 import { SessionSerializer } from './auth/session.serializer';
-import { SessionEntity } from './session/session.entity'
 import { TaskModule } from './task/task.module';
 
 
@@ -34,7 +33,6 @@ import { TaskModule } from './task/task.module';
     EmailModule, 
     DatabaseModule,
     PassportModule.register({ session: true }),
-    TypeOrmModule.forFeature([SessionEntity]),
     TaskModule,
   ],
   controllers: [AppController],

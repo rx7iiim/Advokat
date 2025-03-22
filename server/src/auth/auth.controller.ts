@@ -4,11 +4,12 @@ import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { LocalAuthGuard, AuthenticatedGuard } from './guards/auth.guard';
 import { loginUserDto } from 'src/user/dto/login-user.dto';
 import { Response, Request} from 'express';
-import { GetUser } from 'common/decorators/auth/get-user.decorator';
+import { GetUser } from 'src/common/decorators/auth/get-user.decorator';
 import { SessionInterface } from 'src/types/session.interface';
 import { ResponseInterface } from 'src/types/response.interface';
 import { Console } from 'console';
 import { AuthGuard } from '@nestjs/passport';
+import { User } from 'src/user/entities/user.entity';
 
 
 @Controller('auth')
@@ -45,7 +46,7 @@ export class AuthController {
 
   @Get('session')
   async validateSession(
-    @GetUser() user
+    @GetUser() user:User
   ): Promise<ResponseInterface<null>> {
     if (!user) {
       throw new UnauthorizedException('Invalid session');
