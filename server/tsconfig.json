@@ -21,7 +21,7 @@
     "baseUrl": "./", // Base directory for module resolution
     "paths": {
       "@app/*": ["src/*"] // Map @app/* to src/*
-    },
+    }
   },
   "include": ["src/**/*"], // Include all files in the src directory
   "exclude": ["node_modules", "test", "dist"] // Exclude unnecessary directories
