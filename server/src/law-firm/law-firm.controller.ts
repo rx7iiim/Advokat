@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { LawFirmService } from './law-firm.service';
-import { CreateLawFirmDto } from './dto/create-law-firm.dto';
-import { UpdateLawFirmDto } from './dto/update-law-firm.dto';
+import { LawFirmService } from 'src/law-firm/law-firm.service';
+import { CreateLawFirmDto } from 'src/law-firm/dto/create-law-firm.dto';
+import { UpdateLawFirmDto } from 'src/law-firm/dto/update-law-firm.dto';
 @Controller('law-firm')
 export class LawFirmController {
   constructor(private readonly lawFirmService: LawFirmService) {}

@@ -4,7 +4,6 @@ declare module 'express-session' {
     passport?: { user: any };
   }
 }
-
 declare module 'express' {
   interface Request {
     user?: any;

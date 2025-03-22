@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Subscription } from '../subscription/entities/subscription.entity';
+import { Subscription } from 'src/subscription/entities/subscription.entity';
 import { Client } from 'src/client/entities/client.entity';
 import { File } from 'src/file/entities/file.entity';
 import { LawFirm } from 'src/law-firm/entities/law-firm.entity';

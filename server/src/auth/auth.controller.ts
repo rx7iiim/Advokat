@@ -4,7 +4,7 @@ import { Response, Request} from 'express';
 import { GetUser } from 'src/common/decorators/auth/get-user.decorator';
 import { ResponseInterface } from 'src/types/response.interface';
 import { User } from 'src/user/entities/user.entity';
-import { AuthService } from './auth.service';
+import { AuthService } from 'src/auth/auth.service';
 import { LocalAuthGuard } from './guards/auth.guard';
 @Controller('auth')
 export class AuthController {

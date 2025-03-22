@@ -5,5 +5,4 @@ declare module 'express' {
     user?: any; // Adjust to match your User type
     logIn(user: any, done: (err: any) => void): void;
     logOut(): void;
-  }
-}
+  }}

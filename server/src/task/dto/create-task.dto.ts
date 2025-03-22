@@ -5,6 +5,4 @@ description:'string';
 
 @IsNotEmpty()
 username:'username';
-
-
 }

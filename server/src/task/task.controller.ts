@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Delete, Query } from '@nestjs/common';
-import { TaskService } from './task.service';
-import { CreateTaskDto } from './dto/create-task.dto';
+import { TaskService } from 'src/task/task.service';
+import { CreateTaskDto } from 'src/task/dto/create-task.dto';
 @Controller('task')
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
