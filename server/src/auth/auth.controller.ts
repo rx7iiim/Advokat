@@ -2,13 +2,12 @@ import { Controller, Post, Body, Req, Res, UseGuards, UnauthorizedException, Get
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { LocalAuthGuard, AuthenticatedGuard } from './guards/auth.guard';
-import { loginUserDto } from 'src/user/dto/login-user.dto';
+
 import { Response, Request} from 'express';
 import { GetUser } from 'src/common/decorators/auth/get-user.decorator';
-import { SessionInterface } from 'src/types/session.interface';
+
 import { ResponseInterface } from 'src/types/response.interface';
-import { Console } from 'console';
-import { AuthGuard } from '@nestjs/passport';
+
 import { User } from 'src/user/entities/user.entity';
 
 

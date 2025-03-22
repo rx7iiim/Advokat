@@ -6,7 +6,6 @@ import { Client } from 'src/client/entities/client.entity';
 import { File } from 'src/file/entities/file.entity';
 import { LawFirm } from 'src/law-firm/entities/law-firm.entity';
 import { Schedule } from 'src/schedule/entities/schedule.entity';
-
 import { User } from 'src/user/entities/user.entity';
 
 @Module({
