@@ -6,6 +6,9 @@ import Sidebar from '../../../components/sidebar/Sidebar';
 import Calendar from '../../../components/calander/Calendar';
 import TaskList from './TaskList';
 import Task from "./taskInterface";
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 
 type Props = {
   usernamee: string;

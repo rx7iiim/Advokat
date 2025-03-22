@@ -5,6 +5,9 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Cookies from "js-cookie";
 import Upbar from "../components/Upbar/Upbar";
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 
 const Login = () => {
   const router = useRouter();

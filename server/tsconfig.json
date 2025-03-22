@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+<<<<<<< HEAD
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -22,3 +23,27 @@
     "include": ["src/**/*"],
   "exclude": ["node_modules", "test", "dist"]
 }
+=======
+    "declaration": true, // Generate .d.ts files
+    "removeComments": true, // Remove comments in the output
+    "emitDecoratorMetadata": true, // Required for decorators
+    "experimentalDecorators": true, // Required for decorators
+    "allowSyntheticDefaultImports": true, // Allow synthetic default imports
+    "target": "ES2021", // Target ECMAScript version
+    "sourceMap": true, // Generate source maps
+    "baseUrl": "./", // Base directory for module resolution
+    "incremental": true, // Enable incremental compilation
+    "skipLibCheck": true, // Skip type checking of declaration files
+    "strictNullChecks": true, // Enable strict null checks
+    "forceConsistentCasingInFileNames": true, // Ensure consistent file naming
+    "noImplicitAny": false, // Disable implicit 'any' types
+    "strictBindCallApply": false, // Disable strict bind/call/apply checks
+    "noFallthroughCasesInSwitch": false, // Disable fallthrough case checks
+    "esModuleInterop": true, // Enable ES module interop
+    "outDir": "./dist", // Output directory for compiled files
+    "rootDir": "./src" // Root directory for source files
+  },
+  "include": ["src/**/*"], // Include all files in the src directory
+  "exclude": ["node_modules", "test", "dist"] // Exclude unnecessary directories
+}
+>>>>>>> 79c5b03 (version 1)

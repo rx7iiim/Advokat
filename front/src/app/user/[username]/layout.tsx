@@ -2,14 +2,18 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 
 export default function UserLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const { username } = useParams();
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
-    fetch("http://localhost:5008/auth/session", { credentials: "include" })
+    fetch(`${API_URL}/auth/session`, { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
         if (!data.authenticated || data.username !== username) {
