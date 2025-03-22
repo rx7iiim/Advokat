@@ -18,7 +18,7 @@ dotenv.config();
   const [username, setUsername ]= useState<string | null>(null);
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-  useEffect(() => {
+  /*useEffect(() => {
       fetch("http://localhost:5008/auth/session", {
         credentials: "include",
       })
@@ -36,7 +36,7 @@ dotenv.config();
         });
     }, [router]);
     
-    if (!username) return <p>Loading...</p>;
+    if (!username) return <p>Loading...</p>;*/
 
   return (
     <div className="flex min-h-screen bg-gray-100 text-gray-800 p-2">

@@ -54,7 +54,7 @@ function UserCards() {
     imageUrl:"https://avatars.githubusercontent.com/u/154564602?s=400&u=32aae8bc4ee89d0f09d3d1891d822c0c9e268332&v=4"
   }]
 
-useEffect(() => {
+/*useEffect(() => {
 (async function loaddata(){
     await fetch("http://localhost:5008/auth/session", {
       credentials: "include",
@@ -71,7 +71,7 @@ useEffect(() => {
         console.error("Error fetching session:", error);
         router.push("/login");
       });
-  })()} ,[router]);
+  })()} ,[router]);*/
   
   if (!username) return <p>Loading...</p>;
 

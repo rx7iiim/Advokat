@@ -22,15 +22,15 @@ function HomePage(props: Props) {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  async  function loadpage () {
+  /*async  function loadpage () {
     await fetch(`${API_URL}/auth/session`, {
       credentials: "include",
     })
       .then((res) => res.json())
       .then((data) => {
-       /* if (!data.authenticated || !data.username) {
+        if (!data.authenticated || !data.username) {
           router.push("/login");
-        } else {*/
+        } else {
           setUsername(data.username);
        
       })
@@ -38,10 +38,9 @@ function HomePage(props: Props) {
         console.error("Error fetching session:", error);
         router.push("/login");
       });
-  };
+  };*/
 
   useEffect(() => {
-    if (!username) return;
 
     const fetchData = async () => {
       try {
@@ -68,7 +67,7 @@ function HomePage(props: Props) {
     fetchData();
   }, [username, API_URL]);
 
-  if (!username || isLoading) return <p>Loading...</p>;
+  //if (!username || isLoading) return <p>Loading...</p>;
 
   return (
     <div className="flex min-h-screen bg-gray-100 text-gray-800 p-2">

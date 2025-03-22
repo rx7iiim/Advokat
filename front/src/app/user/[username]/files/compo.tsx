@@ -107,7 +107,7 @@ dotenv.config();
 
   
 
-  useEffect(() => {
+  /*useEffect(() => {
       fetch("http://localhost:5008/auth/session", {
         credentials: "include",
       })
@@ -125,7 +125,7 @@ dotenv.config();
         });
     }, [router]);
     
-    if (!username) return <p>Loading...</p>;
+    if (!username) return <p>Loading...</p>;*/
 
 
 
