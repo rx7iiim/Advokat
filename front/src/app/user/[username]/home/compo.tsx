@@ -22,7 +22,7 @@ function HomePage(props: Props) {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  /*async  function loadpage () {
+  async  function loadpage () {
     await fetch(`${API_URL}/auth/session`, {
       credentials: "include",
     })
@@ -33,12 +33,13 @@ function HomePage(props: Props) {
         } else {
           setUsername(data.username);
        
-      })
+      }})
       .catch((error) => {
         console.error("Error fetching session:", error);
         router.push("/login");
       });
-  };*/
+  };
+  loadpage();
 
   useEffect(() => {
 

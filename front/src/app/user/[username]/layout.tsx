@@ -8,22 +8,24 @@ dotenv.config();
 
 export default function UserLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const { username } = useParams();
+  const params=useParams();
+  const username=params.username;
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
+
     fetch(`${API_URL}/auth/session`, { credentials: "include" })
       .then((res) => res.json())
       .then((data) => {
-        if (!data.authenticated || data.username !== username) {
+        if (!data.authenticated ) {
           router.push("/login");
         } else {
           setAuthenticated(true);
         }
       })
       .catch(() => router.push("/login"));
-  }, [username, router]);
+  }, [username,router]);
 
   if (authenticated === null) return <p>Loading...</p>; // Show a loader while checking auth
 

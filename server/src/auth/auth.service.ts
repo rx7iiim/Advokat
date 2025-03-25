@@ -123,9 +123,10 @@ async findUserById(id: string) {
 }
 
 
-async checkUserValid(userId: number) {
+async checkUserValid(userId) {
   console.log(userId)
   const user_obj = await this.userService.findOneById(userId);
+  console.log(user_obj)
   return true;
 }
 }

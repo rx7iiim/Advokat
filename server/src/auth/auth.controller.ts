@@ -40,17 +40,16 @@ export class AuthController {
 
   @Get('session')
   async validateSession(
-    @GetUser() user:User
-  ): Promise<ResponseInterface<null>> {
+    @GetUser() user:User,
+  ) {
     if (!user) {
       throw new UnauthorizedException('Invalid session');
     }
     await this.authService.checkUserValid(user.userId);
-    return {
+    return{
       authenticated:true,
       username:user.username,
       message: 'Session is valid',
-      status: HttpStatus.OK,
     };
   }
 }

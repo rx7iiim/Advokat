@@ -2,63 +2,52 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
-import Cookies from "js-cookie";
 import Upbar from "../components/Upbar/Upbar";
-import * as dotenv from 'dotenv';
-dotenv.config();
-
 
 const Login = () => {
+
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-  // ✅ Check if the user is already logged in (Avoid infinite loop)
-  document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  // Check if user is already logged in (cookie-based authentication)
   useEffect(() => {
-    const storedUsername = Cookies.get("username");
-    if (storedUsername && window.location.pathname !== `/user/${storedUsername}/home`) {
-      router.replace(`/user/${storedUsername}/home`);
+    const username = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("username="))
+      ?.split("=")[1];
+
+    if (username) {
+      router.push(`/user/${username}/home`);
     }
   }, [router]);
 
-  // 🔥 Login function with fixed redirects
+  // 🔥 Login Function
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
     try {
-      const response = await fetch(`${API_URL}/auth/login`, {
+      const response = await fetch("http://localhost:5008/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include", // ✅ Ensures cookies are included
+        credentials: "include", // ✅ Ensures cookies are sent/received
         body: JSON.stringify({ username, password }),
       });
 
       if (response.ok) {
         const userData = await response.json();
-        Cookies.set("id", userData.user.userId, {
-          path: "/",
-          secure: process.env.NODE_ENV === "production", 
-          sameSite: "Strict",
-        });
-
-        // ✅ Only redirect if the user is not already there
-        if (window.location.pathname !== `/user/${userData.username}/home`) {
-          router.replace(`/user/${userData.username}/home`);
-        }
+        document.cookie = `username=${username}; path=/;`; 
+        router.push(`/user/:${username}/home`);
       } else {
-        setError(response.status === 401 ? "Nom d'utilisateur ou mot de passe incorrect." : "Erreur serveur. Réessayez plus tard.");
+        setError("Invalid username or password");
       }
     } catch (err) {
-      console.error("Échec de la connexion :", err);
-      setError("Une erreur réseau s'est produite. Vérifiez votre connexion.");
+      console.error("Login failed:", err);
+      setError("An error occurred. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -71,13 +60,13 @@ const Login = () => {
         <div className="max-w-md w-full space-y-8">
           <div>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-              Connexion à votre compte
+              Log In To Your Account
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
-              Pas encore de compte ?{" "}
-              <Link href="/signup" className="font-medium text-blue-600 hover:text-blue-500">
-                Inscrivez-vous
-              </Link>
+              Don't have an account?{" "}
+              <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
+                Sign Up
+              </a>
             </p>
           </div>
 
@@ -86,22 +75,22 @@ const Login = () => {
           <form className="mt-8 space-y-6" onSubmit={handleLogin}>
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
-                <label htmlFor="username" className="sr-only">
-                  Nom d'utilisateur
+                <label htmlFor="username-address" className="sr-only">
+                  username address
                 </label>
                 <input
-                  id="username"
+                  id="username-address"
                   name="username"
                   required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  placeholder="Votre pseudo"
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+                  placeholder="rx7iiim"
                 />
               </div>
               <div>
                 <label htmlFor="password" className="sr-only">
-                  Mot de passe
+                  Password
                 </label>
                 <input
                   id="password"
@@ -110,7 +99,7 @@ const Login = () => {
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
                   placeholder="*********"
                 />
               </div>
@@ -125,14 +114,14 @@ const Login = () => {
                   className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
                 />
                 <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-                  Se souvenir de moi
+                  Remember me
                 </label>
               </div>
 
               <div className="text-sm">
-                <Link href="/forgot-password" className="font-medium text-blue-600 hover:text-blue-500">
-                  Mot de passe oublié ?
-                </Link>
+                <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
+                  Forgot your password?
+                </a>
               </div>
             </div>
 
@@ -142,7 +131,7 @@ const Login = () => {
                 disabled={loading}
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
               >
-                {loading ? "Connexion..." : "Se connecter"}
+                {loading ? "Logging in..." : "Log In"}
               </button>
             </div>
           </form>

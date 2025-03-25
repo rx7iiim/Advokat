@@ -23,16 +23,16 @@ async function bootstrap() {
   // Get TypeORM DataSource instance
   const dataSource = app.get(DataSource);
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      callback(null, true); // Accepts all origins
-    },
-    credentials: true, // Allow cookies & session authentication
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+  app.use(
+    cors({
+      origin: process.env.NODE_ENV === "production"
+        ? "https://advocat-mu.vercel.app" // ✅ Use frontend domain in production
+        : "http://localhost:3000", // ✅ Local dev
+      credentials: true, // ✅ Required for session cookies
+      methods: ["GET", "POST", "PUT", "DELETE"],
+      allowedHeaders: ["Content-Type", "Authorization"],
+    })
+  );
 
 
 
@@ -49,8 +49,8 @@ app.use(
       cookie: {
         maxAge: 86400000, // 1 day
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production', // Set to true in production
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Set to 'none' in prod
+        secure:false,
+        sameSite: 'lax' 
       },
     }),
   );
