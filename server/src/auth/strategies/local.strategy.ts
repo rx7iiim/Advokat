@@ -7,8 +7,8 @@ import { AuthService } from '../auth.service';
 export class LocalAuthStrategy extends PassportStrategy(LocalStrategy) {
   constructor(private authService: AuthService) {
     super({
-      usernameField: 'username', // Field name for the username in the request body
-      passwordField: 'password', // Field name for the password in the request body
+      usernameField: 'username',
+      passwordField: 'password', 
     });
   }
 
@@ -17,6 +17,6 @@ export class LocalAuthStrategy extends PassportStrategy(LocalStrategy) {
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
-    return user; // This will be passed to `serializeUser`
+    return user;
   }
 }

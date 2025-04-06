@@ -63,7 +63,7 @@ export class User {
   @JoinColumn({ name: 'law_firm_id' })
   law_firm: LawFirm;
 
-  @OneToMany(() => Client, (client) => client.lawyer,{ nullable: true })
+  @OneToMany(() => Client, (client) => client.user,{ nullable: true })
   clients: Client[];
 
   @OneToMany(() => File, (file) => file.user,{ nullable: true })

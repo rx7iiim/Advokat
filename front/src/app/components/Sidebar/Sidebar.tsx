@@ -8,28 +8,28 @@ import styles from "./sidebar.module.css";
 import UpgradePlanBanner from "../UpgradePlanBanner";
 
 export default function Sidebar() {
-  const pathname = usePathname(); // ✅ Get current path
+  const pathname = usePathname(); 
 
-  // ✅ Extract the username from the path efficiently
+ 
   const username = useMemo(() => {
-    const pathSegments = pathname.split("/"); // Split by "/"
+    const pathSegments = pathname.split("/"); 
     const usernameIndex = pathSegments.indexOf("user") + 1;
     return usernameIndex > 0 && pathSegments.length > usernameIndex ? pathSegments[usernameIndex] : null;
   }, [pathname]);
 
-  if (!username) return <p>Loading Sidebar...</p>; // ✅ Handle missing username
+  if (!username) return <p>Loading Sidebar...</p>;
 
   return (
     <div className="fixed">
       <aside className={styles.sidebar}>
-        {/* Logo Section */}
+     
         <div className={styles.left}>
           <Link href={`/user/${username}/home`} className={styles.logo}>
             <Image src="/logobold.png" alt="our logo" width={200} height={100} />
           </Link>
         </div>
 
-        {/* Menu Section */}
+  
         <h2 className={styles.menuTitle}>MAIN MENU</h2>
         <ul className={styles.menuList}>
           {[
@@ -52,15 +52,15 @@ export default function Sidebar() {
           ))}
         </ul>
 
-        {/* Opened Files Section */}
+      
         <h2 className={styles.menuTitle}>OPENED FILES</h2>
 
-        {/* Upgrade Card using UpgradePlanBanner Component */}
+
         <div className={styles.upgradeCard}>
           <UpgradePlanBanner />
         </div>
 
-        {/* Profile Section */}
+
         <div className={styles.profileSection}>
           <Image src="/sofia.png" alt="User Avatar" width={35} height={35} className={styles.profileAvatar} />
           <div className={styles.profileDetails}>

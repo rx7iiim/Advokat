@@ -3,9 +3,12 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Upbar from "../components/Upbar/Upbar";
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 
 const Login = () => {
-
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
@@ -31,7 +34,7 @@ const Login = () => {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:5008/auth/login", {
+      const response = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include", // ✅ Ensures cookies are sent/received
@@ -41,7 +44,7 @@ const Login = () => {
       if (response.ok) {
         const userData = await response.json();
         document.cookie = `username=${username}; path=/;`; 
-        router.push(`/user/:${username}/home`);
+        router.push(`/user/${username}/home`);
       } else {
         setError("Invalid username or password");
       }

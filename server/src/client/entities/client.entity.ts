@@ -9,23 +9,23 @@ export class Client {
   client_id: number;
 
   @Column()
-  first_name: string;
-
-  @Column()
-  last_name: string;
+  fullName: string;
 
   @Column()
   email: string;
 
   @Column()
-  phone_number: string;
+  phoneNumber: string;
 
   @Column()
-  address: string;
+  contactInfo: string;
+
+  @Column({nullable:true})
+  pfp:string;
 
   @ManyToOne(() => User, (user) => user.clients, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'lawyer_id' })
-  lawyer: User;
+  user: User;
 
   @OneToMany(()=>File,(file)=>file.client,({onDelete:"CASCADE"}))
   file:File;

@@ -16,6 +16,10 @@ async function bootstrap() {
  
   const pgPool = new Pool({
     connectionString: process.env.DATABASE_URL, 
+     ssl: { rejectUnauthorized: false },
+  idleTimeoutMillis: 60000, // Close idle connections after 60 seconds
+  connectionTimeoutMillis: 60000, // Wait longer for a connection
+  max: 10, // Limit number of connections
   });
    
   app.useGlobalPipes(new ValidationPipe());
@@ -59,8 +63,20 @@ async function bootstrap() {
   app.use(passport.initialize());
   app.use(passport.session());
 
+
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true, // You already have this
+      whitelist: true,
+      forbidNonWhitelisted: false, // temporary
+    }),
+  );
+  
+
   const PORT = process.env.PORT || 5000;
   await app.listen(PORT);
   console.log(`🚀 Server running on http://localhost:${PORT}`);
+
+
 }
 bootstrap();

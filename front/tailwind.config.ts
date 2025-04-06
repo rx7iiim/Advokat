@@ -7,7 +7,11 @@ export default {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {
+    extend: { 
+      
+      fontSize: {
+      "2xs": "8px",
+    },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

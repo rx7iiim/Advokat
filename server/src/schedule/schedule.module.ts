@@ -8,4 +8,4 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   controllers: [ScheduleController],
   providers: [ScheduleService],
 })
-export class ScheduleModule {}
+export class ScheduleModulee {}

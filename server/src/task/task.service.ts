@@ -21,7 +21,7 @@ export class TaskService {
 
   async createTask(description: string, username:string): Promise<Task> {
     const user = await this.userRepository.findOne({ where: { username } });
-    if (!user) throw new Error('Lawyer not found');
+    if (!user) throw new Error('user not found');
 
     const task = this.taskRepository.create(
       { description,

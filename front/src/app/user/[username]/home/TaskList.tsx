@@ -78,7 +78,7 @@ export default function TaskList({ tasks, setTasks ,username}: TaskListProps) {
         />
         <button
           onClick={createTask}
-          className="bg-blue-500 text-white px-3 py-2 rounded-lg text-sm shadow-sm hover:bg-blue-600 transition"
+          className="bg-blue-600 text-white px-3 py-2 rounded-lg text-sm shadow-sm hover:bg-blue-700 transition"
         >
           Add Task
         </button>

@@ -1,35 +1,57 @@
-import { Injectable } from '@nestjs/common';
-import { CreateClientDto } from 'src/client/dto/create-client.dto';
+import { forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateClientDto } from 'src/client/dto/update-client.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Client } from 'src/client/entities/client.entity';
+import { User } from 'src/user/entities/user.entity';
+import { UserService } from 'src/user/user.service';
 @Injectable()
 export class ClientService {
 
   constructor(
     @InjectRepository(Client)
     private readonly clientRepository: Repository<Client>,
+    @InjectRepository(User) private userRepository: Repository<User>,
   ) {}
 
 
-  create(createClientDto: CreateClientDto) {
-    return 'This action adds a new client';
+  async createClient(body: any ,username:string,url:string) {
+    const user= await this.userRepository.findOne({where:{username}});
+    if (!user) throw new Error ("user not found");
+    const fullName=body.fullName
+    const email=body.email
+    const contactInfo=body.contactInfo
+    const phoneNumber=body.phoneNumber
+    const pfp=url
+
+    const client=this.clientRepository.create({
+      fullName,
+      email,
+      contactInfo,
+      phoneNumber,
+      pfp,
+      user,
+      created_at:new Date(Date.now())
+
+    })
+    return this.clientRepository.save(client)
   }
 
-  findAll() {
-    return `This action returns all client`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} client`;
-  }
-
-  update(id: number, updateClientDto: UpdateClientDto) {
-    return `This action updates a #${id} client`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} client`;
-  }
+  async getuserClients(username:string): Promise<Client[]> {
+     return this.clientRepository.find({
+       where: { user: {username } },
+       relations: ['user'],
+     });
+   }
+ 
+ 
+ 
+ 
+   async deleteClient(id: number): Promise<void> {
+     const result = await this.clientRepository.delete(id);
+ 
+     if (result.affected === 0) {
+       throw new NotFoundException(`Task with ID ${id} not found`);
+     }
+ }
 }

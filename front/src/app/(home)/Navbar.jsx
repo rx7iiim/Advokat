@@ -40,10 +40,10 @@ const Navbar = () => {
   
 
   return (
-    <nav  className="bg-white md:px-14 p-4 max-w-screen-2xl mx-auto py-4 border-b border-gray-300 text-xl shadow-md fixed w-full top-0 z-50">
-      <div className="container mx-auto flex items-center justify-between">
-        {/* ✅ Logo Section */}
-        <a href="/" className="flex items-center text-2xl font-semibold text-primary">
+    <nav  className="flex flex-col flex-justify-between bg-white md:px-14 p-4 w-full mx-auto py-2 border-b border-gray-300 text-xl shadow-md fixed w-full top-0 z-50">
+  
+      
+        <a href="/" className="text-2xl font-semibold text-primary">
           <Image src={logo} alt="Logo" width={80} height={80} className="w-auto h-16" />
         </a>
 
@@ -62,7 +62,7 @@ const Navbar = () => {
         </ul>
 
         {/* ✅ Desktop Buttons */}
-        <div className="hidden md:flex gap-3">
+        <div className="hidden md:flex items-center space-x-8 " style={{ position: 'absolute', left: '1500px', top: '28px' }}>
           <Link href='/signup' className="px-4 py-2 text-blue-600 border border-blue-600 rounded-3xl">
             Sign Up
           </Link>
@@ -77,7 +77,7 @@ const Navbar = () => {
             {isMenuOpen ? <FaXmark className="w-6 text-primary" /> : <FaBars />}
           </button>
         </div>
-      </div>
+    
 
       {/* ✅ Mobile Menu */}
       {isMenuOpen && (
