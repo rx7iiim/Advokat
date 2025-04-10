@@ -18,8 +18,8 @@ dotenv.config();
   const [username, setUsername ]= useState<string | null>(null);
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-  /*useEffect(() => {
-      fetch("http://localhost:5008/auth/session", {
+  useEffect(() => {
+      fetch(`${API_URL}/auth/session`, {
         credentials: "include",
       })
         .then((res) => res.json())
@@ -36,7 +36,7 @@ dotenv.config();
         });
     }, [router]);
     
-    if (!username) return <p>Loading...</p>;*/
+    if (!username) return <p>Loading...</p>;
 
   return (
     <div className="flex min-h-screen bg-gray-100 text-gray-800 p-2">
@@ -56,9 +56,9 @@ dotenv.config();
               Months
             </button>
             <button
-              className={`px-6 py-2 rounded-md text-lg font-semibold transition-all 
-                          text-gray-700 hover:text-blue-500 
-                          ${view === "day" ? "text-blue-500 after:absolute after:left-0 after:bottom-0 after:w-full after:h-[3px] after:bg-blue-500" : ""}`}
+             className={`px-6 py-2 rounded-md text-lg font-semibold transition-all relative  text-gray-700 hover:text-blue-500 ${
+              view === "day" ? "text-blue-500 after:absolute after:left-0 after:bottom-0 after:w-full after:h-[3px] after:bg-blue-500" : ""
+            }`}
               onClick={() => setView("day")}
             >
               Days
@@ -66,7 +66,7 @@ dotenv.config();
 
             <button className=" absolute  right-16 px-2 py-3 rounded-md text-lg font-semibold transition-all bg-[linear-gradient(135deg,#0048ff,#00d4ff)] text-white p-3">
               <div className="flex items-center justify-center">
-                add event <img src="/plus-circle.png" alt="add event" className="w-6 h-6 ml-2" />
+                add event <img src="/plus-circle-svgrepo-com (1).svg" alt="add event" className="w-6 h-6 ml-2" />
               </div>
             </button>
           </div>

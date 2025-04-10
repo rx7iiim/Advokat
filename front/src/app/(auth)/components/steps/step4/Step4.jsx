@@ -37,10 +37,10 @@ const Step4 = () => {
   };
 
   return (
-    <div className="w-full h-[45vh] flex flex-col md:flex-row gap-6 p-6  rounded-lg">
+    <div className="w-full h-[45vh] flex flex-col justify-center md:flex-row gap-6 p-6  rounded-lg">
       <div className="flex flex-col items-stretch h-full">
   
-  <div className="flex flex-row flex-wrap justify-center gap-[10px]  flex-[0.7]">
+  <div className="flex flex-row justify-center gap-[10px]  flex-[0.7]">
     <TextField
       label="First Name"
       className="rounded-2xl w-2/5"
@@ -61,16 +61,17 @@ const Step4 = () => {
 
     <TextField
       label="Username"
-      className="rounded-2xl w-1/5"
+      className="rounded-2xl w-2/5"
       name="username"
       value={formData.username}
       onChange={handleChange}
       required
     />
-
+</div>
+<div className="flex flex-row justify-center gap-[33px]  ">
     <TextField
       label="Email"
-      className="rounded-2xl w-1/5"
+      className="rounded-2xl w-full"
       name="email"
       value={formData.email}
       onChange={handleChange}
@@ -80,7 +81,7 @@ const Step4 = () => {
 
     <TextField
       label="Phone Number"
-      className="rounded-2xl w-1/5"
+      className="rounded-2xl w-full"
       name="phone"
       inputProps={{ maxLength: 10 }}
       value={formData.phone}
@@ -89,9 +90,9 @@ const Step4 = () => {
     />
   </div>
 
-  <div className="flex flex-row justify-between flex-[0.3]">
+  <div className="flex flex-row justify-center gap-[33px]  ">
  
-    <div className="w-2/5">
+    <div className="w-full">
       <label className="block text-gray-700 text-sm mb-1">Role</label>
       <div className="flex items-center border rounded-lg px-3 py-2 bg-white">
         <FaBriefcase className="text-gray-400" />
@@ -105,7 +106,7 @@ const Step4 = () => {
     </div>
 
    
-    <div className="w-2/5">
+    <div className="w-full">
       <label className="block text-gray-700 text-sm mb-1">Plan</label>
       <div className="flex items-center border rounded-lg px-3 py-2 bg-white">
         <FaBriefcase className="text-gray-400" />

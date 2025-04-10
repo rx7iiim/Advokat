@@ -14,13 +14,54 @@ dotenv.config();
 
 
  function FileUploadTable() {
+  const filedata =[{  index:1
+    ,name: "td analyse",
+     status: "done",
+    date: "50/12/2000",
+    updated:"last day",
+    clientName:"salim"},{  index:2
+      ,name: "td analyse",
+       status: "done",
+      date: "50/12/2000",
+      updated:"last day",
+      clientName:"salim"},{  index:3
+        ,name: "td analyse",
+         status: "done",
+        date: "50/12/2000",
+        updated:"last day",
+        clientName:"salim"},{  index:3
+          ,name: "td analyse",
+           status: "done",
+          date: "50/12/2000",
+          updated:"last day",
+          clientName:"salim"},{  index:4
+            ,name: "td analyse",
+             status: "done",
+            date: "50/12/2000",
+            updated:"last day",
+            clientName:"salim"},{  index:5
+              ,name: "td analyse",
+               status: "done",
+              date: "50/12/2000",
+              updated:"last day",
+              clientName:"salim"},{  index:6 
+                ,name: "td analyse",
+                 status: "done",
+                date: "50/12/2000",
+                updated:"last day",
+                clientName:"salim"},{  index:6
+                  ,name: "td analyse",
+                   status: "done",
+                  date: "50/12/2000",
+                  updated:"last day",
+                  clientName:"salim"}]
 
     const router = useRouter();
    const [username, setUsername] = useState<string | null>(null);
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
     const [fileData, setFileData] = useState<FileData[]>([]);
-    useEffect(() => {
+   /* useEffect(() => {
         const fetchFiles = async () => {
           try {
             const response = await fetch(`${API_URL}/files`);
@@ -35,7 +76,7 @@ dotenv.config();
         };
       
         fetchFiles();
-      }, []);
+      }, []);*/
 
 
 
@@ -107,8 +148,8 @@ dotenv.config();
 
   
 
-  /*useEffect(() => {
-      fetch("http://localhost:5008/auth/session", {
+  useEffect(() => {
+      fetch(`${API_URL}/auth/session`, {
         credentials: "include",
       })
         .then((res) => res.json())
@@ -125,7 +166,7 @@ dotenv.config();
         });
     }, [router]);
     
-    if (!username) return <p>Loading...</p>;*/
+    if (!username) return <p>Loading...</p>;
 
 
 
@@ -204,7 +245,7 @@ dotenv.config();
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {fileData.map((file, index) => (
+                  {filedata.map((file, index) => (
                     <tr key={index}>
                       <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                         <div className="inline-flex items-center gap-x-3">

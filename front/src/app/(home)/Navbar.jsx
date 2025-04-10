@@ -48,7 +48,7 @@ const Navbar = () => {
         </a>
 
         {/* ✅ Desktop Navigation Links */}
-        <ul className="hidden md:flex items-center space-x-14" style={{ position: 'absolute', left: '373px', top: '34px' }}>
+        <ul className="hidden md:flex items-center space-x-8" style={{ position: 'absolute', left: '373px', top: '34px' }}>
           {navItem.map(({ link, path }) => (
             <li key={path}>
               <button
@@ -62,7 +62,7 @@ const Navbar = () => {
         </ul>
 
         {/* ✅ Desktop Buttons */}
-        <div className="hidden md:flex items-center space-x-8 " style={{ position: 'absolute', left: '1500px', top: '28px' }}>
+        <div className="hidden md:flex items-center space-x-8 " style={{ position: 'absolute', left:'1200px', top: '28px' }}>
           <Link href='/signup' className="px-4 py-2 text-blue-600 border border-blue-600 rounded-3xl">
             Sign Up
           </Link>

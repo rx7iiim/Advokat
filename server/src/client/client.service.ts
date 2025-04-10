@@ -15,14 +15,14 @@ export class ClientService {
   ) {}
 
 
-  async createClient(body: any ,username:string,url:string) {
+  async createClient(body: any ,username:string,id:string) {
     const user= await this.userRepository.findOne({where:{username}});
     if (!user) throw new Error ("user not found");
     const fullName=body.fullName
     const email=body.email
     const contactInfo=body.contactInfo
     const phoneNumber=body.phoneNumber
-    const pfp=url
+    const pfp=`https://drive.google.com/uc?export=view&id=${id}`;
 
     const client=this.clientRepository.create({
       fullName,

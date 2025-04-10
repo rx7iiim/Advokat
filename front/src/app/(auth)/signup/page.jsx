@@ -63,7 +63,6 @@ const SignUpContent = () => {
             username: formData.username,
             role:formData.role,
           });
-          console.log(response);
          } catch (error) {
            console.error("Error verifying email:", error);
            setError(true);

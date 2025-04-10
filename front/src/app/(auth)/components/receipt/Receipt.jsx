@@ -1,14 +1,17 @@
 import React from "react";
 import {useForm} from '../../../components/contexts/FormContext';
 import { useRouter } from "next/navigation";
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 function Receipt() {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const router = useRouter();
   const { formData, updateFormData } = useForm();
   const username=formData.username
   const password=formData.password
     async function login (){try {
-    const response = await fetch(`http://localhost:5008/auth/login`, {
+    const response = await fetch(`${API_URL}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -17,7 +20,7 @@ function Receipt() {
 
     if (response.ok) {
       const userData = await response.json();
-      document.cookie = `username=${userData.username}; path=/;`; // ✅ Set username cookie
+      document.cookie = `username=${userData.username}; path=/;`;
       router.push(`/user/${userData.username}/home`);
     } else {
       setError("Invalid username or password");

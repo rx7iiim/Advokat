@@ -47,7 +47,7 @@ export class AuthService {
         
             if (!user) throw new Error('User not found');
         
-            if (user.isEmailConfirmed) throw new Error('Email already confirmed');
+            if (user.isEmailConfirmed) return ('Email confirmed successfully!');
         
             if (user.confirmationCode !== code) throw new Error('Invalid confirmation code');
         

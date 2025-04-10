@@ -2,8 +2,8 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Client from './clientInterface';
-import ClientModal from './createClient';
+import Lawyer from "./lawyer"
+import ClientModal from './createclient';
 import Sidebar from '../../../components/sidebar/Sidebar';
 import Image from 'next/image';
 import * as dotenv from 'dotenv';
@@ -13,10 +13,10 @@ dotenv.config();
 function UserCards() {
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
-  const [clients, setClients] = useState<Client[]>([]);
+  const [clients, setClients] = useState<L[]>([]);
   const [username, setUsername] = useState<string | null>(null);
   const [query, setQuery] = useState('');
-  const [filteredClients, setFilteredClients] = useState<Client[]>([]);
+  const [filteredClients, setFilteredClients] = useState<Lawyer[]>([]);
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {

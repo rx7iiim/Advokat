@@ -31,7 +31,7 @@ async create(
   const folderId="1DGOYFqUIa_iSn52T_Ss0FktdQoMdbNnU"
   const uploadFile=await this.googleDriveService.uploadFile(file ,folderId)
 
-    return this.clientService.createClient(body,username,uploadFile.webViewLink);
+    return this.clientService.createClient(body,username,uploadFile.id);
   }
 
   @Get("clients")
