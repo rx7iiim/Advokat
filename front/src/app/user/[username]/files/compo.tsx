@@ -4,7 +4,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from '../../../components/button';
-import Sidebar from '../../../components/sidebar/Sidebar';
+import Sidebar from '../../../components/Sidebar/Sidebar';
 import FileData from './fileData.interface';
 import * as dotenv from 'dotenv';
 dotenv.config();

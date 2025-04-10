@@ -63,7 +63,7 @@ function Receipt() {
       <button className="text-gray-500">Download receipt</button>
       </div>
       </div>
-      <button onClick={login}>Access my profile</button>
+      <button className="w-1/3 transition-all duration-500 bg-blue-600 text-white font-mona font-bold py-3 rounded-md  hover:bg-blue-700"  onClick={login}>Access my profile</button>
     </div>
   );
 }

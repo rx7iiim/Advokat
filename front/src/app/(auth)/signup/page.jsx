@@ -15,6 +15,7 @@ import axios from 'axios';
 import Created from '../components/steps/created/Created';
 import Payment from '../components/payment/Payment';
 import Receipt from '../components/receipt/Receipt';
+import Link from "next/link";
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -24,7 +25,7 @@ const SignUpContent = () => {
   const { formData, updateFormData, error, setError,errorText,setErrtext } = useForm(); // ✅ Now useForm() works because it's inside FormProvider
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
-  let response;
+  
 
   const handleNext = async() => {
     switch (step) {
@@ -48,6 +49,7 @@ const SignUpContent = () => {
           setErrtext("please check ur password")
           return;
         }
+        
         setError(false);
         let planSelector=null
         if (!formData.firmPlan){planSelector =formData.individPlan}else{planSelector=formData.firmPlan}
@@ -75,9 +77,10 @@ const SignUpContent = () => {
         break;
   
       case 3: // Step 4 validation (if any, otherwise continue)
-      if(formData.phone === '' || formData.firstName==="" || formData.lastName==="" || formData.email==="" || formData.username===""){
+      if(formData.phone===""  || formData.firstName==="" || formData.lastName==="" || formData.email==="" || formData.username===""){
         setError(true);
         setErrtext("please fill phone number");
+        return;
       }
         break;
   
@@ -104,7 +107,7 @@ const SignUpContent = () => {
       )}
         <h1 className={`${styles.title} font-mona text-4xl font-bold`}>Create An Account</h1>
         <p className='font-mona'>
-          Already have an account?<span className='font-mona underline p-1'>Log in</span>
+          Already have an account?<Link href="../../login" className='font-mona underline p-1'>Log in</Link>
         </p>
       </div>
 
@@ -114,7 +117,7 @@ const SignUpContent = () => {
     )}
       {step === 0 && <Step1 />}
       {step === 1 && <Step2 />}
-      {step === 2 && <Step3 />}
+      {step === 2 && <Step3 step={step} setStep={setStep}  />}
       {step === 3 && <Step4 />}
       {step === 4 &&<Created />}
       {step <= 4 && <Buttons onNext={handleNext} onPrev={handlePrev} step={step} />}

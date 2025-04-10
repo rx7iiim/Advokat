@@ -4,7 +4,7 @@ import axios from "axios";
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-const Verification = () => {
+const Verification = ({step, setStep}) => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef([]);
   const { formData, setError, setErrtext } = useForm();
@@ -38,13 +38,15 @@ const Verification = () => {
      code,
       });
 
-    if (response.data) {
-       alert("Email verified successfully!");
+    if (response) {
+       setStep(step+1);
+       
      } else {
          setError(true);
          setErrtext(response.data.message || "Verification failed");
       }
      } catch (error) {
+      console.log(error);
        setError(true);
        setErrtext(error.response?.data?.message || "An error occurred while verifying the email.");
      }

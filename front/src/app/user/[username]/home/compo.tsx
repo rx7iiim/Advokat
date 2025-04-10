@@ -2,7 +2,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Sidebar from '../../../components/sidebar/Sidebar';
+import Sidebar from '../../../components/Sidebar/Sidebar';
 import Calendar from '../../../components/calander/Calendar';
 import TaskList from './TaskList';
 import Task from "./taskInterface";

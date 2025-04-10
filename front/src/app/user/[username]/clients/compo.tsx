@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Client from './clientInterface';
 import ClientModal from './createClient';
-import Sidebar from '../../../components/sidebar/Sidebar';
+import Sidebar from '../../../components/Sidebar/Sidebar';
 import Image from 'next/image';
 import * as dotenv from 'dotenv';
 import Link from 'next/link';

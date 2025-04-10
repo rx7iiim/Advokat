@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Calendar2 from "../../../components/calander/Calendar2";
 import Button from "../../../components/button";
 import { FaUser } from "react-icons/fa";
-import Sidebar from "../../../components/sidebar/Sidebar";
+import Sidebar from "../../../components/Sidebar/Sidebar";
 import DayCalendar from "../../../components/calander/calendardate";
 import * as dotenv from 'dotenv';
 dotenv.config();
