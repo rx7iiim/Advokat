@@ -1,111 +1,91 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import about from "../../../public/about.png";
-import { FaUsers, FaCalendarAlt, FaTasks, FaDatabase } from "react-icons/fa6";
-import Fausers from "../../../public/Clients.png" ;
-import Facalendaralt from "../../../public/agenda.png" ; 
-import fatasks from "../../../public/tasks.png" ; 
-import fadatabase from "../../../public/archives.png" ;
+import Fausers from "../../../public/Clients.png";
+import Facalendaralt from "../../../public/agenda.png"; 
+import fatasks from "../../../public/tasks.png"; 
+import fadatabase from "../../../public/archives.png";
 
 const About = () => {
   return (
-    <section className="py-6 bg-white">
-      <div id="about" className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
+    <section className="py-6 md:py-12 bg-white">
+      <div id="about" className="container mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between">
         
-        {/* ✅ القسم النصي (جهة اليسار) مع مسافة من اليسار */}
-        <div className="md:w-1/2 text-left  relative ml-24 mt-24">
-          <h2 className="text-6xl font-bold text-gray-800 leading-tight">
+        {/* Text Section - Made Responsive */}
+        <div className="md:w-1/2 text-center md:text-left md:ml-6 lg:ml-12 xl:ml-24 mt-0 md:mt-0 order-2 md:order-1">
+          <h2 className="text-6xl md:text-7xl lg:text-7xl font-bold text-gray-800 leading-tight">
             <span className="block">Manage Your</span>
-            <div className="flex gap-4">
-            <span className="block bg-gradient-to-r from-blue-700 to-cyan-300 text-transparent bg-clip-text">
-              Legal Work
-            </span> 
-            <span className="block text-black">with</span>
+            <div className="flex flex-wrap gap-2 md:gap-4 justify-center md:justify-start">
+              <span className="bg-gradient-to-r from-blue-700 to-cyan-300 text-transparent bg-clip-text">
+                Legal Work
+              </span> 
+              <span className="text-black">with</span>
             </div>
-           <div className="flex gap-4">
-           <span className="block text-black">Ease</span>
-            <span className="block bg-gradient-to-r from-cyan-300 to-blue-700 text-transparent bg-clip-text">
-              Advokat
-            </span>
-           </div>
+            <div className="flex flex-wrap gap-2 md:gap-4 justify-center md:justify-start">
+              <span className="text-black">Ease</span>
+              <span className="bg-gradient-to-r from-cyan-300 to-blue-700 text-transparent bg-clip-text">
+                Advokat
+              </span>
+            </div>
           </h2>
-          <p className="mt-4 text-gray-600">
-            <span className="block">An the all-in-one case management system designed for</span>
-             <span className="block">lawyers and law firms. Manage your cases, clients, and tasks</span> 
-             <span className="block">efficiently-so you can focus on winning.</span>
+          <p className="mt-4 md:mt-6 text-gray-600 text-base md:text-xl lg:text-xl max-w-2xl mx-auto md:mx-0">
+            An all-in-one case management system designed for lawyers and law firms. 
+            Manage your cases, clients, and tasks efficiently so you can focus on winning.
           </p>
-          <button className="mt-6 mb-16 px-6 py-3 text-white font-semibold bg-customGray rounded-3xl shadow-lg hover:bg-blue-600 transition-colors">
-  Get Started
-</button>
- 
+          <button className="mt-6 md:mt-8 mb-8 md:mb-16 px-6 py-3 text-white font-semibold bg-customGray rounded-3xl shadow-lg hover:bg-blue-600 transition-colors w-full md:w-auto">
+            Get Started
+          </button>
         </div>
 
-        {/* ✅ القسم الخاص بالصورة (جهة اليمين) مع مسافة من اليمين */}
-        <div className="md:w-1/2 flex justify-end mt-6 md:mt-0 mr-24">
-          <div className="w-[564px] h-[597px] relative">
+        {/* Image Section - Made Responsive */}
+      <div className="md:w-1/2 flex justify-center md:justify-end  md:mt-0  md:mr-3 order-1 md:order-2">
+       <div className="w-full max-w-md lg:max-w-xl aspect-square relative ">
+       <div className="absolute inset-0">
+      <div className="h-1/3 bg-blue-100 rounded-t-lg w-full" />
+    </div>
             <Image 
               src={about} 
               alt="About Us" 
-              layout="fill" 
-              objectFit="cover" 
-              className="rounded-lg"
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="rounded-lg object-contain"
+              priority
             />
           </div>
         </div>
-
       </div>
 
-      <div className="container mx-auto px-4 sm:px-6 md:px-8 lg:px-0 max-w-screen-lg">
-     
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-12 ">
-          {/* 🟦 Clients & Cases */}
-          <div className="bg-white shadow-lg rounded-xl p-6 flex items-start gap-8 border w-full mx-auto hover:border-b-2 hover:border-blue-600 transition duration-200 pb-1">
-            <Image src={Fausers} alt="client" width={120} height={120}  className="text-blue-600 text-3xl" />
-            <div className="flex flex-col">
-              <h3 className="text-3xl font-bold text-gray-900 mb-6 "style={{ wordSpacing: "9px" }}>Clients & Cases</h3>
-              <p className="mt-8 text-1xl text-gray-600 items-center  "style={{ wordSpacing: "9px" }}>
-                Maintain  a  structured database with client details, case histories, and ongoing progress, allowing for quick access and better case management.
-              </p>
+      {/* Features Grid - Enhanced Responsiveness */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 xl:gap-12 mt-12">
+          {[Fausers, Facalendaralt, fatasks, fadatabase].map((icon, index) => (
+            <div key={index} className="bg-white shadow-lg rounded-xl p-4 md:p-6 flex flex-col md:flex-row items-start gap-4 md:gap-6 hover:border-blue-600 hover:shadow-xl transition-all duration-300">
+              <div className="w-16 h-16 md:w-24 md:h-24 flex-shrink-0">
+                <Image 
+                  src={icon} 
+                  alt="Feature icon"
+                  className="w-full h-full object-contain"
+                />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-gray-900 mb-2 md:mb-4 tracking-wide">
+                  {['Clients & Cases', 'Agenda', 'Tasks', 'Storage'][index]}
+                </h3>
+                <p className="text-sm md:text-base lg:text-lg text-gray-600 leading-relaxed tracking-wide">
+                  {[
+                    'Maintain a structured database with client details, case histories, and ongoing progress for better case management.',
+                    'Stay organized with a smart calendar tracking deadlines and court dates with automated reminders.',
+                    'Assign, track, and manage legal tasks efficiently for seamless collaboration.',
+                    'Upload, store, and manage legal documents with organized archive access.'
+                  ][index]}
+                </p>
+              </div>
             </div>
-          </div>
-
-          {/* 🟦 Agenda */}
-          <div className="bg-white shadow-lg rounded-xl p-6 flex items-start gap-8 border w-full mx-auto hover:border-b-2 hover:border-blue-600 transition duration-200 pb-1">
-          <Image src={Facalendaralt} alt="agenda" width={100} height={100}  className="text-blue-600 text-3xl" />
-            <div>
-              <h3 className="text-3xl font-bold text-gray-900"style={{ wordSpacing: "8px" }}>Agenda</h3>
-              <p className="mt-8 text-1xl text-gray-600"style={{ wordSpacing: "8px" }}>
-                Stay organized with a smart calendar that tracks deadlines, court dates, and important meetings while sending automated reminders to keep you on schedule.
-              </p>
-            </div>
-          </div>
-
-          {/* 🟦 Tasks */}
-          <div className="bg-white shadow-lg rounded-xl p-6 flex items-start gap-8 border w-full mx-auto hover:border-b-2 hover:border-blue-600 transition duration-200 pb-1">
-          <Image src={fatasks} alt="taskes" width={99} height={99}  className="text-blue-600 text-3xl" />
-            <div>
-              <h3 className="text-3xl font-bold text-gray-900"style={{ wordSpacing: "8px" }}>Tasks</h3>
-              <p className=" mt-8 text-1xl text-gray-600 "style={{ wordSpacing: "8px" }}>
-                Assign, track, and manage legal tasks efficiently, ensuring seamless collaboration and timely case progress.
-              </p>
-            </div>
-          </div>
-
-          {/* 🟦 Storage */}
-          <div className="bg-white shadow-lg rounded-xl p-6 flex items-start gap-8 border w-full mx-auto hover:border-b-2 hover:border-blue-600 transition duration-200 pb-1">
-          <Image src={fadatabase} alt="storag" width={100} height={1000}  className="text-blue-600 text-3xl" />
-            <div>
-              <h3 className="text-3xl font-bold text-gray-900"style={{ wordSpacing: "8px" }}>Storage</h3>
-              <p className=" mt-8 text-1xl text-gray-600 "style={{ wordSpacing: "8px" }}>
-                Upload, store, and manage legal documents while keeping an organized archive of past case files.
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
-
     </section>
-    
   );
 };
 

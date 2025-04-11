@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Upbar from "../components/Upbar/Upbar";
+import Upbar from "../../components/Upbar/Upbar";
 import Link from "next/link";
 import * as dotenv from 'dotenv';
 dotenv.config();

@@ -19,7 +19,7 @@ function Step1() {
     updateFormData("role", role);
     updateFormData("firmLawyer", false);
     
-    if (role === "Firm Manager") {
+    if (role === "FirmManager") {
       updateFormData("firmPlan", plan);
       updateFormData("individPlan", null);
       updateFormData("planPrice", planprice);

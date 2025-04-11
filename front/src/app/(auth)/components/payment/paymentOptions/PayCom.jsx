@@ -4,17 +4,20 @@ import PayStep2 from './PayStep2';
 import { useForm } from "../../../../components/contexts/FormContext";
 
 const PayCom = ({setStep}) => {
-  const { formData, updateFormData } = useForm();
+  const { formData, updateFormData, error, setError,errorText,setErrtext } = useForm();
   const [selectedOption, setSelectedOption] = useState(formData.payment.paymentMethod || "CIB"); 
   const [showPayStep2, setShowPayStep2] = useState(false);
 
-  // Handle payment method change
   const handlePaymentChange = (method) => {
     setSelectedOption(method);
     updateFormData("payment", { ...formData.payment, paymentMethod: method }); 
   };
   const handlePayButton = ()=>{
-    /* here implement send card data to back functions */
+    if(!formData.payment.CardNumber || !formData.payment.CardExpiration || !formData.payment.CardCVV || !formData.payment.CardName){
+      setError(true);
+      setErrtext("fill all fields");
+      return;
+    }
     setShowPayStep2(true);
   }
 

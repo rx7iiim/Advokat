@@ -47,7 +47,7 @@ const ContactUs = () => {
 
           {/* ✅ معلومات الاتصال */}
           <Box className="mb-5 bg-white text-black p-4 rounded-xl shadow-md flex flex-col items-center gap-4">
-            <Typography variant="body1">📧 advocat@gmail.com</Typography>
+            <Typography variant="body1">📧 contact@yourwebsite.com</Typography>
             <Typography variant="body1">📞 +213 555 12 34 56</Typography>
           </Box>
         </Box>

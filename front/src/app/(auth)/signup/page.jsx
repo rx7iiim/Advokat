@@ -21,7 +21,7 @@ dotenv.config();
 
 
 const SignUpContent = () => {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(5);
   const { formData, updateFormData, error, setError,errorText,setErrtext } = useForm(); // ✅ Now useForm() works because it's inside FormProvider
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -49,39 +49,54 @@ const SignUpContent = () => {
           setErrtext("please check ur password")
           return;
         }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email)) {
+          setError(true);
+          setErrtext("Invalid email format");
+          return;
+        }
+        
         
         setError(false);
-        let planSelector=null
-        if (!formData.firmPlan){planSelector =formData.individPlan}else{planSelector=formData.firmPlan}
-        axios.defaults.withCredentials = true;
-        try {
-           const response = await axios.post(`${API_URL}/auth/signup`, { 
-            firmLawyer:formData.firmLawyer,
-            plan:planSelector,
-            email: formData.email,
-            password: formData.password,
-            first_name: formData.first_name,
-            last_name: formData.last_name,
-            username: formData.username,
-            role:formData.role,
-          });
-         } catch (error) {
-           console.error("Error verifying email:", error);
-           setError(true);
-           setErrtext("Email verification failed.");
-           return;
-         }
+        // let planSelector=null
+        // if (!formData.firmPlan){planSelector =formData.individPlan}else{planSelector=formData.firmPlan}
+        // axios.defaults.withCredentials = true;
+        // try {
+        //    const response = await axios.post(`${API_URL}/auth/signup`, { 
+        //     firmLawyer:formData.firmLawyer,
+        //     plan:planSelector,
+        //     email: formData.email,
+        //     password: formData.password,
+        //     first_name: formData.first_name,
+        //     last_name: formData.last_name,
+        //     username: formData.username,
+        //     role:formData.role,
+        //   });
+        //  } catch (error) {
+        //    console.error("Error verifying email:", error);
+        //    setError(true);
+        //    setErrtext("Email verification failed.");
+        //    return;
+        //  }
         break;
   
       case 2: 
         break;
   
       case 3: // Step 4 validation (if any, otherwise continue)
+      
       if(formData.phone===""  || formData.firstName==="" || formData.lastName==="" || formData.email==="" || formData.username===""){
         setError(true);
-        setErrtext("please fill phone number");
+        setErrtext("please fill all fields");
         return;
       }
+      const strictPhoneRegex = /^\d{10}$/;
+     if (!strictPhoneRegex.test(formData.phone)) {
+        setError(true);
+        setErrtext("invalid phone format");
+        return;
+        }
+        setError(false);
         break;
   
       default:
