@@ -8,6 +8,7 @@ import Sidebar from '../../../components/Sidebar/Sidebar';
 import Image from 'next/image';
 import * as dotenv from 'dotenv';
 import Link from 'next/link';
+import { error } from 'console';
 dotenv.config();
 
 function UserCards() {
@@ -150,6 +151,15 @@ function UserCards() {
   width={100}
   height={100}
   className='scale-75 rounded-full'
+  unoptimized={true} 
+  onError={(e) => {
+    console.error('Image load error details:', {
+      errorEvent: e,
+     attemptedSrc: e.currentTarget.src,
+      clientId: client.client_id 
+    });
+    e.currentTarget.src = '/sofia.png';
+  }}
 /></div>
                   <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">{client.name}</h5>
               

@@ -29,7 +29,7 @@ async create(
   
   console.log(file);
   const folderId="1DGOYFqUIa_iSn52T_Ss0FktdQoMdbNnU"
-  const uploadFile=await this.googleDriveService.uploadFile(file ,folderId)
+  const uploadFile=await this.googleDriveService.uploadFile(file ,folderId);
 
     return this.clientService.createClient(body,username,uploadFile.id);
   }
