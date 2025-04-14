@@ -39,11 +39,11 @@ dotenv.config();
     if (!username) return <p>Loading...</p>;
 
   return (
-    <div className="flex min-h-screen bg-gray-100 text-gray-800 p-2">
+    <div className="flex overflow-hidden min-h-screen bg-gray-100 text-gray-800 p-2">
       <Sidebar />
 
       {/* Main Content */}
-      <main className="flex-1 pl-3 pt-2 ml-60">
+      <main className="flex-1 pl-3 pt-2 overflow-y-auto">
         {/* Calendar */}
         <div className="mt-0 bg-white p-5 rounded-lg shadow-md fle">
           <div className="text-white flex items-center justify-center mb-6">

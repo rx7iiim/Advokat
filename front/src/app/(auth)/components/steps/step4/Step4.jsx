@@ -11,7 +11,7 @@ const Step4 = () => {
   const { formData, updateFormData, error, setError,errorText,setErrtext } = useForm();
 
   const rolePlans = {
-    FirmManager: [
+    "Firm Manager": [
       { name: "Starter", price: "15,000" },
       { name: "Growth", price: "30,000" }
     ],
@@ -56,7 +56,7 @@ const Step4 = () => {
 
    
     const firstPlan = rolePlans[newRole][0];
-    if (newRole === "FirmManager") {
+    if (newRole === "Firm Manager") {
       updateFormData("firmPlan", firstPlan.name);
     } else if (newRole === "Individual Lawyer") {
       updateFormData("individPlan", firstPlan.name);
@@ -64,7 +64,7 @@ const Step4 = () => {
     updateFormData("planPrice", firstPlan.price);
   };
   const getCurrentPlan = () => {
-    if (formData.role === "FirmManager") {
+    if (formData.role === "Firm Manager") {
       return formData.firmPlan;
     } else if (formData.role === "Individual Lawyer") {
       return formData.individPlan;
@@ -80,7 +80,7 @@ const Step4 = () => {
     <div className="w-full h-[45vh] flex flex-col justify-center md:flex-row gap-6 p-6  rounded-lg">
       <div className="flex flex-col items-stretch h-full">
   
-  <div className="flex flex-row justify-center gap-[10px]  flex-[0.7]">
+  <div className="flex flex-row items-center gap-[10px]  flex-[0.7]">
     <TextField
       label="First Name"
       className="rounded-2xl w-2/5"
@@ -132,13 +132,13 @@ const Step4 = () => {
 
   <div className="flex flex-row justify-center gap-[33px]  ">
  
-    <div className="w-full">
+    <div className="w-full p-3">
       <label className="block text-gray-700 text-sm mb-1">Role</label>
       <div className="flex items-center border rounded-lg px-3 py-2 bg-white">
         <FaBriefcase className="text-gray-400" />
         <select className="ml-2 w-full outline-none bg-transparent" value={formData.role} 
         onChange={handleRoleChange}>
-          <option value='FirmManager'>Firm Manager</option>
+          <option value='Firm Manager'>Firm Manager</option>
           <option value='Individual Lawyer'>Individual Lawyer</option>
           <option value='FirmLawyer'>Firm Lawyer</option>
         </select>
@@ -146,7 +146,7 @@ const Step4 = () => {
     </div>
 
    
-    <div className="w-full">
+    <div className="w-full p-3">
       <label className="block text-gray-700 text-sm mb-1">Plan</label>
       <div className="flex items-center border rounded-lg px-3 py-2 bg-white">
         <FaBriefcase className="text-gray-400" />
@@ -155,7 +155,7 @@ const Step4 = () => {
             value={`${getCurrentPlan()}|${formData.planPrice}`}
             onChange={(e) => {
               const [name, price] = e.target.value.split("|");
-              if (formData.role === "FirmManager") {
+              if (formData.role === "Firm Manager") {
                 updateFormData("firmPlan", name);
               } else if (formData.role === "Individual Lawyer") {
                 updateFormData("individPlan", name);

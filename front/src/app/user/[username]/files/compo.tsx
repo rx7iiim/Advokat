@@ -171,9 +171,9 @@ dotenv.config();
 
 
   return (
-    <div className="flex min-h-screen bg-gray-100 text-gray-800 p-2">
+    <div className="flex overflow-hidden min-h-screen bg-gray-100 text-gray-800 p-2">
         <Sidebar/>
-        <main className="flex-1 pl-3 pt-2 ml-60">
+        <main className="flex-1 pl-3 pt-2 overflow-y-auto">
 
     <section className="container px-4 mx-auto bg-white">
       <div className="sm:flex sm:items-center sm:justify-between">

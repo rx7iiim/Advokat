@@ -8,7 +8,7 @@ export const FormProvider = ({ children }) => {
     role: null, // 'FirmManager', 'FirmLawyer', 'IndividLawyer'
     firmPlan: null,
     individPlan: null,
-    firmLawyer: false,
+    firmLawyer: true,
     planPrice : null,
     first_name: '',
     last_name: '',

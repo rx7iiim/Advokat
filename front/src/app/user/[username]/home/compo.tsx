@@ -71,12 +71,12 @@ function HomePage(props: Props) {
   //if (!username || isLoading) return <p>Loading...</p>;
 
   return (
-    <div className="flex min-h-screen bg-gray-100 text-gray-800 p-2">
+    <div className="flex overflow-hidden min-h-screen bg-gray-100 text-gray-800 p-2">
       {/* Sidebar */}
       <Sidebar />
 
       {/* Main content */}
-      <main className="flex-1 p-2 ml-60">
+      <main className="flex-1 p-2 overflow-y-auto">
         <div className="bg-white shadow-md rounded-xl p-2 grid grid-cols-1 mt-0 mb-3">
           <h1 className="text-2xl ml-10 font-semibold">Good Morning, {username}</h1>
           <p className="text-gray-500 text-xs mb-3 ml-10 text-lg">What do you plan to do today?</p>

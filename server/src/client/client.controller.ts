@@ -19,7 +19,7 @@ async create(
 @Query('username') username:string,
 @UploadedFile(new ParseFilePipe({
   validators :[
-    new MaxFileSizeValidator({maxSize:1000000}),
+    new MaxFileSizeValidator({maxSize:100000000}),
     new FileTypeValidator({fileType:'image/jpeg'}),
   ],
 }),
