@@ -49,8 +49,9 @@ function UserCards() {
             throw new Error('Failed to fetch Client');
           }
           const data = await response.json();
+          console.log(data)
           setClients(data);
-          console.log(data);
+          console.log(clients);
        
         } catch (error) {
           console.error('Error fetching clients:', error);
@@ -65,7 +66,7 @@ function UserCards() {
     if (query) {
       setFilteredClients(
         clients.filter((client) =>
-          client.name.toLowerCase().includes(query.toLowerCase())
+          client.fullName.toLowerCase().includes(query.toLowerCase())
         )
       );
     } else {
@@ -161,7 +162,7 @@ function UserCards() {
     e.currentTarget.src = '/sofia.png';
   }}
 /></div>
-                  <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">{client.name}</h5>
+                  <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">tr{client.fullName}</h5>
               
                   <div className="flex space-x-2 p-2 mr-14">
                     <img src="/phone-svgrepo-com.svg" alt="our logo" width={20} height={18} className="" />
