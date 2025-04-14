@@ -1,11 +1,14 @@
+
 "use client"
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Client from './clientInterface';
 import ClientModal from './createClient';
-import Sidebar from '../../../components/sidebar/Sidebar';
+import Sidebar from '../../../components/Sidebar/Sidebar';
+import Image from 'next/image';
 import * as dotenv from 'dotenv';
+import Link from 'next/link';
 dotenv.config();
 
 function UserCards() {
@@ -88,9 +91,12 @@ function UserCards() {
   if (!username) return <p>Loading...</p>;
 
   return (
-    <div className="flex min-h-screen text-gray-800 p-2 bg-gray-100 text-gray-800">
+    <div className="flex min-h-screen text-gray-800 bg-gray-100 text-gray-800">
       {/* Sidebar */}
-      <Sidebar />
+   
+      <aside className="w-12 max-h-full bg-white flex flex-col justify-between">
+           <Sidebar />
+         </aside>
 
       <div className="flex-1 p-2 ml-60">
         <div className="bg-white shadow-md rounded-xl p-4">
@@ -119,6 +125,7 @@ function UserCards() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 mt-4">
             {filteredClients.length > 0 ? (
               filteredClients.map((client) => (
+                <a>
                 <div key={client.client_id} className="relative px-7 border border-transparont bg-gray-100 
                   shadow-[1px_2px_10px_rgba(0,0,0,0.20)] rounded-lg shadow-sm flex flex-col justify-center items-center text-white">
                   
@@ -141,7 +148,13 @@ function UserCards() {
                     </button>
                   </div>
                 
-                  <img className="w-13 h-13 scale-75 rounded-full" src={client.pfp} alt={client.name} />
+                  <Image
+  src={client.pfp}
+  alt="Client Image"
+  width={100}
+  height={100}
+  className='scale-75 rounded-full'
+/>
                   <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">{client.name}</h5>
               
                   <div className="flex space-x-2 p-2 mr-14">
@@ -157,6 +170,7 @@ function UserCards() {
                     <p className="mb-2 font-normal text-gray-100 text-xs dark:text-gray-400 max-w-8">{client.email}</p>
                   </div>
                 </div>
+                </a>
               ))
             ) : (
               <p className="text-gray-500 text-lg mt-4">No clients found.</p>

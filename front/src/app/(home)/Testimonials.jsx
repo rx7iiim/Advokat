@@ -47,7 +47,7 @@ const Testimonials = () => {
       <h1 className="text-4xl font-bold text-center mb-14">Satisfied Clients</h1>
 
       <div className="relative flex items-center justify-center">
-        {/* ✅ البطاقات */}
+       
         <div className="flex flex-wrap md:flex-nowrap justify-center md:justify-between gap-6">
           {testimonials.map((testimonial, index) => {
             const isActive = index === activeIndex;
@@ -60,7 +60,7 @@ const Testimonials = () => {
                   hover:scale-110 hover:opacity-100 hover:z-40 cursor-pointer`}
                 onClick={() => handleCardClick(index)}
               >
-                {/* ⭐ التقييم */}
+         
                 <div className="w-[160px] h-[38px] flex items-center gap-2 mb-3 rounded-3xl border-2 bg-white border-white p-2">
                   {[...Array(5)].map((_, i) => (
                     <span key={i} className={`text-yellow-400 ${i < Math.round(testimonial.rating) ? "" : "opacity-20"}`}>&#9733;</span>
@@ -68,13 +68,12 @@ const Testimonials = () => {
                   <span className="text-gray-700 text-sm font-semibold">{testimonial.rating}</span>
                 </div>
 
-                {/* 📄 نص التقييم */}
+               
                 <p className="text-gray-700 text-sm leading-relaxed text-center">"{testimonial.text}"</p>
 
-                {/* 👤 معلومات العميل */}
-              {/* 👤 معلومات العميل */}
+            
               <div className="flex items-start gap-4 w-full justify-start">
-  {/* ✅ صورة العميل */}
+
   <div className="flex-shrink-0">
     <Image
       src={testimonial.image}
@@ -86,7 +85,6 @@ const Testimonials = () => {
     />
   </div>
 
-  {/* ✅ النص بجانب الصورة */}
   <div className="flex flex-col font-bold text-left items-start">
     <h3 className="font-semibold text-gray-900 text-sm mt-5">{testimonial.name}</h3>
     <p className="text-xs text-gray-500">{testimonial.role}</p>

@@ -13,7 +13,7 @@ function Page() {
   const router = useRouter(); // استخدم `useRouter` بدلاً من `createBrowserRouter`
 
   return (
-    <div>
+    <div className="overflow-x-hidden">
     
       <Navbar />
       <About />

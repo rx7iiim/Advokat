@@ -40,7 +40,7 @@ dotenv.config();
 
 
 // Handle file download
-/*const handleDownload = async (fileId: string, fileName: string) => {
+const handleDownload = async (fileId: string, fileName: string) => {
     try {
       const response = await fetch(`${API_URL}/download/${fileId}`);
       if (!response.ok) {
@@ -103,11 +103,11 @@ dotenv.config();
     } catch (error) {
       console.error('Error uploading file:', error);
     }
-  };*/
+  };
 
   
 
-  /*useEffect(() => {
+  useEffect(() => {
       fetch("http://localhost:5008/auth/session", {
         credentials: "include",
       })
@@ -125,7 +125,7 @@ dotenv.config();
         });
     }, [router]);
     
-    if (!username) return <p>Loading...</p>;*/
+    if (!username) return <p>Loading...</p>;
 
 
 
