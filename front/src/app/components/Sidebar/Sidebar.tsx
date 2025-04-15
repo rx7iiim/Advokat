@@ -37,8 +37,8 @@ export default function Sidebar() {
             { href: "agenda", icon: "/Vectoragenda.png", label: "Agenda" },
             { href: "clients", icon: "/Vectorclients.png", label: "Clients" },
             { href: "files", icon: "/Vectorfiles.png", label: "Files" },
-            { href: "lawyers", icon: "/VectorLawyer.png", label: "Lawyers" },
-            { href: "dashboard", icon: "/Vectordashboard.png", label: "Dashboard" },
+            { href: "lawyers", icon: "/Vectorfiles.png", label: "Lawyers" },
+            { href: "dashboard", icon: "/Vectorfiles.png", label: "Dashboard" },
        
           ].map(({ href, icon, label }) => (
             <li key={href}>

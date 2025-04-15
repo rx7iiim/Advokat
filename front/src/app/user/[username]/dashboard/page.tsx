@@ -1,11 +1,15 @@
 "use client";
 
-import React from 'react';
-import Barchart from '../../../components/Barchart/barchart';
-import Sidebar from '../../../components/Sidebar/Sidebar';
-import Tinybarchart from '../../../components/Tinybarchart/tinybarchart';
+import React from "react";
+import Barchart from "../../../components/Barchart/barchart";
+import Sidebar from "../../../components/Sidebar/Sidebar";
+import Tinybarchart from "../../../components/Tinybarchart/tinybarchart";
 
 const Dashboard = () => {
+  const total = 50;
+  const used = 30;
+  const percentage = (used / total) * 100;
+  const needleAngle = (percentage * 180) / 100 - 90;
   return (
     <div className="flex min-h-screen">
 
@@ -17,10 +21,7 @@ const Dashboard = () => {
         <h1 className="text-3xl font-bold mb-8">Dashboard</h1>
 
         <section className="mb-12">
-          <div className="ml-28 items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold">Won/Lost Cases</h2>
-            <span className="text-gray-500">Cases from Jan–Dec, 2024</span>
-          </div>
+
           <Barchart />
         </section>
 
@@ -34,41 +35,84 @@ const Dashboard = () => {
       <Tinybarchart />
     </div>
 
-    {/* العنصر الثاني */}
     <div className="bg-white p-4 rounded-2xl shadow-md flex flex-col items-center">
       <p className="mb-3 text-gray-600 text-center">
-        You have used 30 GB of the available 50 GB
+        You have used {used} GB of the available {total} GB
       </p>
-      <div className="relative w-24 h-24 mb-2">
-        <svg className="w-full h-full">
-          <circle
-            cx="50%"
-            cy="50%"
-            r="45%"
+      <div className="relative w-40 h-24 mb-3">
+        <svg className="w-full h-full" viewBox="0 0 200 100">
+     
+          <path
+            d="M 10 100 A 90 90 0 0 1 190 100"
             stroke="#e5e7eb"
-            strokeWidth="8"
+            strokeWidth="12"
             fill="none"
           />
-          <circle
-            cx="50%"
-            cy="50%"
-            r="45%"
-            stroke="#4f46e5"
-            strokeWidth="8"
-            strokeDasharray="283"
-            strokeDashoffset="113"
+
+          
+          <defs>
+            <linearGradient id="usageGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#0000FF" /> 
+              <stop offset="50%" stopColor="#0000FF" />
+              <stop offset="100%" stopColor="#0000FF" /> 
+            </linearGradient>
+          </defs>
+          <path
+            d="M 10 100 A 90 90 0 0 1 190 100"
+            stroke="url(#usageGradient)"
+            strokeWidth="12"
             fill="none"
+            strokeDasharray="283"
+            strokeDashoffset={283 - (283 * percentage) / 100}
             strokeLinecap="round"
           />
+
+       
+          {[...Array(11)].map((_, i) => {
+            const angle = (i * 18 - 90) * (Math.PI / 180);
+            const x1 = 100 + Math.cos(angle) * 80;
+            const y1 = 100 + Math.sin(angle) * 80;
+            const x2 = 100 + Math.cos(angle) * 90;
+            const y2 = 100 + Math.sin(angle) * 90;
+            return (
+              <line
+                key={i}
+                x1={x1}
+                y1={y1}
+                x2={x2}
+                y2={y2}
+                stroke="#9ca3af"
+                strokeWidth="2"
+              />
+            );
+          })}
+
+
+          <g transform={`rotate(${needleAngle} 100 100)`}>
+            <line
+              x1="100"
+              y1="100"
+              x2="100"
+              y2="20"
+              stroke="#4f46e5"
+              strokeWidth="5"
+              strokeLinecap="round"
+            />
+          </g>
+
+      
+          <circle cx="100" cy="100" r="6" fill="#4f46e5" />
         </svg>
-        <div className="absolute inset-0 flex items-center justify-center text-lg font-semibold text-indigo-600">
-          30 GB
+
+  
+        <div className="absolute inset-0 flex items-end justify-center text-lg font-semibold text-indigo-600 pb-1">
+          {used} GB
         </div>
       </div>
-      <span className="text-sm text-gray-600">Storage used 30GB</span>
+      <span className="text-sm text-gray-600">Storage used {used} GB</span>
     </div>
 
-    {/* العنصر الثالث */}
+
     <div className="p-4 bg-gradient-to-r from-blue-500 to-cyan-400 text-white rounded-2xl shadow-md flex flex-col justify-between">
       <h3 className="text-lg font-semibold mb-2">Upgrade Plan</h3>
       <p className="mb-4 text-sm">
@@ -87,3 +131,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
