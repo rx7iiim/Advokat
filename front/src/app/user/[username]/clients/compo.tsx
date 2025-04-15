@@ -95,7 +95,7 @@ function UserCards() {
     <div className="flex flex-row overflow-hidden min-h-screen text-gray-800 p-2 bg-gray-100 text-gray-800">
       {/* Sidebar */}
       <Sidebar />
-      <div className="invisible-spacer w-[260px] h-[100vh]" aria-hidden="true"></div>
+      <div className="invisible w-[260px] h-[100vh]" aria-hidden="true"></div>
       <div className="flex-1 p-2 overflow-y-auto">
         <div className="bg-white shadow-md rounded-xl flex flex-col justify-start gap-[10px] p-4">
           <div className="flex justify-between items-center w-full">
@@ -106,7 +106,7 @@ function UserCards() {
                 className="flex items-center gap-2 bg-blue-600 text-white font-semibold px-4 py-4 mb-5 rounded-xl shadow-md hover:bg-blue-700 transition-all duration-200 active:scale-95 text-sm sm:text-base"
               >
                 <img src="/plus-circle-svgrepo-com (1).svg" alt="Add lawyer" className="w-5 h-5 sm:w-6 sm:h-6" />
-                <span className="hidden sm:inline">Add Lawyer</span>
+                <span className="hidden sm:inline">Add client</span>
               </button>
               {showModal && (
                 <ClientModal onClose={() => setShowModal(false)} username={username} />

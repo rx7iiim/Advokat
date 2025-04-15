@@ -90,14 +90,14 @@ function UserCards() {
   if (!username) return <p>Loading...</p>;
 
   return (
-    <div className="flex min-h-screen text-gray-800 p-2 bg-gray-100 text-gray-800">
+    <div className="flex flex-row min-h-screen text-gray-800 p-2 bg-gray-100 text-gray-800">
       {/* Sidebar */}
       <Sidebar />
-
-      <div className="flex-1 p-2 ml-60">
-        <div className="bg-white shadow-md rounded-xl p-4">
+      <div className="invisible w-[260px] h-[100vh]" aria-hidden="true"></div>
+      <div className="flex-1 p-2">
+        <div className="bg-white flex flex-col justify-start gap-[10px] shadow-md rounded-xl p-4">
           <div className="flex justify-between items-center w-full">
-            <p className="text-3xl font-bold mb-3">Clients</p>
+            <p className="text-3xl font-bold mb-3">Lawyers</p>
             <div className="relative w-full max-w-xs">
               {/* Search Input */}
               <input
@@ -118,12 +118,11 @@ function UserCards() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 mt-4">
+          <div className="flex flex-row justify-start flex-wrap gap-[10px]">
             {filteredClients.length > 0 ? (
               filteredClients.map((client) => (
-                <a>
-                <div key={client.client_id} className="relative px-7 border border-transparont bg-gray-100 
-                  shadow-[1px_2px_10px_rgba(0,0,0,0.20)] rounded-lg shadow-sm flex flex-col justify-center items-center text-white">
+                
+                <div key={client.client_id} className="relative min-w-[100px] w-full sm:w-[calc(50%-12px)] md:w-[calc(33.333%-12px)] lg:w-[calc(25%-12px)] px-2 border border-transparent bg-gray-100 shadow-[1px_2px_10px_rgba(0,0,0,0.20)] rounded-lg flex flex-col justify-center items-center h-[300px] text-white">
                   
                   <div className="absolute top-0 right-0 inline-flex divide-x divide-gray-400 overflow-hidden rounded 
                     shadow-sm m-2">
@@ -166,10 +165,10 @@ function UserCards() {
                     <p className="mb-2 font-normal text-gray-100 text-xs dark:text-gray-400 max-w-8">{client.email}</p>
                   </div>
                 </div>
-                </a>
+               
               ))
             ) : (
-              <p className="text-gray-500 text-lg mt-4">No clients found.</p>
+              <p className="text-gray-500 text-lg mt-4">No lawyers found.</p>
             )}
 
             <div className="col-start-4 row-start-auto flex justify-center items-end h-30">

@@ -41,7 +41,7 @@ dotenv.config();
   return (
     <div className="flex flex-row overflow-hidden min-h-screen bg-gray-100 text-gray-800 p-2">
       <Sidebar />
-      <div className="invisible-spacer w-[260px] h-[100vh]" aria-hidden="true"></div>
+      <div className="invisible w-[260px] h-[100vh]" aria-hidden="true"></div>
       {/* Main Content */}
       <main className="flex-1 pl-3 pt-2 overflow-y-auto">
         {/* Calendar */}
