@@ -20,7 +20,7 @@ export default function Sidebar() {
   if (!username) return <p>Loading Sidebar...</p>;
 
   return (
-    <div className=" overflow-hidden flex">
+    <div className=" overflow-hidden flex fixed">
       <aside className={styles.sidebar}>
      
         <div className={styles.left}>

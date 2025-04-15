@@ -92,14 +92,26 @@ function UserCards() {
   if (!username) return <p>Loading...</p>;
 
   return (
-    <div className="flex overflow-hidden min-h-screen text-gray-800 p-2 bg-gray-100 text-gray-800">
+    <div className="flex flex-row overflow-hidden min-h-screen text-gray-800 p-2 bg-gray-100 text-gray-800">
       {/* Sidebar */}
       <Sidebar />
-
+      <div className="invisible-spacer w-[260px] h-[100vh]" aria-hidden="true"></div>
       <div className="flex-1 p-2 overflow-y-auto">
-        <div className="bg-white shadow-md rounded-xl p-4">
+        <div className="bg-white shadow-md rounded-xl flex flex-col justify-start gap-[10px] p-4">
           <div className="flex justify-between items-center w-full">
             <p className="text-3xl font-bold mb-3">Clients</p>
+            <div className="col-start-4 row-start-auto flex justify-center items-end h-30">
+              <button
+                onClick={() => setShowModal(true)}
+                className="flex items-center gap-2 bg-blue-600 text-white font-semibold px-4 py-4 mb-5 rounded-xl shadow-md hover:bg-blue-700 transition-all duration-200 active:scale-95 text-sm sm:text-base"
+              >
+                <img src="/plus-circle-svgrepo-com (1).svg" alt="Add lawyer" className="w-5 h-5 sm:w-6 sm:h-6" />
+                <span className="hidden sm:inline">Add Lawyer</span>
+              </button>
+              {showModal && (
+                <ClientModal onClose={() => setShowModal(false)} username={username} />
+              )}
+            </div>
             <div className="relative w-full max-w-xs">
               {/* Search Input */}
               <input
@@ -120,12 +132,11 @@ function UserCards() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 mt-4">
+          <div className="flex flex-row justify-start flex-wrap gap-[10px]">
             {filteredClients.length > 0 ? (
               filteredClients.map((client) => (
               
-                <div key={client.client_id} className="relative px-7 border border-transparont bg-gray-100 
-                  shadow-[1px_2px_10px_rgba(0,0,0,0.20)] rounded-lg shadow-sm flex flex-col justify-center items-center text-white">
+                <div key={client.client_id} className="relative min-w-[100px] w-full sm:w-[calc(50%-12px)] md:w-[calc(33.333%-12px)] lg:w-[calc(25%-12px)] px-2 border border-transparent bg-gray-100 shadow-[1px_2px_10px_rgba(0,0,0,0.20)] rounded-lg flex flex-col justify-center items-center h-[300px] text-white">
                   
                   <div className="absolute top-0 right-0 inline-flex divide-x divide-gray-400 overflow-hidden rounded 
                     shadow-sm m-2">
@@ -162,19 +173,20 @@ function UserCards() {
     e.currentTarget.src = '/sofia.png';
   }}
 /></div>
-                  <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">tr{client.fullName}</h5>
-              
-                  <div className="flex space-x-2 p-2 mr-14">
+                  <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 font-mona">{client.fullName}</h5>
+              <div className='flex flex-col justify-around h-2/5  w-full'>
+                  <div className="flex flex-row justify-center gap-[15px] w-full ">
                     <img src="/phone-svgrepo-com.svg" alt="our logo" width={20} height={18} className="" />
-                    <p className="font-normal text-gray-100 text-xs dark:text-gray-400 max-w-8">{client.phoneNumber}</p>
+                    <div className='w-3/4 overflow-hidden'><p className="font-mona w-5/6 text-gray-100 text-xs dark:text-gray-400 ">{client.phoneNumber}</p></div>
                   </div>
-                  <div className="flex space-x-2 p-2 mr-14">
+                  <div className="flex flex-row justify-center gap-[15px] w-full">
                     <img src="/contact-book-svgrepo-com.svg" alt="our logo" width={20} height={18} className="mr-1" />
-                    <p className="font-normal text-gray-100 text-xs dark:text-gray-400 max-w-8">{client.contactInfo}</p>
+                    <div className='w-3/4 overflow-hidden'><p className="font-mona w-5/6 text-gray-100 text-xs dark:text-gray-400 ">{client.contactInfo}</p></div>
                   </div>
-                  <div className="flex space-x-2 p-2 mr-14">
+                  <div className="flex flex-row justify-center gap-[15px] w-full">
                     <img src="/email-1572-svgrepo-com.svg" alt="our logo" width={18} height={18} className="mb-2 mr-1" />
-                    <p className="mb-2 font-normal text-gray-100 text-xs dark:text-gray-400 max-w-8">{client.email}</p>
+                    <div className='w-3/4 overflow-hidden'><p className="mb-2 font-mona w-5/6 text-gray-100 text-xs dark:text-gray-400 ">{client.email}</p></div>
+                  </div>
                   </div>
                 </div>
 
@@ -183,18 +195,7 @@ function UserCards() {
               <p className="text-gray-500 text-lg mt-4">No clients found.</p>
             )}
 
-            <div className="col-start-4 row-start-auto flex justify-center items-end h-30">
-              <button
-                onClick={() => setShowModal(true)}
-                className="flex items-center gap-2 bg-blue-600 text-white font-semibold px-4 py-4 mb-5 rounded-xl shadow-md hover:bg-blue-700 transition-all duration-200 active:scale-95 text-sm sm:text-base"
-              >
-                <img src="/plus-circle-svgrepo-com (1).svg" alt="Add lawyer" className="w-5 h-5 sm:w-6 sm:h-6" />
-                <span className="hidden sm:inline">Add Lawyer</span>
-              </button>
-              {showModal && (
-                <ClientModal onClose={() => setShowModal(false)} username={username} />
-              )}
-            </div>
+           
           </div>
         </div>
       </div>

@@ -118,7 +118,7 @@ export default function ClientModal({ onClose, username }: ClientModalProps) {
         <button
           type="submit"
           onClick={onClose}
-          className="bg-red-500 w-[150] text-white p-2 rounded hover:bg-red-700 transition disabled:opacity-50"
+          className="bg-red-500 w-[150px] text-white p-2 rounded hover:bg-red-700 transition disabled:opacity-50"
         >cancel</button>
         </div>
       </form>
