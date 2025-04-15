@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Upbar from "../components/Upbar/Upbar";
+import Upbar from "../../components/Upbar/Upbar";
+import Link from "next/link";
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -27,7 +28,7 @@ const Login = () => {
     }
   }, [router]);
 
-  // 🔥 Login Function
+  // Login Function
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -122,9 +123,9 @@ const Login = () => {
               </div>
 
               <div className="text-sm">
-                <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
+                <Link href="../forgot-password" className="font-medium text-blue-600 hover:text-blue-500">
                   Forgot your password?
-                </a>
+                </Link>
               </div>
             </div>
 

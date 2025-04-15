@@ -4,7 +4,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from '../../../components/button';
-import Sidebar from '../../../components/sidebar/Sidebar';
+import Sidebar from '../../../components/Sidebar/Sidebar';
 import FileData from './fileData.interface';
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -14,13 +14,54 @@ dotenv.config();
 
 
  function FileUploadTable() {
+  const filedata =[{  index:1
+    ,name: "td analyse",
+     status: "done",
+    date: "50/12/2000",
+    updated:"last day",
+    clientName:"salim"},{  index:2
+      ,name: "td analyse",
+       status: "done",
+      date: "50/12/2000",
+      updated:"last day",
+      clientName:"salim"},{  index:3
+        ,name: "td analyse",
+         status: "done",
+        date: "50/12/2000",
+        updated:"last day",
+        clientName:"salim"},{  index:3
+          ,name: "td analyse",
+           status: "done",
+          date: "50/12/2000",
+          updated:"last day",
+          clientName:"salim"},{  index:4
+            ,name: "td analyse",
+             status: "done",
+            date: "50/12/2000",
+            updated:"last day",
+            clientName:"salim"},{  index:5
+              ,name: "td analyse",
+               status: "done",
+              date: "50/12/2000",
+              updated:"last day",
+              clientName:"salim"},{  index:6 
+                ,name: "td analyse",
+                 status: "done",
+                date: "50/12/2000",
+                updated:"last day",
+                clientName:"salim"},{  index:6
+                  ,name: "td analyse",
+                   status: "done",
+                  date: "50/12/2000",
+                  updated:"last day",
+                  clientName:"salim"}]
 
     const router = useRouter();
    const [username, setUsername] = useState<string | null>(null);
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
     const [fileData, setFileData] = useState<FileData[]>([]);
-    useEffect(() => {
+   /* useEffect(() => {
         const fetchFiles = async () => {
           try {
             const response = await fetch(`${API_URL}/files`);
@@ -35,7 +76,7 @@ dotenv.config();
         };
       
         fetchFiles();
-      }, []);
+      }, []);*/
 
 
 
@@ -108,7 +149,8 @@ const handleDownload = async (fileId: string, fileName: string) => {
   
 
   useEffect(() => {
-      fetch("http://localhost:5008/auth/session", {
+      fetch(`${API_URL}/auth/session`, {
+
         credentials: "include",
       })
         .then((res) => res.json())
@@ -130,9 +172,10 @@ const handleDownload = async (fileId: string, fileName: string) => {
 
 
   return (
-    <div className="flex min-h-screen bg-gray-100 text-gray-800 p-2">
+    <div className="flex flex-row overflow-hidden min-h-screen bg-gray-100 text-gray-800 p-2">
         <Sidebar/>
-        <main className="flex-1 pl-3 pt-2 ml-60">
+        <div className="invisible-spacer w-[260px] h-[100vh]" aria-hidden="true"></div>
+        <main className="flex-1 pl-3 pt-2 overflow-y-auto">
 
     <section className="container px-4 mx-auto bg-white">
       <div className="sm:flex sm:items-center sm:justify-between">
@@ -204,7 +247,7 @@ const handleDownload = async (fileId: string, fileName: string) => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {fileData.map((file, index) => (
+                  {filedata.map((file, index) => (
                     <tr key={index}>
                       <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
                         <div className="inline-flex items-center gap-x-3">

@@ -1,44 +1,67 @@
 import React from "react";
 import { useForm } from "../../../../components/contexts/FormContext";
 
-function PayStep1({onNext}) {
-  const { formData, updateFormData, error, setError, errorText, setErrtext } = useForm();
+function PayStep1({ onNext }) {
+  const { formData, updateFormData } = useForm();
 
-  // Handle input changes
+  
   const handleChange = (field, value) => {
-    updateFormData("payment", { ...formData.payment, [field]: value });
+    
+    const numericValue = value.replace(/\D/g, '');
+    
+    
+    let processedValue = numericValue;
+    if (field === "CardNumber") {
+      processedValue = numericValue.slice(0, 16);
+    } else if (field === "CardCVV") {
+      processedValue = numericValue.slice(0, 3);
+    } else {
+      processedValue = value; 
+    }
+    
+    updateFormData("payment", { ...formData.payment, [field]: processedValue });
+  };
+
+
+  const formatCardNumber = (value) => {
+    if (!value) return "";
+    return value.replace(/(\d{4})(?=\d)/g, "$1 ");
   };
 
   return (
     <div className="max-w-md p-6 bg-inherit rounded-lg h-3/4">
       <div className="grid grid-cols-2 gap-4 bg-inherit">
-      
+    
         <div className="col-span-2">
           <label className="font-mona text-sm text-gray-700">Card Number</label>
           <input
-            type="number"
+            type="text"
+            inputMode="numeric"
             placeholder="1234 5678 9101 1121"
-            value={formData.payment.CardNumber || ""}
+            value={formatCardNumber(formData.payment.CardNumber || "")}
             onChange={(e) => handleChange("CardNumber", e.target.value)}
             className="w-full px-3 py-2 border-2 border-[#b2b2b2] rounded-md bg-inherit focus:border-[black]"
-            required
-          />
-        </div>
-
-     
-        <div>
-          <label className="font-mona text-sm text-gray-700">CVV</label>
-          <input
-            type="number"
-            placeholder="123"
-            value={formData.payment.CardCVV || ""}
-            onChange={(e) => handleChange("CardCVV", e.target.value)}
-            className="w-full px-3 py-2 border-2 border-[#b2b2b2] rounded-md bg-inherit focus:border-[black]"
+            maxLength={19} // 16 digits + 3 spaces
             required
           />
         </div>
 
         
+        <div>
+          <label className="font-mona text-sm text-gray-700">CVV</label>
+          <input
+            type="text"
+            inputMode="numeric"
+            placeholder="123"
+            value={formData.payment.CardCVV || ""}
+            onChange={(e) => handleChange("CardCVV", e.target.value)}
+            className="w-full px-3 py-2 border-2 border-[#b2b2b2] rounded-md bg-inherit focus:border-[black]"
+            maxLength={3}
+            required
+          />
+        </div>
+
+       
         <div>
           <label className="font-mona text-sm text-gray-700">Expiration Date</label>
           <input
@@ -51,7 +74,7 @@ function PayStep1({onNext}) {
           />
         </div>
 
-    
+        
         <div className="col-span-2">
           <label className="font-mona text-sm text-gray-700">Name</label>
           <input
@@ -65,7 +88,7 @@ function PayStep1({onNext}) {
         </div>
       </div>
 
-      
+    
       <div className="flex items-center space-x-2 mt-4">
         <input type="checkbox" id="saveCard" className="w-4 h-4 text-blue-600 border-gray-300 rounded" />
         <label htmlFor="saveCard" className="font-mona text-gray-700 text-sm cursor-pointer">
@@ -73,8 +96,8 @@ function PayStep1({onNext}) {
         </label>
       </div>
 
-      
-      <button onClick={onNext}  className="w-full bg-blue-600 text-white font-mona font-bold py-3 rounded-md mt-5 hover:bg-blue-700">
+     
+      <button onClick={onNext} className="w-full bg-blue-600 text-white font-mona font-bold py-3 rounded-md mt-5 hover:bg-blue-700">
         {`Pay ${formData.planPrice || 0} Dz/mo`}
       </button>
     </div>
@@ -82,4 +105,3 @@ function PayStep1({onNext}) {
 }
 
 export default PayStep1;
-

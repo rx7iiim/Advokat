@@ -15,16 +15,19 @@ import axios from 'axios';
 import Created from '../components/steps/created/Created';
 import Payment from '../components/payment/Payment';
 import Receipt from '../components/receipt/Receipt';
+import Link from "next/link";
+import Waitfa from "../components/waitForApproval/Waitfa";
+import Firmselect from "../components/firmselect/Firmselect";
 import * as dotenv from 'dotenv';
 dotenv.config();
 
 
 const SignUpContent = () => {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(4);
   const { formData, updateFormData, error, setError,errorText,setErrtext } = useForm(); // ✅ Now useForm() works because it's inside FormProvider
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
-  let response;
+  
 
   const handleNext = async() => {
     switch (step) {
@@ -48,6 +51,14 @@ const SignUpContent = () => {
           setErrtext("please check ur password")
           return;
         }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email)) {
+          setError(true);
+          setErrtext("Invalid email format");
+          return;
+        }
+        
+        
         setError(false);
         let planSelector=null
         if (!formData.firmPlan){planSelector =formData.individPlan}else{planSelector=formData.firmPlan}
@@ -63,7 +74,7 @@ const SignUpContent = () => {
             username: formData.username,
             role:formData.role,
           });
-          console.log(response);
+          console.log(response)
          } catch (error) {
            console.error("Error verifying email:", error);
            setError(true);
@@ -76,10 +87,19 @@ const SignUpContent = () => {
         break;
   
       case 3: // Step 4 validation (if any, otherwise continue)
-      if(formData.phone === '' || formData.firstName==="" || formData.lastName==="" || formData.email==="" || formData.username===""){
+      
+      if(formData.phone===""  || formData.firstName==="" || formData.lastName==="" || formData.email==="" || formData.username===""){
         setError(true);
-        setErrtext("please fill phone number");
+        setErrtext("please fill all fields");
+        return;
       }
+      const strictPhoneRegex = /^\d{10}$/;
+     if (!strictPhoneRegex.test(formData.phone)) {
+        setError(true);
+        setErrtext("invalid phone format");
+        return;
+        }
+        setError(false);
         break;
   
       default:
@@ -105,7 +125,7 @@ const SignUpContent = () => {
       )}
         <h1 className={`${styles.title} font-mona text-4xl font-bold`}>Create An Account</h1>
         <p className='font-mona'>
-          Already have an account?<span className='font-mona underline p-1'>Log in</span>
+          Already have an account?<Link href="../../login" className='font-mona underline p-1'>Log in</Link>
         </p>
       </div>
 
@@ -115,12 +135,16 @@ const SignUpContent = () => {
     )}
       {step === 0 && <Step1 />}
       {step === 1 && <Step2 />}
-      {step === 2 && <Step3 />}
+      {step === 2 && <Step3 step={step} setStep={setStep}  />}
       {step === 3 && <Step4 />}
-      {step === 4 &&<Created />}
-      {step <= 4 && <Buttons onNext={handleNext} onPrev={handlePrev} step={step} />}
-      {step === 5 && <Payment step={step} setStep={setStep}/>}
-      {step === 6 && <div className="flex justify-center items-center"><Receipt /></div>}
+      {!formData.firmLawyer && step === 4 &&<Created />}
+      {formData.firmLawyer && step === 4 && <Firmselect />}
+      {formData.firmLawyer && step === 5 && <Waitfa />}
+      {step <= 4 && <Buttons onNext={step!==2 ?handleNext: null} onPrev={handlePrev} step={step} />}
+      {step === 5 && !formData.firmLawyer&& <Payment step={step} setStep={setStep}/>}
+      {step === 6 && !formData.firmLawyer&& <div className="flex justify-center items-center"><Receipt /></div>}
+
+
     </div>
   );
 }

@@ -8,6 +8,7 @@
     height: 25%;
     align-items: center;
     transition: border-color 0.3s ease;
+    padding: 3px;
 }
 
 .container:has(input[type="radio"]:checked) {

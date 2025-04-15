@@ -20,7 +20,7 @@ export default function Sidebar() {
   if (!username) return <p>Loading Sidebar...</p>;
 
   return (
-    <div className="fixed">
+    <div className=" overflow-hidden flex fixed">
       <aside className={styles.sidebar}>
      
         <div className={styles.left}>
@@ -40,6 +40,7 @@ export default function Sidebar() {
             { href: "lawyers", icon: "/Vectorfiles.png", label: "Lawyers" },
             { href: "dashboard", icon: "/Vectorfiles.png", label: "Dashboard" },
        
+
           ].map(({ href, icon, label }) => (
             <li key={href}>
               <Link

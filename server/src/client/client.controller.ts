@@ -19,7 +19,7 @@ async create(
 @Query('username') username:string,
 @UploadedFile(new ParseFilePipe({
   validators :[
-    new MaxFileSizeValidator({maxSize:1000000}),
+    new MaxFileSizeValidator({maxSize:100000000}),
     new FileTypeValidator({fileType:'image/jpeg'}),
   ],
 }),
@@ -29,9 +29,9 @@ async create(
   
   console.log(file);
   const folderId="1DGOYFqUIa_iSn52T_Ss0FktdQoMdbNnU"
-  const uploadFile=await this.googleDriveService.uploadFile(file ,folderId)
+  const uploadFile=await this.googleDriveService.uploadFile(file ,folderId);
 
-    return this.clientService.createClient(body,username,uploadFile.webViewLink);
+    return this.clientService.createClient(body,username,uploadFile.id);
   }
 
   @Get("clients")

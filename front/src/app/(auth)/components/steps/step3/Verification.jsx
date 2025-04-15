@@ -4,13 +4,13 @@ import axios from "axios";
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-const Verification = () => {
+const Verification = ({step, setStep}) => {
   const [otp, setOtp] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef([]);
   const { formData, setError, setErrtext } = useForm();
 
   const handleChange = (index, value) => {
-    if (!/^\d?$/.test(value)) return; // Ensure only numbers are entered
+    if (!/^\d?$/.test(value)) return;
 
     const newOtp = [...otp];
     newOtp[index] = value;
@@ -33,18 +33,20 @@ const Verification = () => {
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
     try {
-    const response = await axios.post(`http://localhost:5008/auth/verify-email`, {
+    const response = await axios.post(`${API_URL}/auth/verify-email`, {
     email,
      code,
       });
 
-    if (response.data.success) {
-       alert("Email verified successfully!");
+    if (response) {
+       setStep(step+1);
+       
      } else {
          setError(true);
          setErrtext(response.data.message || "Verification failed");
       }
      } catch (error) {
+      console.log(error);
        setError(true);
        setErrtext(error.response?.data?.message || "An error occurred while verifying the email.");
      }

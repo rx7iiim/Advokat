@@ -1,5 +1,5 @@
 export default interface Client{
-    name:string,
+    fullName:string,
     client_id:string,
     phoneNumber :string,
     pfp:string,
