@@ -1,4 +1,4 @@
-interface Lawyer {
+export default interface Lawyer {
     client_id: string;
     name: string;
     phoneNumber: string;
