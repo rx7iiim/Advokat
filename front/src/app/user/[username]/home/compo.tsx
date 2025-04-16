@@ -74,7 +74,7 @@ function HomePage(props: Props) {
     <div className="flex flex-row overflow-hidden min-h-screen bg-gray-100 text-gray-800 p-2">
       {/* Sidebar */}
       <Sidebar />
-      <div className="invisible w-[260px] h-[100vh]" aria-hidden="true"></div>
+      <div className="invisible-spacer w-[260px] h-[100vh]" aria-hidden="true"></div>
 
       {/* Main content */}
       <main className="flex-1 p-2 overflow-y-auto">

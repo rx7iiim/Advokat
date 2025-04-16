@@ -1,3 +1,4 @@
+
 "use client"
 import React from 'react';
 import { useEffect, useState } from 'react';
@@ -9,6 +10,7 @@ import Image from 'next/image';
 import * as dotenv from 'dotenv';
 import Link from 'next/link';
 import { error } from 'console';
+
 dotenv.config();
 
 function UserCards() {
@@ -92,12 +94,14 @@ function UserCards() {
   if (!username) return <p>Loading...</p>;
 
   return (
+
     <div className="flex flex-row overflow-hidden min-h-screen text-gray-800 p-2 bg-gray-100 text-gray-800">
       {/* Sidebar */}
       <Sidebar />
       <div className="invisible w-[260px] h-[100vh]" aria-hidden="true"></div>
       <div className="flex-1 p-2 overflow-y-auto">
         <div className="bg-white shadow-md rounded-xl flex flex-col justify-start gap-[10px] p-4">
+
           <div className="flex justify-between items-center w-full">
             <p className="text-3xl font-bold mb-3">Clients</p>
             <div className="col-start-4 row-start-auto flex justify-center items-end h-30">
@@ -135,8 +139,9 @@ function UserCards() {
           <div className="flex flex-row justify-start flex-wrap gap-[10px]">
             {filteredClients.length > 0 ? (
               filteredClients.map((client) => (
-              
+
                 <div key={client.client_id} className="relative min-w-[100px] w-full sm:w-[calc(50%-12px)] md:w-[calc(33.333%-12px)] lg:w-[calc(25%-12px)] px-2 border border-transparent bg-gray-100 shadow-[1px_2px_10px_rgba(0,0,0,0.20)] rounded-lg flex flex-col justify-center items-center h-[300px] text-white">
+
                   
                   <div className="absolute top-0 right-0 inline-flex divide-x divide-gray-400 overflow-hidden rounded 
                     shadow-sm m-2">
@@ -156,13 +161,16 @@ function UserCards() {
                       <img src="/delete-svgrepo-com.svg" alt="edit client" className="size-2 color-white" />
                     </button>
                   </div>
+
                 <div>
+
                   <Image
   src={client.pfp}
   alt="Client Image"
   width={100}
   height={100}
   className='scale-75 rounded-full'
+
   unoptimized={true} 
   onError={(e) => {
     console.error('Image load error details:', {
@@ -176,6 +184,7 @@ function UserCards() {
                   <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 font-mona">{client.fullName}</h5>
               <div className='flex flex-col justify-around h-2/5  w-full'>
                   <div className="flex flex-row justify-center gap-[15px] w-full ">
+
                     <img src="/phone-svgrepo-com.svg" alt="our logo" width={20} height={18} className="" />
                     <div className='w-3/4 overflow-hidden'><p className="font-mona w-5/6 text-gray-100 text-xs dark:text-gray-400 ">{client.phoneNumber}</p></div>
                   </div>
@@ -189,6 +198,8 @@ function UserCards() {
                   </div>
                   </div>
                 </div>
+
+        
 
               ))
             ) : (

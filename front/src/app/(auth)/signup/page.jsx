@@ -64,7 +64,7 @@ const SignUpContent = () => {
         if (!formData.firmPlan){planSelector =formData.individPlan}else{planSelector=formData.firmPlan}
         axios.defaults.withCredentials = true;
         try {
-           const response = await axios.post(`${API_URL}/auth/signup`, { 
+           const response = await axios.post(`http://localhost:5008/auth/signup`, { 
             firmLawyer:formData.firmLawyer,
             plan:planSelector,
             email: formData.email,
