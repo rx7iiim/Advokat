@@ -171,15 +171,7 @@ function UserCards() {
   height={100}
   className='scale-75 rounded-full'
 
-  unoptimized={true} 
-  onError={(e) => {
-    console.error('Image load error details:', {
-      errorEvent: e,
-     attemptedSrc: e.currentTarget.src,
-      clientId: client.client_id 
-    });
-    e.currentTarget.src = '/sofia.png';
-  }}
+  
 /></div>
                   <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 font-mona">{client.fullName}</h5>
               <div className='flex flex-col justify-around h-2/5  w-full'>

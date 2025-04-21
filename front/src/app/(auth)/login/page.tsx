@@ -17,16 +17,16 @@ const Login = () => {
   const [error, setError] = useState("");
 
   // Check if user is already logged in (cookie-based authentication)
-  useEffect(() => {
-    const username = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("username="))
-      ?.split("=")[1];
+  // useEffect(() => {
+  //   const username = document.cookie
+  //     .split("; ")
+  //     .find((row) => row.startsWith("username="))
+  //     ?.split("=")[1];
 
-    if (username) {
-      router.push(`/user/${username}/home`);
-    }
-  }, [router]);
+  //   if (username) {
+  //     router.push(`/user/${username}/home`);
+  //   }
+  // }, [router]);
 
   // Login Function
   const handleLogin = async (e: React.FormEvent) => {

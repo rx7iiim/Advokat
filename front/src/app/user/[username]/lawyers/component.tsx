@@ -13,7 +13,7 @@ dotenv.config();
 function UserCards() {
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
-  const [clients, setClients] = useState<L[]>([]);
+  const [clients, setClients] = useState<Lawyer[]>([]);
   const [username, setUsername] = useState<string | null>(null);
   const [query, setQuery] = useState('');
   const [filteredClients, setFilteredClients] = useState<Lawyer[]>([]);
@@ -64,7 +64,7 @@ function UserCards() {
     if (query) {
       setFilteredClients(
         clients.filter((client) =>
-          client.name.toLowerCase().includes(query.toLowerCase())
+          client.fullName.toLowerCase().includes(query.toLowerCase())
         )
       );
     } else {
@@ -147,14 +147,10 @@ function UserCards() {
                     </button>
                   </div>
                 
-                  <Image
-  src={client.pfp}
-  alt="Client Image"
-  width={100}
-  height={100}
-  className='scale-75 rounded-full'
-/>
-                  <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">{client.name}</h5>
+                <div className="overflow-hidden w-[100px] h-[100px]">
+  <Image src={client.pfp} alt="Client Image" width={50} height={50} className='rounded-[50%]' />
+</div>
+                  <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">{client.fullName}</h5>
               
                   <div className="flex space-x-2 p-2 mr-14">
                     <img src="/phone-svgrepo-com.svg" alt="our logo" width={20} height={18} className="" />
