@@ -11,16 +11,7 @@ function Inpute({ elem }) {
   const handleChange = (e) => {
     const { name, value } = e.target;
   
-    if (name === "email") {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email regex
-      if (!emailRegex.test(value)) {
-        setError(true);
-        setErrtext("Invalid email format");
-      } else {
-        setError(false);// ✅ Clears error when email is valid
-        setErrtext("");
-      }
-    }
+   
   
     updateFormData(name, value); // ✅ Always update form data
   };

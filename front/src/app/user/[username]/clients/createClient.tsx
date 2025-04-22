@@ -1,3 +1,4 @@
+
 "use client";
 import React, { useState } from "react";
 import * as dotenv from 'dotenv';
@@ -107,14 +108,20 @@ export default function ClientModal({ onClose, username }: ClientModalProps) {
             className="hidden"
           />
         </label>
-
+       <div className="flex flex-row justify-between">
         <button
           type="submit"
           disabled={loading}
-          className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition disabled:opacity-50"
+          className="bg-blue-500 w-[150px] text-white p-2 rounded hover:bg-blue-700 transition disabled:opacity-50"
         >
           {loading ? "Submitting..." : "Submit"}
         </button>
+        <button
+          type="submit"
+          onClick={onClose}
+   className="bg-red-500 w-[150px] text-white p-2 rounded hover:bg-red-700 transition disabled:opacity-50"
+        >cancel</button>
+        </div>
       </form>
     </div>
   );

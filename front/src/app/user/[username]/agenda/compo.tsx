@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Calendar2 from "../../../components/calander/Calendar2";
 import Button from "../../../components/button";
 import { FaUser } from "react-icons/fa";
-import Sidebar from "../../../components/sidebar/Sidebar";
+import Sidebar from "../../../components/Sidebar/Sidebar";
 import DayCalendar from "../../../components/calander/calendardate";
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -39,11 +39,11 @@ dotenv.config();
     if (!username) return <p>Loading...</p>;
 
   return (
-    <div className="flex min-h-screen bg-gray-100 text-gray-800 p-2">
+    <div className="flex flex-row overflow-hidden min-h-screen bg-gray-100 text-gray-800 p-2">
       <Sidebar />
-
+      <div className="invisible w-[260px] h-[100vh]" aria-hidden="true"></div>
       {/* Main Content */}
-      <main className="flex-1 pl-3 pt-2 ml-60">
+      <main className="flex-1 pl-3 pt-2 overflow-y-auto">
         {/* Calendar */}
         <div className="mt-0 bg-white p-5 rounded-lg shadow-md fle">
           <div className="text-white flex items-center justify-center mb-6">

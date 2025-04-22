@@ -1,8 +1,9 @@
-export default interface Client{
-    name:string,
-    client_id:string,
-    phoneNumber :string,
-    pfp:string,
-    contactInfo:string,
-    email:string,
-}
+export default interface Lawyer {
+    client_id: string;
+    fullName: string;
+    phoneNumber: string;
+    contactInfo: string;
+    email: string;
+    pfp: string; // Image URL
+  }
+  

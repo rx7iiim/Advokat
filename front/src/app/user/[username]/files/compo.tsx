@@ -4,7 +4,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from '../../../components/button';
-import Sidebar from '../../../components/sidebar/Sidebar';
+import Sidebar from '../../../components/Sidebar/Sidebar';
 import FileData from './fileData.interface';
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -81,7 +81,7 @@ dotenv.config();
 
 
 // Handle file download
-/*const handleDownload = async (fileId: string, fileName: string) => {
+const handleDownload = async (fileId: string, fileName: string) => {
     try {
       const response = await fetch(`${API_URL}/download/${fileId}`);
       if (!response.ok) {
@@ -144,12 +144,13 @@ dotenv.config();
     } catch (error) {
       console.error('Error uploading file:', error);
     }
-  };*/
+  };
 
   
 
   useEffect(() => {
       fetch(`${API_URL}/auth/session`, {
+
         credentials: "include",
       })
         .then((res) => res.json())
@@ -171,9 +172,10 @@ dotenv.config();
 
 
   return (
-    <div className="flex min-h-screen bg-gray-100 text-gray-800 p-2">
+    <div className="flex flex-row overflow-hidden min-h-screen bg-gray-100 text-gray-800 p-2">
         <Sidebar/>
-        <main className="flex-1 pl-3 pt-2 ml-60">
+        <div className="invisible-spacer w-[260px] h-[100vh]" aria-hidden="true"></div>
+        <main className="flex-1 pl-3 pt-2 overflow-y-auto">
 
     <section className="container px-4 mx-auto bg-white">
       <div className="sm:flex sm:items-center sm:justify-between">

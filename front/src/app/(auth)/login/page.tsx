@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Upbar from "../components/Upbar/Upbar";
+import Upbar from "../../components/Upbar/Upbar";
+import Link from "next/link";
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -16,18 +17,18 @@ const Login = () => {
   const [error, setError] = useState("");
 
   // Check if user is already logged in (cookie-based authentication)
-  useEffect(() => {
-    const username = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("username="))
-      ?.split("=")[1];
+  // useEffect(() => {
+  //   const username = document.cookie
+  //     .split("; ")
+  //     .find((row) => row.startsWith("username="))
+  //     ?.split("=")[1];
 
-    if (username) {
-      router.push(`/user/${username}/home`);
-    }
-  }, [router]);
+  //   if (username) {
+  //     router.push(`/user/${username}/home`);
+  //   }
+  // }, [router]);
 
-  // 🔥 Login Function
+  // Login Function
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -67,7 +68,7 @@ const Login = () => {
             </h2>
             <p className="mt-2 text-center text-sm text-gray-600">
               Don't have an account?{" "}
-              <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
+              <a href="../signup" className="font-medium text-blue-600 hover:text-blue-500">
                 Sign Up
               </a>
             </p>
@@ -122,9 +123,9 @@ const Login = () => {
               </div>
 
               <div className="text-sm">
-                <a href="#" className="font-medium text-blue-600 hover:text-blue-500">
+                <Link href="../forgot-password" className="font-medium text-blue-600 hover:text-blue-500">
                   Forgot your password?
-                </a>
+                </Link>
               </div>
             </div>
 
