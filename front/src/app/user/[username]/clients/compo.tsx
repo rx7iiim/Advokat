@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Client from './clientInterface';
 import ClientModal from './createClient';
-import Sidebar from '@/app/components/sidebar/Sidebar';
+import Sidebar from '../../../components/Sidebar/Sidebar';
 import Image from 'next/image';
 import * as dotenv from 'dotenv';
 import Link from 'next/link';
@@ -91,12 +91,7 @@ function UserCards() {
     }
   };
 
-  if (!username)
-    return (
-      <div className=" w-full h-full flex justify-center items-center h-18">
-        <span className="loading loading-spinner text-primary"></span>
-      </div>
-    );
+  if (!username) return <p>Loading...</p>;
 
   return (
 
@@ -106,6 +101,7 @@ function UserCards() {
       <div className="invisible w-[260px] h-[100vh]" aria-hidden="true"></div>
       <div className="flex-1 p-2 overflow-y-auto">
         <div className="bg-white shadow-md rounded-xl flex flex-col justify-start gap-[10px] p-4">
+
           <div className="flex justify-between items-center w-full">
             <p className="text-3xl font-bold mb-3">Clients</p>
             <div className="col-start-4 row-start-auto flex justify-center items-end h-30">

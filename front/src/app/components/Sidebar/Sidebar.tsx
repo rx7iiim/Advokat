@@ -33,12 +33,12 @@ export default function Sidebar() {
         <h2 className={styles.menuTitle}>MAIN MENU</h2>
         <ul className={styles.menuList}>
           {[
-            { href: "home", icon: "/home.svg", label: "Home" },
-            { href: "agenda", icon: "/agenda.svg", label: "Agenda" },
-            { href: "clients", icon: "/client.svg", label: "Clients" },
-            { href: "files", icon: "/file.svg", label: "Files" },
-            { href: "lawyers", icon: "/lawyer.svg", label: "Lawyers" },
-            { href: "dashboard", icon: "/dashbord.svg", label: "Dashboard" },
+            { href: "home", icon: "/Vector.png", label: "Home" },
+            { href: "agenda", icon: "/Vectoragenda.png", label: "Agenda" },
+            { href: "clients", icon: "/Vectorclients.png", label: "Clients" },
+            { href: "files", icon: "/Vectorfiles.png", label: "Files" },
+            { href: "lawyers", icon: "/Vectorfiles.png", label: "Lawyers" },
+            { href: "dashboard", icon: "/Vectorfiles.png", label: "Dashboard" },
        
 
           ].map(({ href, icon, label }) => (

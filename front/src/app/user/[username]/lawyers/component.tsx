@@ -3,8 +3,8 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Lawyer from './lawyer'; 
-import ClientModal from './createclient';
-import Sidebar from '@/app/components/sidebar/Sidebar';
+import ClientModal from './createClient';
+import Sidebar from '../../../components/Sidebar/Sidebar';
 import Image from 'next/image';
 import * as dotenv from 'dotenv';
 import Link from 'next/link';
@@ -87,14 +87,13 @@ function UserCards() {
     }
   };
 
-  
+  if (!username) return <p>Loading...</p>;
 
   return (
 
     <div className="flex flex-row min-h-screen text-gray-800 p-2 bg-gray-100 text-gray-800">
       {/* Sidebar */}
       <Sidebar />
-      
       <div className="invisible w-[260px] h-[100vh]" aria-hidden="true"></div>
       <div className="flex-1 p-2">
         <div className="bg-white flex flex-col justify-start gap-[10px] shadow-md rounded-xl p-4">

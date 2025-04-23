@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Calendar2 from "../../../components/calander/Calendar2";
 import Button from "../../../components/button";
 import { FaUser } from "react-icons/fa";
-import Sidebar from "@/app/components/sidebar/Sidebar";
+import Sidebar from "../../../components/Sidebar/Sidebar";
 import DayCalendar from "../../../components/calander/calendardate";
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -36,12 +36,7 @@ dotenv.config();
         });
     }, [router]);
     
-    if (!username)
-      return (
-        <div className=" w-full h-full flex justify-center items-center h-18">
-          <span className="loading loading-spinner text-primary"></span>
-        </div>
-      );
+    if (!username) return <p>Loading...</p>;
 
   return (
     <div className="flex flex-row overflow-hidden min-h-screen bg-gray-100 text-gray-800 p-2">

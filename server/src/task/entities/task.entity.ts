@@ -10,14 +10,9 @@ description:string;
 @Column()
 start_time: Date;
 
-@Column({ default: false })
-completed: boolean;
-
 
 @ManyToOne(() => User, (user) => user.tasks, { onDelete: 'CASCADE' })
 @JoinColumn()
 user: User;
-
-
 
 }

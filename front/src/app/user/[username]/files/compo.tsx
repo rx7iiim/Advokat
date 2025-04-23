@@ -4,7 +4,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from '../../../components/button';
-import Sidebar from "@/app/components/sidebar/Sidebar";
+import Sidebar from '../../../components/Sidebar/Sidebar';
 import FileData from './fileData.interface';
 import * as dotenv from 'dotenv';
 dotenv.config();
@@ -167,12 +167,7 @@ const handleDownload = async (fileId: string, fileName: string) => {
         });
     }, [router]);
     
-    if (!username)
-      return (
-        <div className=" w-full h-full flex justify-center items-center h-18">
-          <span className="loading loading-spinner text-primary"></span>
-        </div>
-      );
+    if (!username) return <p>Loading...</p>;
 
 
 
