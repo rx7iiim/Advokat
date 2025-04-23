@@ -55,7 +55,7 @@ function UserCards() {
   }]
 
 useEffect(() => {
-    fetch("http://localhost:5008/auth/session", {
+    fetch(`${API_URL}/auth/session`, {
       credentials: "include",
     })
       .then((res) => res.json())

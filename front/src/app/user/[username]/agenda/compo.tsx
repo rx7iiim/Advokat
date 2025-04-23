@@ -18,7 +18,7 @@ dotenv.config();
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
-      fetch("http://localhost:5008/auth/session", {
+      fetch(`${API_URL}/auth/session`, {
         credentials: "include",
       })
         .then((res) => res.json())
