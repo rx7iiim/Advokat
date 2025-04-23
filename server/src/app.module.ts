@@ -1,31 +1,20 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { UserModule } from './user/user.module';
-import { SubscriptionModule } from './subscription/subscription.module';
-import { LawFirmModule } from './law-firm/law-firm.module';
-import { LawyerModule } from './lawyer/lawyer.module';
-import { FileModule } from './file/file.module';
-import { ScheduleModule } from './schedule/schedule.module';
-import { ClientModule } from './client/client.module';
-import { AuthModule} from './auth/auth.module';
-import { EmailModule } from './email/email.module';
+import { AppController } from 'src/app.controller';
+import { AppService } from 'src/app.service';
+import { UserModule } from 'src/user/user.module';
+import { SubscriptionModule } from 'src/subscription/subscription.module';
+import { LawFirmModule } from 'src/law-firm/law-firm.module';
+import { FileModule } from 'src/file/file.module';
+import { ScheduleModulee } from 'src/schedule/schedule.module';
+import { ClientModule } from 'src/client/client.module';
+import { AuthModule} from 'src/auth/auth.module';
+import { EmailModule } from 'src/email/email.module';
 import { ConfigModule } from '@nestjs/config';
-import { DatabaseModule } from './database/database.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './user/entities/user.entity';
-import { Subscription } from 'rxjs';
-import { LawFirm } from './law-firm/entities/law-firm.entity';
-import { Lawyer } from './lawyer/entities/lawyer.entity';
-import { Client } from './client/entities/client.entity';
-import { File } from './file/entities/file.entity';
-import { Schedule } from './schedule/entities/schedule.entity';
+import { DatabaseModule } from 'src/database/database.module';
 import { PassportModule } from '@nestjs/passport';
-import { SessionSerializer } from './auth/guards/session.serializer';
-import { SessionEntity } from './session/session.entity'
-
-
-
+import { SessionSerializer } from 'src/auth/session.serializer';
+import { TaskModule } from 'src/task/task.module';
+import { DriveModule } from './drive/drive.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -34,15 +23,16 @@ import { SessionEntity } from './session/session.entity'
     AuthModule,
     LawFirmModule,
     FileModule,
-    LawyerModule,
-    ScheduleModule,
+    ScheduleModulee,
     ClientModule,
     SubscriptionModule,
     UserModule,
     EmailModule, 
     DatabaseModule,
     PassportModule.register({ session: true }),
-    TypeOrmModule.forFeature([SessionEntity]),
+    TaskModule,
+    DriveModule
+ 
   ],
   controllers: [AppController],
   providers: [AppService,SessionSerializer],})

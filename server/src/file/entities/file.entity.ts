@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne ,JoinColumn} from 'typeorm';
 import { Client } from '../../client/entities/client.entity';
-import { Lawyer } from '../../lawyer/entities/lawyer.entity';
+import { User } from 'src/user/entities/user.entity';
+
 
 @Entity()
 export class File {
@@ -38,9 +39,9 @@ export class File {
   @JoinColumn({ name: 'client_id' })
   client: Client;
 
-  @ManyToOne(() => Lawyer, (lawyer) => lawyer.files, { onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.files, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'lawyer_id' })
-  lawyer: Lawyer;
+  user: User;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   created_at: Date;

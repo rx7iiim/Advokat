@@ -1,5 +1,6 @@
+
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "../../../public/logo.png";
@@ -7,104 +8,139 @@ import { FaBars, FaXmark } from "react-icons/fa6";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const navbarRef = useRef(null);
 
+  // Handle scroll and resize events
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 1600) {
-        setIsMenuOpen(false);
-      }
+      if (window.innerWidth >= 768) setIsMenuOpen(false);
+    };
+
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
     };
 
     window.addEventListener("resize", handleResize);
-    handleResize();
+    window.addEventListener("scroll", handleScroll);
 
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
-  // ✅ دالة التنقل السلس إلى القسم المطلوب
+  // Smooth scroll to a section with an offset to account for the navbar
   const scrollToSection = (id) => {
-
     const element = document.getElementById(id);
+    const navbarHeight = navbarRef.current?.offsetHeight || 0;
+
     if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setIsMenuOpen(false); // إغلاق القائمة بعد النقر (في الموبايل)
+      // Scroll to the element with smooth behavior and offset to prevent it being hidden behind the navbar
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+
+      // Adjust scroll position to account for the navbar height
+      window.scrollBy(0, -navbarHeight);
+
+      setIsMenuOpen(false);
     }
   };
 
-  const navItem = [
+  const navItems = [
     { link: "About", path: "about" },
     { link: "Pricing", path: "pricing" },
     { link: "Testimonials", path: "testimonials" },
     { link: "Contact us", path: "contactus" },
   ];
-  
 
   return (
-    <nav  className="bg-white md:px-14 p-4 max-w-screen-2xl mx-auto py-4 border-b border-gray-300 text-xl shadow-md fixed w-full top-0 z-50">
-      <div className="container mx-auto flex items-center justify-between">
-        {/* ✅ Logo Section */}
-        <a href="/" className="flex items-center text-2xl font-semibold text-primary">
-          <Image src={logo} alt="Logo" width={80} height={80} className="w-auto h-16" />
-        </a>
-
-        {/* ✅ Desktop Navigation Links */}
-        <ul className="hidden md:flex items-center space-x-14" style={{ position: 'absolute', left: '373px', top: '34px' }}>
-          {navItem.map(({ link, path }) => (
-            <li key={path}>
-              <button
-                onClick={() => scrollToSection(path)}
-                className="hover:text-gray-500 hover:border-b-2 hover:border-blue-600 transition duration-200 pb-1"
-              >
-                {link}
-              </button>
-            </li>
-          ))}
-        </ul>
-
-        {/* ✅ Desktop Buttons */}
-        <div className="hidden md:flex gap-3">
-          <Link href='/signup' className="px-4 py-2 text-blue-600 border border-blue-600 rounded-3xl">
-            Sign Up
+    <nav 
+      ref={navbarRef}
+      className={`sticky top-0 w-full bg-transparent border-b border-gray-300 z-50 transition-all duration-300 ${
+        isScrolled ? "shadow-md" : "shadow-none"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <Link href="/" className="flex-shrink-0">
+            <Image 
+              src={logo} 
+              alt="Logo" 
+              width={80}
+              height={80}
+              className="h-12 w-auto"
+              priority
+            />
           </Link>
-          <Link href='/login'  className="px-4 py-2 bg-blue-600 text-white rounded-3xl hover:text-white hover:bg-indigo-600">
-            Sign In
-          </Link>
-        </div>
 
-        {/* ✅ Mobile Menu Button */}
-        <div className="md:hidden">
-          <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-blue-600 text-2xl">
-            {isMenuOpen ? <FaXmark className="w-6 text-primary" /> : <FaBars />}
-          </button>
-        </div>
-      </div>
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            <ul className="flex space-x-6">
+              {navItems.map(({ link, path }) => (
+                <li key={path}>
+                  <button
+                    onClick={() => scrollToSection(path)}
+                    className="px-3 py-2 text-gray-600 hover:text-blue-600 transition-colors relative group"
+                  >
+                    {link}
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full"></span>
+                  </button>
+                </li>
+              ))}
+            </ul>
 
-      {/* ✅ Mobile Menu */}
-      {isMenuOpen && (
-        <div className="md:hidden bg-white absolute top-16 left-0 w-full text-2xl shadow-lg">
-          <ul className="flex flex-col text-2xl items-center space-y-4 py-4">
-            {navItem.map(({ link, path }) => (
-              <li key={path}>
-                <button
-                  onClick={() => scrollToSection(path)}
-                  className="block text-2xl text-gray-800 hover:text-blue-600 transition"
-                >
-                  {link}
-                </button>
-              </li>
-            ))}
-            {/* ✅ Mobile Buttons */}
-            <div className="flex flex-col gap-3 w-full items-center mt-4">
-            <Link  href="/signup" className="px-6 py-2 text-blue-600 border border-blue-600 rounded-3xl w-32">
-               Sign Up
-            </Link>
-              <Link href='/login' className="px-6 py-2 bg-blue-600 text-white rounded-3xl w-32 hover:text-white hover:bg-indigo-600">
+            <div className="flex items-center space-x-4 ml-8">
+              <Link href="/signup" className="px-6 py-2 text-blue-600 border border-blue-600 rounded-full hover:bg-blue-50 transition-colors">
+                Sign Up
+              </Link>
+              <Link href="/login" className="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors">
                 Sign In
               </Link>
             </div>
-          </ul>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button 
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="md:hidden p-2 text-gray-600 hover:text-blue-600"
+            aria-label="Toggle menu"
+          >
+            {isMenuOpen ? <FaXmark className="w-6 h-6" /> : <FaBars className="w-6 h-6" />}
+          </button>
         </div>
-      )}
+
+        {/* Mobile Menu */}
+        {isMenuOpen && (
+          <div className="md:hidden absolute w-full bg-white shadow-lg">
+            <ul className="px-4 py-6 space-y-4">
+              {navItems.map(({ link, path }) => (
+                <li key={path}>
+                  <button
+                    onClick={() => scrollToSection(path)}
+                    className="w-full px-4 py-2 text-left text-gray-700 hover:bg-blue-50 rounded-lg transition-colors"
+                  >
+                    {link}
+                  </button>
+                </li>
+              ))}
+              <li className="pt-4 border-t border-gray-200">
+                <div className="flex flex-col space-y-4">
+                  <Link href="/signup" className="px-6 py-2 text-center text-blue-600 border border-blue-600 rounded-full hover:bg-blue-50">
+                    Sign Up
+                  </Link>
+                  <Link href="/login" className="px-6 py-2 text-center bg-blue-600 text-white rounded-full hover:bg-blue-700">
+                    Sign In
+                  </Link>
+                </div>
+              </li>
+            </ul>
+          </div>
+        )}
+      </div>
     </nav>
   );
 };

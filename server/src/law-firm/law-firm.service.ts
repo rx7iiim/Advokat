@@ -1,12 +1,11 @@
 import { BadRequestException, forwardRef, Inject, Injectable } from '@nestjs/common';
-import { CreateLawFirmDto } from './dto/create-law-firm.dto';
-import { UpdateLawFirmDto } from './dto/update-law-firm.dto';
-import { LawFirm } from './entities/law-firm.entity';
+import { CreateLawFirmDto } from 'src/law-firm/dto/create-law-firm.dto';
+import { UpdateLawFirmDto } from 'src/law-firm/dto/update-law-firm.dto';
+import { LawFirm } from 'src/law-firm/entities/law-firm.entity';
 import { Repository } from 'typeorm';
 import { EmailService } from 'src/email/email.service';
 import { AuthService } from 'src/auth/auth.service';
 import { InjectRepository } from '@nestjs/typeorm';
-
 @Injectable()
 export class LawFirmService {
 

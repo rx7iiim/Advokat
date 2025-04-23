@@ -5,7 +5,6 @@ import { ConfigService } from '@nestjs/config';
 export class EmailService {
   private readonly logger = new Logger(EmailService.name);
   private transporter;
-
   constructor(private configService: ConfigService,) {
     this.transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com', // Change for other providers (e.g., Outlook, Yahoo)

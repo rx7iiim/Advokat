@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne,JoinColumn } from 'typeorm';
-import { Lawyer } from '../../lawyer/entities/lawyer.entity';
-
+import { Task } from 'src/task/entities/task.entity';
+import { User } from 'src/user/entities/user.entity';
 @Entity()
 export class Schedule {
   @PrimaryGeneratedColumn()
@@ -18,9 +18,9 @@ export class Schedule {
   @Column()
   end_time: Date;
 
-  @ManyToOne(() => Lawyer, (lawyer) => lawyer.schedules, { onDelete: 'CASCADE' })
-  @JoinColumn({ name: 'lawyer_id' })
-  lawyer: Lawyer;
+  @ManyToOne(() => User, (user) =>user.schedules, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 
 
 }

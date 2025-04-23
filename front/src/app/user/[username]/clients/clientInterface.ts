@@ -1,6 +1,8 @@
 export default interface Client{
-    name:string,
-    id:string,
-    description :string,
-    imageUrl:string
+    fullName:string,
+    client_id:string,
+    phoneNumber :string,
+    pfp:string,
+    contactInfo:string,
+    email:string,
 }

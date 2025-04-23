@@ -10,6 +10,22 @@ const Step4 = () => {
 
   const { formData, updateFormData, error, setError,errorText,setErrtext } = useForm();
 
+  const rolePlans = {
+    "Firm Manager": [
+      { name: "Starter", price: "15,000" },
+      { name: "Growth", price: "30,000" }
+    ],
+    "Individual Lawyer": [
+      { name: "Basic", price: "2,500" },
+      { name: "Pro", price: "5,500" },
+      { name: "Premium", price: "10,000" }
+    ],
+    FirmLawyer: [
+      { name: "No plan", price: "0" }
+    ]
+  };
+  
+
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -20,27 +36,51 @@ const Step4 = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     const phoneRegex = /^\d{0,10}$/;
-    // Validate email only for email field
-    if (name === "email") {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Basic email regex
-      
-      setError(!emailRegex.test(value));
-      setErrtext("invalid email"); // Set error state if email is invalid
-    }else if(name==="phone" && !phoneRegex.test(value)){
-      setError(true);
-      setErrtext("invalid phone number");
-    }
+    
+
+    
       
     
 
-    updateFormData(name, value); // Update form data
+    updateFormData(name, value); 
+  }
+    const handleRoleChange = (e) => {
+    const newRole = e.target.value;
+    updateFormData("role", newRole);
+    
+   
+    updateFormData("firmPlan", null);
+    updateFormData("individPlan", null);
+    updateFormData("planPrice", null);
+    updateFormData("firmLawyer", newRole === "FirmLawyer");
+
+   
+    const firstPlan = rolePlans[newRole][0];
+    if (newRole === "Firm Manager") {
+      updateFormData("firmPlan", firstPlan.name);
+    } else if (newRole === "Individual Lawyer") {
+      updateFormData("individPlan", firstPlan.name);
+    }
+    updateFormData("planPrice", firstPlan.price);
+  };
+  const getCurrentPlan = () => {
+    if (formData.role === "Firm Manager") {
+      return formData.firmPlan;
+    } else if (formData.role === "Individual Lawyer") {
+      return formData.individPlan;
+    }
+    return "No plan";
+  };
+
+  const getCurrentPlanOptions = () => {
+    return rolePlans[formData.role] || [];
   };
 
   return (
-    <div className="w-full h-[45vh] flex flex-col md:flex-row gap-6 p-6  rounded-lg">
+    <div className="w-full h-[45vh] flex flex-col justify-center md:flex-row gap-6 p-6  rounded-lg">
       <div className="flex flex-col items-stretch h-full">
   
-  <div className="flex flex-row flex-wrap justify-center gap-[10px]  flex-[0.7]">
+  <div className="flex flex-row items-center gap-[10px]  flex-[0.7]">
     <TextField
       label="First Name"
       className="rounded-2xl w-2/5"
@@ -61,16 +101,17 @@ const Step4 = () => {
 
     <TextField
       label="Username"
-      className="rounded-2xl w-1/5"
+      className="rounded-2xl w-2/5"
       name="username"
       value={formData.username}
       onChange={handleChange}
       required
     />
-
+</div>
+<div className="flex flex-row justify-center gap-[33px]  ">
     <TextField
       label="Email"
-      className="rounded-2xl w-1/5"
+      className="rounded-2xl w-full"
       name="email"
       value={formData.email}
       onChange={handleChange}
@@ -80,7 +121,7 @@ const Step4 = () => {
 
     <TextField
       label="Phone Number"
-      className="rounded-2xl w-1/5"
+      className="rounded-2xl w-full"
       name="phone"
       inputProps={{ maxLength: 10 }}
       value={formData.phone}
@@ -89,60 +130,46 @@ const Step4 = () => {
     />
   </div>
 
-  <div className="flex flex-row justify-between flex-[0.3]">
+  <div className="flex flex-row justify-center gap-[33px]  ">
  
-    <div className="w-2/5">
+    <div className="w-full p-3">
       <label className="block text-gray-700 text-sm mb-1">Role</label>
       <div className="flex items-center border rounded-lg px-3 py-2 bg-white">
         <FaBriefcase className="text-gray-400" />
-        <select className="ml-2 w-full outline-none bg-transparent" value={formData.role} // Bind value to formData
-        onChange={(e) => updateFormData("role", e.target.value)}>
-          <option value='FirmManager'>Firm Manager</option>
-          <option value='IndividLawyer'>Individual Lawyer</option>
+        <select className="ml-2 w-full outline-none bg-transparent" value={formData.role} 
+        onChange={handleRoleChange}>
+          <option value='Firm Manager'>Firm Manager</option>
+          <option value='Individual Lawyer'>Individual Lawyer</option>
           <option value='FirmLawyer'>Firm Lawyer</option>
         </select>
       </div>
     </div>
 
    
-    <div className="w-2/5">
+    <div className="w-full p-3">
       <label className="block text-gray-700 text-sm mb-1">Plan</label>
       <div className="flex items-center border rounded-lg px-3 py-2 bg-white">
         <FaBriefcase className="text-gray-400" />
         <select
-        className="ml-2 w-full outline-none bg-transparent"
-        name="firmPlan"
-        value={formData.firmPlan}
-        onChange={(e) => {
-          const selectedOption = e.target.value.split("|"); // Split the value into name and price
-          updateFormData("firmPlan", selectedOption[0]); // Plan Name
-          updateFormData("planPrice", selectedOption[1]); // Plan Price
-        }}
-      >
-        { formData.role === 'Individual Lawyer' && 
-          (<>
-          <option value="Basic|2,500">Basic (2,500 DZD/mo)</option>
-          <option value="Pro|5,500">Pro (5,500 DZD/mo)</option>
-          <option value="Premium|10,000">Premium (10,000 DZD/mo)</option>
-          </>
-          )
-        }
-         { formData.role === 'Firm Manager' && 
-          (<>
-          <option value="Starter|15,000">Starter (15,000 DZD/mo)</option>
-          <option value="Growth|30,000">Growth (30,000 DZD/mo)</option>
-          
-          </>
-          )
-        }
-        { formData.role === 'FirmLawyer' && 
-          (<>
-          <option selected>No plan</option>
-          
-          </>
-          )
-        }
-        </select>
+            className="ml-2 w-full outline-none bg-transparent"
+            value={`${getCurrentPlan()}|${formData.planPrice}`}
+            onChange={(e) => {
+              const [name, price] = e.target.value.split("|");
+              if (formData.role === "Firm Manager") {
+                updateFormData("firmPlan", name);
+              } else if (formData.role === "Individual Lawyer") {
+                updateFormData("individPlan", name);
+              }
+              updateFormData("planPrice", price);
+            }}
+            disabled={formData.role === "FirmLawyer"}
+          >
+            {getCurrentPlanOptions().map((plan) => (
+              <option key={plan.name} value={`${plan.name}|${plan.price}`}>
+                {plan.name} ({plan.price} DZD/mo)
+              </option>
+            ))}
+          </select>
       </div>
     </div>
   </div>

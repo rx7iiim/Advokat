@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne,JoinColumn, OneToOne, OneToMany } from 'typeorm';
-import { Lawyer } from '../../lawyer/entities/lawyer.entity';
+
 import { File } from 'src/file/entities/file.entity';
+import { User } from 'src/user/entities/user.entity';
 
 @Entity()
 export class Client {
@@ -8,23 +9,23 @@ export class Client {
   client_id: number;
 
   @Column()
-  first_name: string;
-
-  @Column()
-  last_name: string;
+  fullName: string;
 
   @Column()
   email: string;
 
   @Column()
-  phone_number: string;
+  phoneNumber: string;
 
   @Column()
-  address: string;
+  contactInfo: string;
 
-  @ManyToOne(() => Lawyer, (lawyer) => lawyer.clients, { onDelete: 'CASCADE' })
+  @Column({nullable:true})
+  pfp:string;
+
+  @ManyToOne(() => User, (user) => user.clients, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'lawyer_id' })
-  lawyer: Lawyer;
+  user: User;
 
   @OneToMany(()=>File,(file)=>file.client,({onDelete:"CASCADE"}))
   file:File;

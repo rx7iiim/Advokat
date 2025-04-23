@@ -5,10 +5,11 @@ import { useRouter } from "next/navigation";
 import Calendar2 from "../../../components/calander/Calendar2";
 import Button from "../../../components/button";
 import { FaUser } from "react-icons/fa";
-import Sidebar from "../../../components/sidebar/Sidebar";
+import Sidebar from "@/app/components/sidebar/Sidebar";
 import DayCalendar from "../../../components/calander/calendardate";
 import * as dotenv from 'dotenv';
 dotenv.config();
+
 
  function AgendaPage() {
 
@@ -35,14 +36,19 @@ dotenv.config();
         });
     }, [router]);
     
-    if (!username) return <p>Loading...</p>;
+    if (!username)
+      return (
+        <div className=" w-full h-full flex justify-center items-center h-18">
+          <span className="loading loading-spinner text-primary"></span>
+        </div>
+      );
 
   return (
-    <div className="flex min-h-screen bg-gray-100 text-gray-800 p-2">
+    <div className="flex flex-row overflow-hidden min-h-screen bg-gray-100 text-gray-800 p-2">
       <Sidebar />
-
+      <div className="invisible w-[260px] h-[100vh]" aria-hidden="true"></div>
       {/* Main Content */}
-      <main className="flex-1 pl-3 pt-2 ml-60">
+      <main className="flex-1 pl-3 pt-2 overflow-y-auto">
         {/* Calendar */}
         <div className="mt-0 bg-white p-5 rounded-lg shadow-md fle">
           <div className="text-white flex items-center justify-center mb-6">
@@ -55,9 +61,9 @@ dotenv.config();
               Months
             </button>
             <button
-              className={`px-6 py-2 rounded-md text-lg font-semibold transition-all 
-                          text-gray-700 hover:text-blue-500 
-                          ${view === "day" ? "text-blue-500 after:absolute after:left-0 after:bottom-0 after:w-full after:h-[3px] after:bg-blue-500" : ""}`}
+             className={`px-6 py-2 rounded-md text-lg font-semibold transition-all relative  text-gray-700 hover:text-blue-500 ${
+              view === "day" ? "text-blue-500 after:absolute after:left-0 after:bottom-0 after:w-full after:h-[3px] after:bg-blue-500" : ""
+            }`}
               onClick={() => setView("day")}
             >
               Days
@@ -65,7 +71,7 @@ dotenv.config();
 
             <button className=" absolute  right-16 px-2 py-3 rounded-md text-lg font-semibold transition-all bg-[linear-gradient(135deg,#0048ff,#00d4ff)] text-white p-3">
               <div className="flex items-center justify-center">
-                add event <img src="/plus-circle.png" alt="add event" className="w-6 h-6 ml-2" />
+                add event <img src="/plus-circle-svgrepo-com (1).svg" alt="add event" className="w-6 h-6 ml-2" />
               </div>
             </button>
           </div>

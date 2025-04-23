@@ -2,7 +2,6 @@ import {
     forwardRef,
     Inject,
     Injectable,
-    UnauthorizedException,
   } from '@nestjs/common';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { User } from '../user/entities/user.entity';
@@ -12,9 +11,6 @@ import { EmailService } from 'src/email/email.service';
 import { UserService } from 'src/user/user.service';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
-import { loginUserDto } from 'src/user/dto/login-user.dto';
-import { Request, Response } from 'express';
-import { LawyerService } from 'src/lawyer/lawyer.service';
 import { CreateLawFirmDto } from 'src/law-firm/dto/create-law-firm.dto';
 import { LawFirmService } from 'src/law-firm/law-firm.service';
 import { LawFirm } from 'src/law-firm/entities/law-firm.entity';
@@ -51,7 +47,7 @@ export class AuthService {
         
             if (!user) throw new Error('User not found');
         
-            if (user.isEmailConfirmed) throw new Error('Email already confirmed');
+            if (user.isEmailConfirmed) return ('Email confirmed successfully!');
         
             if (user.confirmationCode !== code) throw new Error('Invalid confirmation code');
         
@@ -123,9 +119,18 @@ export class AuthService {
 }
 
 async findUserById(id: string) {
-  return this.userService.findOne(Number(id));
+  return this.userService.findOneById(Number(id));
 }
-  }
+
+
+async checkUserValid(userId) {
+  console.log(userId)
+  const user_obj = await this.userService.findOneById(userId);
+  console.log(user_obj)
+  return true;
+}
+}
+  
 
 
 
