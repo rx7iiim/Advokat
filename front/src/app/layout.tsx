@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
 import MuiProvider from "./mui-provider";
+import Loader from "./loader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,7 +31,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <MuiProvider>{children}</MuiProvider>
+        <MuiProvider>
+          <Suspense fallback={<Loader />}>
+          {children}
+          </Suspense>
+          </MuiProvider>
       </body>
     </html>
   );
