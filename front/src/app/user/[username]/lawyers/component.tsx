@@ -3,7 +3,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Lawyer from './lawyer'; 
-import ClientModal from './createClient';
+import ClientModal from './createclient';
 import Sidebar from '../../../components/Sidebar/Sidebar';
 import Image from 'next/image';
 import * as dotenv from 'dotenv';

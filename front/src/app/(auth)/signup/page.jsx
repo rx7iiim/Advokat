@@ -24,7 +24,7 @@ dotenv.config();
 
 const SignUpContent = () => {
   const [step, setStep] = useState(0);
-  const { formData, updateFormData, error, setError,errorText,setErrtext } = useForm(); // ✅ Now useForm() works because it's inside FormProvider
+  const { formData, updateFormData, error, setError,errorText,setErrtext } = useForm(); 
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   

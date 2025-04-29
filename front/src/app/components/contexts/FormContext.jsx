@@ -34,7 +34,7 @@ export const FormProvider = ({ children }) => {
   const updateFormData = (field, value) => {
     setFormData((prev) => {
       const updatedFormData = { ...prev, [field]: value };
-      console.log("Updated Form Data:", updatedFormData); // ✅ Logs correctly
+      console.log("Updated Form Data:", updatedFormData); 
       return updatedFormData;
     });
   };
