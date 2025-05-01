@@ -3,16 +3,16 @@
 A full-stack web application for managing lawyers, clients, cases, and subscriptions.  
 
 ## 🚀 Tech Stack  
-- **Frontend:** React + Vite ⚛️  
+- **Frontend:** nextjs ⚛️  
 - **Backend:** NestJS 🏗️  
-- **Database:** PostgreSQL (Hosted on Neon) 🗄️  
-- **Authentication:** JWT 🔑  
+- **Database:** PostgreSQL  🗄️  
+- **Authentication:** session based 🔑  
 - **Deployment:** vercel 🌍  
 
 ---
 
 ## 📌 Features  
-✅ User Authentication (Clients, Lawyers, Admins)  
+✅ User Authentication (Managers, Lawyers, Admins)  
 ✅ Lawyer Profile & Specialization Management  
 ✅ Case Tracking System  
 ✅ Subscription Plans & Payments  
@@ -38,17 +38,17 @@ A full-stack web application for managing lawyers, clients, cases, and subscript
 ### 1️⃣ Clone the Repository  
 ```sh
 git clone https://github.com/rx7iiim/Advokat
-cd suits  
+cd Advokat  
 ```
 
 ### 2️⃣ Backend Setup (NestJS)  
 ```sh
 cd backend  
 npm install  
-cp .env.example .env  # Configure environment variables  
+cp .env  # Configure environment variables  
 npm run start:dev  
 ```
-👉 **API Runs on:** `http://localhost:5000`  
+👉 **API Runs on:** `http://localhost:5008`  
 
 ### 3️⃣ Frontend Setup (React + Vite)  
 ```sh
@@ -56,12 +56,12 @@ cd frontend
 npm install  
 npm run dev  
 ```
-👉 **UI Runs on:** `http://localhost:5173`  
+👉 **UI Runs on:** `http://localhost:3000`  
 
 ---
 
 ## 📚 Database Configuration  
-- **DBMS:** PostgreSQL (Neon)  
+- **DBMS:** PostgreSQL 
 - **Migrations:** TypeORM  
 
 To apply database migrations:  
