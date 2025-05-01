@@ -8,7 +8,13 @@
     justify-content: space-between;
     margin-top: 10px;
     border-radius: 16px;
+    overflow-y: auto;
   }
+  .sidebar::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+  
   
   /* Logo */
   .logoContainer {
@@ -91,6 +97,7 @@
   
   /* Profile Section */
   .profileSection {
+    cursor: pointer;
     display: flex;
     align-items: center;
     padding: 10px;

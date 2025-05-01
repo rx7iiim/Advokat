@@ -1,8 +1,10 @@
 export default interface FileData{
     index:any 
-    ,name: string,
-     status: string,
+    name: string,
+    status: string,
     date: string,
     updated: string,
-    clientName:string
+    size:any,
+    file_path:string
+
 }

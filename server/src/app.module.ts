@@ -15,6 +15,7 @@ import { PassportModule } from '@nestjs/passport';
 import { SessionSerializer } from 'src/auth/session.serializer';
 import { TaskModule } from 'src/task/task.module';
 import { DriveModule } from './drive/drive.module';
+import { LawyerModule } from './lawyer/lawyer.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -31,7 +32,8 @@ import { DriveModule } from './drive/drive.module';
     DatabaseModule,
     PassportModule.register({ session: true }),
     TaskModule,
-    DriveModule
+    DriveModule,
+    LawyerModule
  
   ],
   controllers: [AppController],

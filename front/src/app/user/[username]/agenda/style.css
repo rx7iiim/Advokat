@@ -1,0 +1,61 @@
+
+.fc .fc-toolbar-chunk button{
+    background-color: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    margin: 0 4px;
+}
+  
+  .fc-toolbar-title {
+    font-size: 1.5rem;
+    color: black;
+  }
+  
+  .fc .fc-toolbar-chunk button:hover {
+    background-color: blue;
+  }
+  .fc .fc-toolbar .fc-button.fc-button-active,
+.fc .fc-toolbar .fc-button:active {
+  background-color: #1e40af !important;
+  color: white !important;
+  border-color: transparent !important;
+  border: none !important;
+}
+
+
+.fc .fc-toolbar .fc-button:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+  .fc .fc-toolbar-chunk .fc-button {
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .fc-scrollgrid-section-body .fc-daygrid-day {
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .fc-scrollgrid-section-body .fc-daygrid-day:hover {
+    background-color: #e5e7eb; /* Tailwind's gray-200 */
+  }
+  
+  
+  .custom-scrollbar {
+    scrollbar-width: 0px; /* Firefox */
+    scrollbar-color: white white; /* thumb and track */
+  
+    /* Chrome, Edge, Safari */
+  }
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 0px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+  

@@ -26,41 +26,59 @@ const DayCalendar = () => {
   const hours = Array.from({ length: 12 }, (_, i) => `${i + 7}:00`);
 
   return (
-    <div className="p-4 bg-gray-50 rounded-lg shadow-sm transition-all duration-300 ease-in-out">
-      {/* Week Navigation */}
-      <div className="flex justify-between items-center mb-4">
-        <button 
-          onClick={handlePrevWeek} 
-          className="px-3 py-1 bg-gray-100 rounded hover:bg-gray-200 transition-all duration-200 text-gray-600">
-          ◀
-        </button>
-        <h2 className="text-xl font-bold text-gray-700">{format(currentDate, "MMMM yyyy")}</h2>
-        <button 
-          onClick={handleNextWeek} 
-          className="px-3 py-1 bg-gray-100 rounded hover:bg-gray-200 transition-all duration-200 text-gray-600">
-          ▶
-        </button>
-      </div>
+    <div>
 
-      {/* Calendar Grid with Hours on the sides */}
-      <div className="flex">
-        {/* Hours on the left */}
-        <div className="flex flex-col justify-between text-xs text-gray-500 mr-2">
+      {/* Week Navigation */}
+      <span
+  className="inline-flex divide-x divide-gray-300 overflow-hidden rounded border border-gray-300 bg-white shadow-sm"
+>
+  <button
+   onClick={handlePrevWeek}
+    type="button"
+    className="px-3 py-1.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 hover:text-gray-900 focus:relative"
+  >
+     ◀
+  </button>
+
+  <button
+    type="button"
+    className="px-3 py-1.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 hover:text-gray-900 focus:relative"
+  >
+    {format(currentDate, "MMMM yyyy")}
+  </button>
+
+  <button
+    onClick={handleNextWeek} 
+    type="button"
+    className="px-3 py-1.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 hover:text-gray-900 focus:relative"
+  >
+     ▶
+  </button>
+</span>
+
+    <div className="p-4 rounded-lg shadow-sm transition-all duration-300 ease-in-out h-screen">
+<div className="flex h-full">
+       {/* Hours on the left */}
+       <div className="flex flex-col justify-end items-end text-xs text-gray-500 mr-2 h-full">
           {hours.map((hour, i) => (
-            <div key={i} className="h-8 flex items-center justify-end">
-              {hour}
+            <div key={i} className="h-full flex justify-end items-end flex-nowrap mt-auto">
+              <p>{hour}</p> <p>am</p>
             </div>
           ))}
         </div>
+      
 
-        {/* Main Calendar Grid */}
-        <div className="flex-1 grid grid-cols-7 gap-1">
+
+<div className="w-full">
+  
+<div className="h-full">
+    <div className="flex-1 grid grid-cols-7 gap-0 mr-auto ">
           {days.map((date, index) => {
             const isSelected =
               selectedDate && format(selectedDate, "yyyy-MM-dd") === format(date, "yyyy-MM-dd");
 
             return (
-              <div key={index} className="border rounded-lg overflow-hidden bg-white">
+              <div key={index} className="border rounded-sm overflow-hidden bg-white">
                 {/* Date Header */}
                 <button
                   onClick={() => handleSelectDate(date)}
@@ -69,28 +87,49 @@ const DayCalendar = () => {
                   }`}
                 >
                   {format(date, "d")}
-                </button>
+                </button></div>
+             );
+            })}</div>
+            
 
-                {/* Time Slots (empty for fetched data) */}
-                <div className="grid grid-rows-12">
-                  {hours.map((_, i) => (
-                    <div key={i} className="h-8 border-t"></div>
-                  ))}
-                </div>
-              </div>
-            );
-          })}
-        </div>
+            {/* Calendar Grid with Hours on the sides */}
+  
+       
 
-        {/* Hours on the right */}
-        <div className="flex flex-col justify-between text-xs text-gray-500 ml-2">
-          {hours.map((hour, i) => (
-            <div key={i} className="h-8 flex items-center">
-              {hour}
-            </div>
-          ))}
-        </div>
-      </div>
+       {/* Main Calendar Grid */}
+       <div className="flex-1 grid grid-cols-7 gap-0 h-full">
+         {days.map((date, index) => {
+           const isSelected =
+             selectedDate && format(selectedDate, "yyyy-MM-dd") === format(date, "yyyy-MM-dd");
+
+           return (
+             <div key={index} className="border h-full overflow-hidden bg-white">
+             
+
+               {/* Time Slots (empty for fetched data) */}
+               <div className="grid grid-rows-13 h-full">
+                 {hours.map((_, i) => (
+                   <div key={i} className="h-8 border-t"></div>
+                 ))}
+               </div>
+             </div>
+           );
+         })}
+       </div></div></div>
+
+       {/* Hours on the right */}
+       <div className="flex flex-col justify-between text-xs text-gray-500 ml-2 mt-auto">
+         {hours.map((hour, i) => (
+           <div key={i} className="h-8 flex items-center flex-nowrap">
+             <p>{hour}</p> <p>am</p>
+           </div>
+         ))}
+       </div>       
+            
+</div>
+
+
+      
 
       {/* Show selected date */}
       {selectedDate && (
@@ -98,6 +137,7 @@ const DayCalendar = () => {
           Selected Date: {format(selectedDate, "PPP")}
         </p>
       )}
+    </div>
     </div>
   );
 };

@@ -1,12 +1,19 @@
 "use client"
 'use client'
-import React from "react";
+import React, { useRef } from "react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from '../../../components/button';
-import Sidebar from '../../../components/Sidebar/Sidebar';
+import Sidebar from "@/app/components/sidebar/Sidebar";
 import FileData from './fileData.interface';
 import * as dotenv from 'dotenv';
+import PdfViewer from "./pdf.viwer";
+import DriveViewer from "./drive.viewer";
+
+
+
+
+
 dotenv.config();
 
 
@@ -14,57 +21,28 @@ dotenv.config();
 
 
  function FileUploadTable() {
-  const filedata =[{  index:1
-    ,name: "td analyse",
-     status: "done",
-    date: "50/12/2000",
-    updated:"last day",
-    clientName:"salim"},{  index:2
-      ,name: "td analyse",
-       status: "done",
-      date: "50/12/2000",
-      updated:"last day",
-      clientName:"salim"},{  index:3
-        ,name: "td analyse",
-         status: "done",
-        date: "50/12/2000",
-        updated:"last day",
-        clientName:"salim"},{  index:3
-          ,name: "td analyse",
-           status: "done",
-          date: "50/12/2000",
-          updated:"last day",
-          clientName:"salim"},{  index:4
-            ,name: "td analyse",
-             status: "done",
-            date: "50/12/2000",
-            updated:"last day",
-            clientName:"salim"},{  index:5
-              ,name: "td analyse",
-               status: "done",
-              date: "50/12/2000",
-              updated:"last day",
-              clientName:"salim"},{  index:6 
-                ,name: "td analyse",
-                 status: "done",
-                date: "50/12/2000",
-                updated:"last day",
-                clientName:"salim"},{  index:6
-                  ,name: "td analyse",
-                   status: "done",
-                  date: "50/12/2000",
-                  updated:"last day",
-                  clientName:"salim"}]
+  
 
     const router = useRouter();
+  const [user,setUser]=useState<any|null>(null);
    const [username, setUsername] = useState<string | null>(null);
+   const [selectedPdf, setSelectedPdf] = useState<string|null>(null);
+   const didRunRef = useRef(false);
+ 
+   const handleFileClick = (fileurl:string) => {
+     setSelectedPdf(fileurl);
+   };
+
+ 
+
+   
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
     const [fileData, setFileData] = useState<FileData[]>([]);
-   /* useEffect(() => {
+    useEffect(() => {
         const fetchFiles = async () => {
           try {
-            const response = await fetch(`${API_URL}/files`);
+            const response = await fetch(`${API_URL}/file`);
             if (!response.ok) {
               throw new Error('Failed to fetch files');
             }
@@ -76,7 +54,8 @@ dotenv.config();
         };
       
         fetchFiles();
-      }, []);*/
+  
+      }, []);
 
 
 
@@ -125,7 +104,7 @@ const handleDownload = async (fileId: string, fileName: string) => {
     formData.append('file', file); // Append the file to the FormData object
   
     try {
-      const response = await fetch('https://your-backend-api.com/upload', {
+      const response = await fetch(`${API_URL}/file?username=${username}`, {
         method: 'POST',
         body: formData, // Send the file to the backend
       });
@@ -133,12 +112,12 @@ const handleDownload = async (fileId: string, fileName: string) => {
       if (!response.ok) {
         throw new Error('Failed to upload file');
       }
-  
+    
       const result = await response.json();
       console.log('Upload successful:', result);
   
       // Refresh the file list after upload
-      const refreshResponse = await fetch('https://your-backend-api.com/files');
+      const refreshResponse = await fetch(`${API_URL}/file`);
       const refreshData = await refreshResponse.json() as FileData[];
       setFileData(refreshData);
     } catch (error) {
@@ -148,16 +127,19 @@ const handleDownload = async (fileId: string, fileName: string) => {
 
   
 
-  useEffect(() => {
+useEffect(() => {
+    if (didRunRef.current) return;
+    didRunRef.current = true;
       fetch(`${API_URL}/auth/session`, {
-
         credentials: "include",
       })
         .then((res) => res.json())
         .then((data) => {
           if (!data.authenticated || !data.username) {
-            router.push("/login"); 
+            router.push("/login");
           } else {
+            console.log(data)
+            setUser(data.user);
             setUsername(data.username);
           }
         })
@@ -165,19 +147,25 @@ const handleDownload = async (fileId: string, fileName: string) => {
           console.error("Error fetching session:", error);
           router.push("/login");
         });
-    }, [router]);
+    }, [router, API_URL]);
+  
     
-    if (!username) return <p>Loading...</p>;
+    if (!username)
+      return (
+        <div className=" w-full h-full flex justify-center items-center h-18">
+          <span className="loading loading-spinner text-primary"></span>
+        </div>
+      );
 
 
 
   return (
     <div className="flex flex-row overflow-hidden min-h-screen bg-gray-100 text-gray-800 p-2">
-        <Sidebar/>
-        <div className="invisible-spacer w-[260px] h-[100vh]" aria-hidden="true"></div>
-        <main className="flex-1 pl-3 pt-2 overflow-y-auto">
+        <Sidebar user={user} />
+        <div className="invisible-spacer w-[21%] h-[100vh]" aria-hidden="true"></div>
+        <main className="flex-1 pl-3 pt-2 overflow-y-auto rounded-3xl overflow-hidden">
 
-    <section className="container px-4 mx-auto bg-white">
+    <section className="container px-4 mx-auto bg-white rounded-xl" >
       <div className="sm:flex sm:items-center sm:justify-between">
         <h2 className="text-lg font-medium text-gray-800">Files uploaded</h2>
 
@@ -193,13 +181,13 @@ const handleDownload = async (fileId: string, fileName: string) => {
   onChange={(e) => {
     if (e.target.files && e.target.files[0]) {
         console.log('to be continued')
-      //handleUpload(e.target.files[0]); // Call handleUpload with the selected file
+      handleUpload(e.target.files[0]);
     }
   }}
 />
 <label
   htmlFor="file-upload" // Link the label to the file input
-  className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-600 rounded-lg sm:w-auto gap-x-2 hover:bg-blue-700"
+  className="flex items-center rounded-3xl justify-center cursor-pointer w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-600 rounded-lg sm:w-auto gap-x-2 hover:bg-blue-700"
 >
 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clipPath="url(#clip0_3098_154395)">
@@ -217,8 +205,8 @@ const handleDownload = async (fileId: string, fileName: string) => {
         </div>
       </div>
 
-      <div className="flex flex-col mt-6">
-        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div className="flex flex-col mt-6 overflow-hidden p-2">
+        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 w-full">
           <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
             <div className="overflow-hidden border border-gray-200 rounded-lg">
               <table className="min-w-full divide-y divide-gray-200">
@@ -239,17 +227,23 @@ const handleDownload = async (fileId: string, fileName: string) => {
                       Last updated
                     </th>
                     <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
-                      Client
+                      File size
                     </th>
                     <th scope="col" className="relative py-3.5 px-4">
                       <span className="sr-only">Edit</span>
                     </th>
                   </tr>
                 </thead>
+               
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {filedata.map((file, index) => (
-                    <tr key={index}>
+                
+                  {fileData.map((file, index) => (
+                    <tr  key={index}
+                    className="cursor-pointer hover:bg-gray-100 transition"
+                    onClick={() => handleFileClick(file.file_path)}>
+                      
                       <td className="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap">
+                 
                         <div className="inline-flex items-center gap-x-3">
                         
                           <div className="flex items-center gap-x-2">
@@ -260,7 +254,7 @@ const handleDownload = async (fileId: string, fileName: string) => {
                             </div>
                             <div>
                               <h2 className="font-normal text-gray-800">{file.name}</h2>
-                              <p className="text-xs font-normal text-gray-500">{file.status}</p>
+              
                             </div>
                           </div>
                         </div>
@@ -268,18 +262,31 @@ const handleDownload = async (fileId: string, fileName: string) => {
                       <td className="px-12 py-4 text-sm font-normal text-gray-700 whitespace-nowrap">{file.status}</td>
                       <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">{file.date}</td>
                       <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">{file.updated}</td>
-                      <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">{file.clientName}</td>
+                       <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
+                     {(file.size / (1024 * 1024)).toFixed(2)} MB</td>
+
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
                         <Button className="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg bg-gray-100">
                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
                           </svg>
                         </Button>
+                        
                       </td>
+
+                      
                     </tr>
                   ))}
+                 
                 </tbody>
               </table>
+
+
+
+
+               {/* Modal */}
+    
+
             </div>
           </div>
         </div>
@@ -301,7 +308,7 @@ const handleDownload = async (fileId: string, fileName: string) => {
           ))}
         </div>
 
-        <a href="#" className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100">
+        <a href="#" className="flex items-center px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md gap-x-2 hover:bg-gray-100 mb-6">
           <span>Next</span>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 rtl:-scale-x-100">
             <path strokeLinecap="round" strokeLinejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
@@ -309,6 +316,15 @@ const handleDownload = async (fileId: string, fileName: string) => {
         </a>
       </div>
     </section>
+
+
+
+    {selectedPdf && (
+        <DriveViewer
+          fileurl= {selectedPdf}
+          onClose={() => setSelectedPdf(null)} />
+      )}
+
     </main>
     </div>
   );

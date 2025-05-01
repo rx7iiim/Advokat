@@ -2,14 +2,17 @@
 "use client";
 import React, { useState } from "react";
 import * as dotenv from 'dotenv';
+import Lawyer from "../lawyers/lawyer";
+import Client from "./clientInterface";
 dotenv.config();
 
 interface ClientModalProps {
   onClose: () => void;
   username: string;
+  onUserCreated: (newClient: Client) => void;
 }
 
-export default function ClientModal({ onClose, username }: ClientModalProps) {
+export default function ClientModal({ onClose,onUserCreated, username }: ClientModalProps) {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   const [fullName, setFullName] = useState("");
@@ -42,12 +45,20 @@ export default function ClientModal({ onClose, username }: ClientModalProps) {
       if (!res.ok) {
         throw new Error(await res.text()); // Show backend error
       }
-  
+      const createdClient={
+        client_id:"",
+        fullName :fullName,
+         email: email,
+         phoneNumber: phoneNumber,
+        contactInfo:contactInfo,
+      pfp:""
+    }
       setFullName("");
       setEmail("");
       setPhoneNumber("");
       setContactInfo("");
       setPfp(null);
+      onUserCreated(createdClient);
       onClose();
     } catch (err: any) {
       setError(err.message);

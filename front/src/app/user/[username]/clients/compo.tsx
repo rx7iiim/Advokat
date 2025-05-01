@@ -1,28 +1,32 @@
-
 "use client"
-import React from 'react';
+import React, { useRef } from 'react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Client from './clientInterface';
+import Lawyer from '../lawyers/lawyer';
 import ClientModal from './createClient';
-import Sidebar from '../../../components/Sidebar/Sidebar';
+import Sidebar from '@/app/components/sidebar/Sidebar';
 import Image from 'next/image';
 import * as dotenv from 'dotenv';
 import Link from 'next/link';
-import { error } from 'console';
-
+import Client from './clientInterface';
 dotenv.config();
 
 function UserCards() {
+  const [selectedClient, setSelectedClient] = useState<Client | null>(null);
+  const [user,setUser]=useState<any|null>(null)
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
   const [clients, setClients] = useState<Client[]>([]);
   const [username, setUsername] = useState<string | null>(null);
   const [query, setQuery] = useState('');
+  const didRunRef = useRef(false);
   const [filteredClients, setFilteredClients] = useState<Client[]>([]);
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  
 
   useEffect(() => {
+    if (didRunRef.current) return;
+    didRunRef.current = true;
     const loaddata = async () => {
       try {
         const res = await fetch(`${API_URL}/auth/session`, {
@@ -32,6 +36,8 @@ function UserCards() {
         if (!data.authenticated || !data.username) {
           router.push('/login');
         } else {
+          console.log(data)
+          setUser(data.user)
           setUsername(data.username);
         }
       } catch (error) {
@@ -42,7 +48,11 @@ function UserCards() {
     loaddata();
   }, [API_URL, router]);
 
+
+ 
+
   useEffect(() => {
+
     if (username) {
       const fetchClient = async () => {
         try {
@@ -51,9 +61,7 @@ function UserCards() {
             throw new Error('Failed to fetch Client');
           }
           const data = await response.json();
-          console.log(data)
           setClients(data);
-          console.log(clients);
        
         } catch (error) {
           console.error('Error fetching clients:', error);
@@ -76,6 +84,14 @@ function UserCards() {
     }
   }, [query, clients]);
 
+
+
+  const handleAddClient = (newClient: Client) => {
+    setClients((prev) => [...prev, newClient]);
+    setShowModal(false); // Close the modal
+  };
+
+
   const deleteclient = async (id: string) => {
     try {
       const response = await fetch(`${API_URL}/clients?id=${id}`, {
@@ -91,31 +107,24 @@ function UserCards() {
     }
   };
 
-  if (!username) return <p>Loading...</p>;
+  if (!username)
+    return (
+      <div className=" w-full h-full flex justify-center items-center h-18">
+        <span className="loading loading-spinner text-primary"></span>
+      </div>
+    );
 
   return (
 
-    <div className="flex flex-row overflow-hidden min-h-screen text-gray-800 p-2 bg-gray-100 text-gray-800">
+    <div className="flex gap-2 min-h-screen text-gray-800 p-2 bg-gray-100 text-gray-800">
       {/* Sidebar */}
-      <Sidebar />
-      <div className="invisible w-[260px] h-[100vh]" aria-hidden="true"></div>
-      <div className="flex-1 p-2 overflow-y-auto">
-        <div className="bg-white shadow-md rounded-xl flex flex-col justify-start gap-[10px] p-4">
-
+      <Sidebar user={user} />
+      <div className="invisible w-[21%] h-[100vh]" aria-hidden="true"></div>
+      <div className="flex-1 p-2">
+        <div className="bg-white flex flex-col justify-start gap-[10px] shadow-md rounded-xl p-4 relative">
           <div className="flex justify-between items-center w-full">
             <p className="text-3xl font-bold mb-3">Clients</p>
-            <div className="col-start-4 row-start-auto flex justify-center items-end h-30">
-              <button
-                onClick={() => setShowModal(true)}
-                className="flex items-center gap-2 bg-blue-600 text-white font-semibold px-4 py-4 mb-5 rounded-xl shadow-md hover:bg-blue-700 transition-all duration-200 active:scale-95 text-sm sm:text-base"
-              >
-                <img src="/plus-circle-svgrepo-com (1).svg" alt="Add lawyer" className="w-5 h-5 sm:w-6 sm:h-6" />
-                <span className="hidden sm:inline">Add client</span>
-              </button>
-              {showModal && (
-                <ClientModal onClose={() => setShowModal(false)} username={username} />
-              )}
-            </div>
+
             <div className="relative w-full max-w-xs">
               {/* Search Input */}
               <input
@@ -136,70 +145,140 @@ function UserCards() {
             </div>
           </div>
 
-          <div className="flex flex-row justify-start flex-wrap gap-[10px]">
-            {filteredClients.length > 0 ? (
-              filteredClients.map((client) => (
 
-                <div key={client.client_id} className="relative min-w-[100px] w-full sm:w-[calc(50%-12px)] md:w-[calc(33.333%-12px)] lg:w-[calc(25%-12px)] px-2 border border-transparent bg-gray-100 shadow-[1px_2px_10px_rgba(0,0,0,0.20)] rounded-lg flex flex-col justify-center items-center h-[300px] text-white">
+          <div className="grid grid-cols-4 gap-4 mt-2">
+  {filteredClients.length > 0 ? (
+    filteredClients.map((client) => (
+      <div
+        key={client.client_id}
+        onClick={() => setSelectedClient(client)}
+        className="relative cursor-pointer h-auto border border-transparent bg-gray-100 shadow-[1px_2px_10px_rgba(0,0,0,0.20)] rounded-lg flex flex-col justify-center items-center text-white p-4"
+      >
+        {/* Edit/Delete Buttons */}
+        <div className="absolute top-0 right-0 inline-flex divide-x divide-gray-400 overflow-hidden rounded shadow-sm m-2 z-10">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              // Edit logic here
+            }}
+            className="px-1 py-1.5 bg-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-500 hover:text-gray-900"
+          >
+            <img src="/edit-svgrepo-com.svg" alt="edit" className="size-2" />
+          </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              deleteclient(client.client_id);
+            }}
+            className="px-1 py-1.5 bg-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-500 hover:text-gray-900"
+          >
+            <img src="/delete-svgrepo-com.svg" alt="delete" className="size-2" />
+          </button>
+        </div>
 
-                  
-                  <div className="absolute top-0 right-0 inline-flex divide-x divide-gray-400 overflow-hidden rounded 
-                    shadow-sm m-2">
-                    <button
-                      type="button"
-                      className="px-1 py-1.5 bg-gray-300 text-sm font-medium text-gray-70 hover:bg-gray-500 hover:text-gray-900 focus:relative"
-                      aria-label="view"
-                    >
-                      <img src="/edit-svgrepo-com.svg" alt="edit client" className="size-2 color-white" />
-                    </button>
+        {/* Avatar */}
+        <div className="mb-2 mt-2 w-[100px] h-[100px] bg-cyan-700 rounded-full flex justify-center items-center">
+          <p className="font-bold text-xl">{client.fullName.charAt(0).toUpperCase()}</p>
+        </div>
 
-                    <button
-                      className="px-1 py-1.5 bg-gray-300 text-sm font-medium text-gray-70 transition-colors hover:bg-gray-500 hover:text-gray-900 focus:relative"
-                      aria-label="View"
-                      onClick={() => deleteclient(client.client_id)}
-                    >
-                      <img src="/delete-svgrepo-com.svg" alt="edit client" className="size-2 color-white" />
-                    </button>
-                  </div>
+        {/* Details */}
+        <h5 className="mb-2 text-xl font-bold text-gray-900">{client.fullName}</h5>
+        <div className="flex items-center gap-2">
+          <img src="/phone-svgrepo-com.svg" alt="sdijf" width={20} />
+          <p className="text-gray-700 text-xs my-1">{client.phoneNumber}</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <img src="/contact-book-svgrepo-com.svg" alt="dsho" width={20} />
+          <p className="text-gray-700 text-xs my-1">{client.contactInfo}</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <img src="/email-1572-svgrepo-com.svg" alt="sdlkjf" width={18} />
+          <p className="text-gray-700 text-xs my-1">{client.email}</p>
+        </div>
+      </div>
+    ))
+  ) : (
+    <p className="text-gray-500 text-lg mt-4">No lawyers found. :/</p>
+  )}
 
-                <div>
+  {/* Add Lawyer Button */}
+  <div className="col-span-4 flex justify-end mt-2">
+    <button
+      onClick={() => setShowModal(true)}
+      className="flex items-center gap-2 bg-blue-600 text-white font-semibold px-2 py-3 rounded-2xl shadow-[2px_2px_10px_rgba(0,0,0,0.20)] hover:bg-blue-700 transition-all duration-200 active:scale-95 text-sm sm:text-base"
+    >
+      <img src="/plus-circle-svgrepo-com (1).svg" alt="dsj" className="w-5 h-5  sm:w-6 sm:h-6" />
+      <span>Add Lawyer</span>
+    </button>
+  </div>
 
-                  <Image
-  src={client.pfp}
-  alt="Client Image"
-  width={100}
-  height={100}
-  className='scale-75 rounded-full'
+  {/* Add Client Modal */}
+  {showModal && (
+    <ClientModal
+      onClose={() => setShowModal(false)}
+      username={username}
+      onUserCreated={handleAddClient}
+    />
+  )}
 
-  
-/></div>
-                  <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 font-mona">{client.fullName}</h5>
-              <div className='flex flex-col justify-around h-2/5  w-full'>
-                  <div className="flex flex-row justify-center gap-[15px] w-full ">
+  {/* Detail Modal */}
+  {selectedClient && (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+      onClick={() => setSelectedClient(null)}
+    >
+      <div
+        className="bg-white p-6 rounded-lg shadow-lg w-full max-w-lg relative"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <button
+          className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+          onClick={() => setSelectedClient(null)}
+        >
+          ✕
+        </button>
+        <div className="flow-root">
+  <dl className="-my-3 divide-y divide-gray-200 text-sm">
+    <div className="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+      <dt className="font-medium text-gray-900">Full name</dt>
 
-                    <img src="/phone-svgrepo-com.svg" alt="our logo" width={20} height={18} className="" />
-                    <div className='w-3/4 overflow-hidden'><p className="font-mona w-5/6 text-gray-100 text-xs dark:text-gray-400 ">{client.phoneNumber}</p></div>
-                  </div>
-                  <div className="flex flex-row justify-center gap-[15px] w-full">
-                    <img src="/contact-book-svgrepo-com.svg" alt="our logo" width={20} height={18} className="mr-1" />
-                    <div className='w-3/4 overflow-hidden'><p className="font-mona w-5/6 text-gray-100 text-xs dark:text-gray-400 ">{client.contactInfo}</p></div>
-                  </div>
-                  <div className="flex flex-row justify-center gap-[15px] w-full">
-                    <img src="/email-1572-svgrepo-com.svg" alt="our logo" width={18} height={18} className="mb-2 mr-1" />
-                    <div className='w-3/4 overflow-hidden'><p className="mb-2 font-mona w-5/6 text-gray-100 text-xs dark:text-gray-400 ">{client.email}</p></div>
-                  </div>
-                  </div>
-                </div>
+      <dd className="text-gray-700 sm:col-span-2">{selectedClient.fullName}</dd>
+    </div>
 
-        
+    <div className="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+      <dt className="font-medium text-gray-900">Phone number </dt>
 
-              ))
-            ) : (
-              <p className="text-gray-500 text-lg mt-4">No clients found.</p>
-            )}
+      <dd className="text-gray-700 sm:col-span-2">{selectedClient.phoneNumber}</dd>
+    </div>
 
-           
-          </div>
+    <div className="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+      <dt className="font-medium text-gray-900">Contact info</dt>
+
+      <dd className="text-gray-700 sm:col-span-2">{selectedClient.contactInfo}</dd>
+    </div>
+
+    <div className="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+      <dt className="font-medium text-gray-900">Case</dt>
+
+      <dd className="text-gray-700 sm:col-span-2">{selectedClient.phoneNumber}</dd>
+    </div>
+
+    <div className="grid grid-cols-1 gap-1 py-3 sm:grid-cols-3 sm:gap-4">
+      <dt className="font-medium text-gray-900">Bio</dt>
+
+      <dd className="text-gray-700 sm:col-span-2">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et facilis debitis explicabo
+        doloremque impedit nesciunt dolorem facere, dolor quasi veritatis quia fugit aperiam
+        aspernatur neque molestiae labore aliquam soluta architecto?
+      </dd>
+    </div>
+  </dl>
+</div>
+      </div>
+    </div>
+  )}
+</div>
+
         </div>
       </div>
     </div>

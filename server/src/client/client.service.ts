@@ -19,7 +19,7 @@ export class ClientService {
     const user= await this.userRepository.findOne({where:{username}});
     if (!user) throw new Error ("user not found");
     const fullName=body.fullName
-    const email=body.email
+    const email=body.email  
     const contactInfo=body.contactInfo
     const phoneNumber=body.phoneNumber
     const pfp=`https://drive.google.com/uc?export=view&id=${id}`;
@@ -40,7 +40,7 @@ export class ClientService {
   async getuserClients(username:string): Promise<Client[]> {
      return this.clientRepository.find({
        where: { user: {username } },
-       relations: ['user'],
+       relations: ['user'],  
      });
    }
  

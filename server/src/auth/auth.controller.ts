@@ -50,6 +50,7 @@ export class AuthController {
       authenticated:true,
       username:user.username,
       message: 'Session is valid',
+      user:user
     };
   }
 }

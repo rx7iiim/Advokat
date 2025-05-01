@@ -34,7 +34,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/**/*"
-  ],
+, "public/worker.min.js"  ],
   "exclude": [
     "node_modules"
   ]

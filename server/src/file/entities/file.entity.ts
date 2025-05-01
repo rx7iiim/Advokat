@@ -6,34 +6,28 @@ import { User } from 'src/user/entities/user.entity';
 @Entity()
 export class File {
   @PrimaryGeneratedColumn()
-  file_id: number;
+  index: number;
 
   @Column()
-  file_name: string;
+  name: string;
 
   @Column()
   file_path: string;
 
-  @Column()
-  Client_Background: string;
+  @Column({type:'enum',enum:["active",'done'],default:"active"})
+ status:string;
 
-  @Column()
-  Case_Details: string;
 
-  @Column('jsonb')
-  witnesses: object;
 
-  @Column('jsonb')
-  documents: object;
+@Column()
+date:Date
 
-  @Column('jsonb')
-  laws: object;
+@Column()
+updated:Date 
 
-  @Column('jsonb')
-  defense_strategy: object;
+@Column()
+size:Number
 
-  @Column('jsonb')
-  negotiations: object;
 
   @ManyToOne(() => Client, (client) => client.client_id, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'client_id' })

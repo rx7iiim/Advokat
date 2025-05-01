@@ -10,7 +10,7 @@ function Upbar() {
     <div className={styles.container}>
     <div className={styles.bar}>
       <div className={styles.left}>
-      <Link href="/" className={styles.logo}><Image src="/logobold.png" alt="our logo" width={200} height={100} /></Link>
+      <Link href="/" className={styles.logo}><Image src="/logo bold.svg" alt="our logo" width={200} height={100} /></Link>
       </div>
       <div className={styles.goback}>
         <p className={styles.text}>Home</p>

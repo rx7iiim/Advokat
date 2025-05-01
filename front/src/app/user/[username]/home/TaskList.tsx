@@ -72,13 +72,12 @@ export default function TaskList({ tasks, setTasks ,username}: TaskListProps) {
         <input
           type="text"
           placeholder="Enter a new task..."
-          value={newTask}
           onChange={(e) => setNewTask(e.target.value)}
-          className="flex-1 px-3 py-2 text-sm border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="flex-1 bg-white px-3 py-2 text-sm border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
         <button
           onClick={createTask}
-          className="bg-blue-600 text-white px-3 py-2 rounded-lg text-sm shadow-sm hover:bg-blue-700 transition"
+          className="bg-blue-600 text-white  rounded-lg text-xs p-2 shadow-sm hover:bg-blue-700 transition"
         >
           Add Task
         </button>
@@ -94,13 +93,14 @@ export default function TaskList({ tasks, setTasks ,username}: TaskListProps) {
             {/* ✅ Task Checkbox */}
             <input
               type="checkbox"
-              checked={task.completed}
+              className="w-4 h-4 text-blue-500 bg-white border-gray-300 rounded focus:ring-blue-500"
+              checked={!!task.completed}
               onChange={() => toggleTaskCompletion(task.id)}
-              className="w-4 h-4 text-blue-500 border-gray-300 rounded focus:ring-blue-500"
+            
               aria-label={`Mark task "${task.description}" as ${task.completed ? "incomplete" : "complete"}`}
             />
             <span
-              className={`ml-3 text-sm text-gray-700 ${
+              className={`ml-3 text-sm bg-w text-gray-700 ${
                 task.completed ? "line-through text-gray-400" : ""
               }`}
             >

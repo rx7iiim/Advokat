@@ -1,18 +1,18 @@
 import { Controller, Get, Post, Body, Delete, Query, UploadedFile, MaxFileSizeValidator, FileTypeValidator, ParseFilePipe, UseInterceptors } from '@nestjs/common';
-import { ClientService } from './client.service';
-import { CreateClientDto } from './dto/create-client.dto';
+import { LawyerService } from './lawyer.service';
+import { CreateLawyerDto } from './dto/create-lawyer.dto';
 import { GoogleDriveService } from 'src/drive/drive.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 
 @Controller('clients')
-export class ClientController {
+export class LawyerController {
   constructor(  
-    private readonly clientService: ClientService,
+    private readonly lawyerService: LawyerService,
     private readonly googleDriveService:GoogleDriveService
   ) {}
 
-@Post('client')
+@Post('lawyer')
 @UseInterceptors(FileInterceptor('pfp'))
 async create(
 @Body() body:any,
@@ -31,18 +31,18 @@ async create(
   const folderId="1DGOYFqUIa_iSn52T_Ss0FktdQoMdbNnU"
   const uploadFile=await this.googleDriveService.uploadFile(file ,folderId);
 
-    return this.clientService.createClient(body,username,uploadFile.id);
+    return this.lawyerService.createClient(body,username,uploadFile.id);
   }
 
-  @Get("clients")
+  @Get("lawyers")
   findTasks(@Query ('username') username:string) {
-    console.log( this.clientService.getuserClients(username));
-    return (this.clientService.getuserClients(username));
+    console.log( this.lawyerService.getuserClients(username));
+    return (this.lawyerService.getuserClients(username));
   }
 
 
   @Delete()
   remove(@Query('id') id: number) {
-    return this.clientService.deleteClient(id);
+    return this.lawyerService.deleteClient(id);
   }
 }

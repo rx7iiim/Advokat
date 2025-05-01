@@ -11,7 +11,7 @@ import { DriveModule } from 'src/drive/drive.module';
     TypeOrmModule.forFeature([Client]),
   TypeOrmModule.forFeature([User]),DriveModule],
   controllers: [ClientController],
-  providers: [ClientService],
+  providers: [ClientService],   
   exports:[ClientService]
 })
 export class ClientModule {}
