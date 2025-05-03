@@ -8,12 +8,12 @@ const Pricing = () => {
   return (
     <div id="pricing" className="p-6 md:p-10 bg-white min-h-screen flex justify-center items-center">
       <div className="shadow-lg rounded-xl p-6 md:p-10 max-w-3xl w-full bg-white md:bg-gray-100 ">
-        {/* ✅ العنوان وأزرار التبديل */}
+       
         <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-800">
           Advokat Pricing
         </h2>
 
-        {/* ✅ أزرار التبديل مع شريط متحرك */}
+      
         <div className="mt-6 relative flex justify-center space-x-6 ">
           <button
             className={`text-xl font-semibold transition-all ${activePlan === "law-firm" ? "text-customGray" : "text-black"}`}
@@ -29,7 +29,7 @@ const Pricing = () => {
             Individual Lawyer
           </button>
 
-          {/* ✅ الشريط المتحرك */}
+        
           <div
             className="mt-9 absolute bottom-0 h-1 transition-all duration-300 hidden md:block"
             style={{
@@ -42,11 +42,10 @@ const Pricing = () => {
           />
         </div>
 
-        {/* ✅ عرض الباقات بناءً على الحالة */}
         <div className="mt-16 flex flex-col md:flex-row justify-center gap-6 mb-4">
           {activePlan === "law-firm" ? (
             <>
-              {/* ✅ باقة Starter */}
+            
               <div className="bg-gray-50 shadow-2xl rounded-xl p-6 md:w-1/2 items-start border w-full hover:border-b-2 hover:border-customGray transition duration-200 pb-1"
                >
                 <h3 className="text-3xl font-bold mb-6 ml-4">Starter</h3>
@@ -63,7 +62,7 @@ const Pricing = () => {
                 </div>
               </div>
 
-              {/* ✅ باقة Growth */}
+             
               <div className="bg-gray-50 shadow-2xl rounded-xl p-6 md:w-1/2 items-start border w-full hover:border-b-2 hover:border-blue-600 transition duration-200 pb-1"
               >
                 <h3 className="text-3xl font-bold mb-6 ml-4">Growth</h3>
@@ -82,7 +81,7 @@ const Pricing = () => {
             </>
           ) : (
             <>
-              {/* ✅ باقة Individual Basic */}
+           
               <div className="bg-gray-50 shadow-2xl rounded-xl p-6 md:w-1/2 items-start border w-full hover:border-b-2 hover:border-blue-600 transition duration-200 pb-1"
                 >
                 <h3 className="text-3xl font-bold mb-6 ml-4">Basic</h3>
@@ -105,7 +104,7 @@ const Pricing = () => {
                 </div>
               </div>
 
-              {/* ✅ باقة Individual Pro */}
+        
               <div className="bg-gray-50 shadow-2xl rounded-xl p-6 md:w-1/2 items-start border w-full hover:border-b-2 hover:border-blue-600 transition duration-200 pb-1"
                >
                 <h3 className="text-3xl font-bold mb-6 ml-4">Pro</h3>
@@ -129,7 +128,7 @@ const Pricing = () => {
                 </div>
               </div>
 
-              {/* ✅ باقة Premium */}
+         
               <div className="bg-gray-50 shadow-2xl rounded-xl p-6 md:w-1/2 items-start border w-full hover:border-b-2 hover:border-blue-600 transition duration-200 pb-1"
              >
                 <h3 className="text-3xl font-bold mb-6 ml-4">Premium</h3>
