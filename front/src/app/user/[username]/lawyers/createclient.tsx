@@ -1,17 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import * as dotenv from 'dotenv';
-import Lawyer from "../lawyers/lawyer";
-
 dotenv.config();
 
-interface LawyerModalProps {
+interface ClientModalProps {
   onClose: () => void;
   username: string;
-  onUserCreated: (newClient: Lawyer) => void;
 }
 
-export default function LawyerModal({ onClose,onUserCreated, username }: LawyerModalProps) {
+export default function ClientModal({ onClose, username }: ClientModalProps) {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   const [fullName, setFullName] = useState("");
@@ -36,7 +33,7 @@ export default function LawyerModal({ onClose,onUserCreated, username }: LawyerM
       if (pfp) {
         formData.append("pfp", pfp);
       }
-      const res = await fetch(`${API_URL}/lawyers/lawyer?username=${username}`, {
+      const res = await fetch(`${API_URL}/clients/client?username=${username}`, {
         method: "POST",
         body: formData, 
       });
@@ -44,20 +41,12 @@ export default function LawyerModal({ onClose,onUserCreated, username }: LawyerM
       if (!res.ok) {
         throw new Error(await res.text()); // Show backend error
       }
-      const createdClient={
-        lawyer_id:"",
-        fullName :fullName,
-         email: email,
-         phoneNumber: phoneNumber,
-        contactInfo:contactInfo,
-      pfp:""
-    }
+  
       setFullName("");
       setEmail("");
       setPhoneNumber("");
       setContactInfo("");
       setPfp(null);
-      onUserCreated(createdClient);
       onClose();
     } catch (err: any) {
       setError(err.message);
@@ -118,20 +107,14 @@ export default function LawyerModal({ onClose,onUserCreated, username }: LawyerM
             className="hidden"
           />
         </label>
-       <div className="flex flex-row justify-between">
+
         <button
           type="submit"
           disabled={loading}
-          className="bg-blue-500 w-[150px] text-white p-2 rounded hover:bg-blue-700 transition disabled:opacity-50"
+          className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition disabled:opacity-50"
         >
           {loading ? "Submitting..." : "Submit"}
         </button>
-        <button
-          type="submit"
-          onClick={onClose}
-   className="bg-red-500 w-[150px] text-white p-2 rounded hover:bg-red-700 transition disabled:opacity-50"
-        >cancel</button>
-        </div>
       </form>
     </div>
   );
