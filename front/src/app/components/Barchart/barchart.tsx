@@ -19,14 +19,14 @@ type DataPoint = {
 
 
 const dataByYear: Record<number, DataPoint[]> = {
-  2023: [
+  2020: [
     { name: 'Jan', won: 10, lost: 4 },
     { name: 'Feb', won: 6, lost: 2 },
     { name: 'Mar', won: 8, lost: 3 },
     { name: 'Apr', won: 9, lost: 1 },
     { name: 'May', won: 4, lost: 5 },
   ],
-  2024: [
+  2021: [
     { name: 'Jan', won: 14, lost: 3 },
     { name: 'Feb', won: 8, lost: 5 },
     { name: 'Mar', won: 11, lost: 2 },
@@ -36,7 +36,7 @@ const dataByYear: Record<number, DataPoint[]> = {
     { name: 'Apr', won: 7, lost: 6 },
     { name: 'May', won: 13, lost: 4 },
   ],
-  2025: [
+  2022: [
     { name: 'Jan', won: 12, lost: 7 },
     { name: 'Feb', won: 9, lost: 6 },
     { name: 'Mar', won: 13, lost: 4 },
@@ -46,7 +46,7 @@ const dataByYear: Record<number, DataPoint[]> = {
     { name: 'Apr', won: 10, lost: 3 },
     { name: 'May', won: 15, lost: 2 },
   ],
-  2026: [
+  2023: [
     { name: 'Jan', won: 14, lost: 7 },
     { name: 'Feb', won: 9, lost: 6 },
     { name: 'Mar', won: 3, lost: 4 },
@@ -56,7 +56,7 @@ const dataByYear: Record<number, DataPoint[]> = {
     { name: 'Apr', won: 16, lost: 3 },
     { name: 'May', won: 15, lost: 2 },
   ],
-  2027: [
+  2024: [
     { name: 'Jan', won: 17, lost: 7 },
     { name: 'Feb', won: 19, lost: 6 },
     { name: 'Mar', won: 3, lost: 4 },
@@ -66,7 +66,7 @@ const dataByYear: Record<number, DataPoint[]> = {
     { name: 'Apr', won: 5, lost: 3 },
     { name: 'May', won: 10, lost: 2 },
   ],
-  2028: [
+  2025: [
     { name: 'Jan', won: 1, lost: 7 },
     { name: 'Feb', won: 13, lost: 6 },
     { name: 'Mar', won: 15, lost: 4 },
@@ -109,8 +109,6 @@ const Barchart: React.FC = () => {
     </button>
   </div>
 </div>
-
-
 
 
       <div style={{ width: "80%", height: 200 }}>
