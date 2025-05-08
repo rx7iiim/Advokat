@@ -17,7 +17,7 @@ function UserCards() {
   const [Lawyers, setLawyers] = useState<Lawyer[]>([]);
   const [username, setUsername] = useState<string | null>(null);
   const [query, setQuery] = useState('');
-  const [filteredLawyers, setFilteredLawyers] = useState<Lawyer[]>([]);
+  const [filteredFiles, setFilteredFiles] = useState<File[]>([]);
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const didRunRef =useRef(false);
 
