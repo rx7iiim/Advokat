@@ -1,13 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { LawFirm } from 'src/law-firm/entities/law-firm.entity'; 
+import { User } from 'src/user/entities/user.entity';
 
 @Entity()
 export class Lawyer {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number;  
 
   @Column()
-  fullName: string;
+  lawyerUsername: string;
 
   @Column({ unique: true })
   phoneNumber: string;
@@ -30,6 +31,9 @@ export class Lawyer {
   @Column({ type: 'int' })
   experienceYears: number;
 
-  @ManyToOne(() => LawFirm, (lawFirm) => lawFirm.lawyers, { onDelete: 'SET NULL' })
-  lawFirm: LawFirm;
+  @ManyToOne(() => User, (user) => user.lawyers, { onDelete: 'SET NULL' })
+  @JoinColumn()
+  user: User;
+
+
 }

@@ -19,7 +19,7 @@ export default function Sidebar( {user}) {
     { href: "clients", icon: "/cleint.svg", label: "Clients" },
     { href: "files", icon: "/files.svg", label: "Files" },
     // Conditionally render these only if not independent lawyer
-    ...(user.role !== "independent lawyer"
+    ...(user.role == "Firm Manager"
       ? [
           { href: "lawyers", icon: "/lawyer.svg", label: "Lawyers" },
           { href: "dashboard", icon: "/dashbord.svg", label: "Dashboard" },

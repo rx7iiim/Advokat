@@ -5,7 +5,7 @@ import { GoogleDriveService } from 'src/drive/drive.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 
-@Controller('clients')
+@Controller('lawyers')
 export class LawyerController {
   constructor(  
     private readonly lawyerService: LawyerService,
@@ -34,7 +34,7 @@ async create(
     return this.lawyerService.createClient(body,username,uploadFile.id);
   }
 
-  @Get("lawyers")
+  @Get("lawyer")
   findTasks(@Query ('username') username:string) {
     console.log( this.lawyerService.getuserClients(username));
     return (this.lawyerService.getuserClients(username));

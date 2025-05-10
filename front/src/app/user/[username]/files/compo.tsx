@@ -39,15 +39,42 @@ dotenv.config();
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
     const [fileData, setFileData] = useState<FileData[]>([]);
+
     useEffect(() => {
+      if (didRunRef.current) return;
+      didRunRef.current = true;
+        fetch(`${API_URL}/auth/session`, {
+          credentials: "include",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (!data.authenticated || !data.username) {
+              router.push("/login");
+            } else {
+              console.log(data)
+              setUser(data.user);
+              setUsername(data.username);
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching session:", error);
+            router.push("/login");
+          });
+      }, [router, API_URL]);
+
+
+
+    useEffect(() => {
+      if(!username) return ;
         const fetchFiles = async () => {
           try {
-            const response = await fetch(`${API_URL}/file`);
+            const response = await fetch(`${API_URL}/file?username=${username}`);
             if (!response.ok) {
               throw new Error('Failed to fetch files');
             }
             const data = await response.json();
             setFileData(data);
+            console.log("ccc")
           } catch (error) {
             console.error('Error fetching files:', error);
           }
@@ -55,7 +82,7 @@ dotenv.config();
       
         fetchFiles();
   
-      }, []);
+      }, [username, API_URL]);
 
 
 
@@ -127,27 +154,7 @@ const handleDownload = async (fileId: string, fileName: string) => {
 
   
 
-useEffect(() => {
-    if (didRunRef.current) return;
-    didRunRef.current = true;
-      fetch(`${API_URL}/auth/session`, {
-        credentials: "include",
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (!data.authenticated || !data.username) {
-            router.push("/login");
-          } else {
-            console.log(data)
-            setUser(data.user);
-            setUsername(data.username);
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching session:", error);
-          router.push("/login");
-        });
-    }, [router, API_URL]);
+
   
     
     if (!username)

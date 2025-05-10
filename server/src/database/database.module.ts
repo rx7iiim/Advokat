@@ -7,6 +7,7 @@ import { File } from 'src/file/entities/file.entity';
 import { LawFirm } from 'src/law-firm/entities/law-firm.entity';
 import { Schedule } from 'src/schedule/entities/schedule.entity';
 import { User } from 'src/user/entities/user.entity';
+import {Lawyer }from 'src/lawyer/entities/lawyer.entity'
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
@@ -15,7 +16,7 @@ import { User } from 'src/user/entities/user.entity';
         useFactory: (configService: ConfigService) =>({
             type: 'postgres',
             url: configService.get<string>('DATABASE_URL'),
-            entities:[User,Subscription,LawFirm,Client,File,Schedule],
+            entities:[User,Subscription,LawFirm,Client,File,Schedule,Lawyer],
             autoLoadEntities: true,
             synchronize: true,
         }),}),

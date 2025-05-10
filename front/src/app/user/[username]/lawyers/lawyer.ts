@@ -1,6 +1,6 @@
 export default interface Lawyer {
     lawyer_id: string;
-    fullName: string;
+    lawyerUsername: string;
     phoneNumber: string;
     contactInfo: string;
     email: string;

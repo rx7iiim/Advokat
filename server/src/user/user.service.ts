@@ -32,6 +32,7 @@ export class UserService {
             const firmLawyer=createUserDto.firmLawyer
             const role=createUserDto.role
             const plan=createUserDto.plan
+            const lawFirm= createUserDto.lawFirm
 
             const username=createUserDto.username
             const password = await this.authservice.hashPassword(createUserDto.password);
@@ -47,12 +48,14 @@ export class UserService {
             firstName,
             lastName,
             confirmationCode,
+            lawFirm,
             confirmationExpires: new Date(Date.now() + 10 * 60 * 1000), 
             });
         
            const savedUser = await this.userRepository.save(newUser);
+           if (!newUser.lawFirm){
         
-            await this.emailService.sendVerificationEmail(createUserDto.email, confirmationCode);
+            await this.emailService.sendVerificationEmail(createUserDto.email, confirmationCode);}
           
            
             return { message: 'Verification code sent. Please check your email.' };

@@ -40,4 +40,36 @@ export class EmailService {
       this.logger.error(`Email sending failed: ${error.message}`);
     }
   }
+
+
+
+
+  async sendCompanyAdditionEmail(email: string, tempPassword: string, companyName: string) {
+  try {
+    const info = await this.transporter.sendMail({
+      from: `"Advocat Support Team" <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject: `Welcome to ${companyName} on Advocat!`,
+      text: `Hello,
+
+You have been added to the company "${companyName}" on Advocat. 
+
+To access your account, please log in using the following temporary password:
+
+Temporary Password: ${tempPassword}
+
+We recommend that you change this password immediately after logging in for security purposes.
+
+Welcome to Advocat! We are excited to have you onboard.
+
+Best Regards,
+The Advocat Team`,
+    });
+
+    this.logger.log(`Email sent to ${email}: ${info.messageId}`);
+  } catch (error) {
+    this.logger.error(`Failed to send company addition email to ${email}: ${error.message}`);
+  }
+}
+
 }

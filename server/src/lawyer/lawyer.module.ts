@@ -6,9 +6,12 @@ import { User } from 'src/user/entities/user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LawFirm } from 'src/law-firm/entities/law-firm.entity';
 import { LawFirmModule } from 'src/law-firm/law-firm.module';
+import { Lawyer } from './entities/lawyer.entity';
+import { UserModule } from 'src/user/user.module';
+import { EmailModule } from 'src/email/email.module';
 
 @Module({
-  imports:[forwardRef(()=>LawyerModule),TypeOrmModule.forFeature([User]),DriveModule,TypeOrmModule.forFeature([LawFirm]),LawFirmModule],  
+  imports:[TypeOrmModule.forFeature([Lawyer]),TypeOrmModule.forFeature([User]),DriveModule,forwardRef(() =>UserModule ),forwardRef(() =>EmailModule ),],  
   controllers: [LawyerController],
   providers: [LawyerService],
   exports:[LawyerService],

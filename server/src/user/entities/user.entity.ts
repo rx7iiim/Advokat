@@ -5,6 +5,7 @@ import { Client } from '../../client/entities/client.entity'
 import { File } from '../../file/entities/file.entity';
 import { Schedule } from '../../schedule/entities/schedule.entity';
 import { Task } from '../../task/entities/task.entity';
+import { Lawyer } from 'src/lawyer/entities/lawyer.entity';
 
 @Entity()
 export class User {
@@ -46,11 +47,14 @@ export class User {
   confirmationExpires: Date;
 
 
-  @Column({ type: 'enum', enum: ['Firm Manager', 'single lawyer','lawyer'],default:"single lawyer" })
+  @Column({ type: 'enum', enum: ['Firm Manager', 'single lawyer','firm lawyer'],default:"single lawyer" })
   role: string;
 
   @Column()
   plan:string;
+
+  @Column({nullable:true})
+  lawFirm:string;
 
  
   @OneToOne(() => Subscription, (subscription) => subscription.user, { onDelete: 'CASCADE' })
@@ -66,9 +70,15 @@ export class User {
   @OneToMany(() => Client, (client) => client.user,{ nullable: true })
   clients: Client[];
 
+  @OneToMany(() => Lawyer, (lawyer) => lawyer.user,{onDelete:'CASCADE'})
+  lawyers: Lawyer[];
+
   @OneToMany(() => File, (file) => file.user,{ nullable: true })
   files: File[];
 
   @OneToMany(() => Schedule, (schedule) => schedule.user,{ nullable: true })
   schedules: Schedule[];
+
+  
+
 }
