@@ -10,7 +10,7 @@ function FirmManager({ selectedPlan, handleRadioChange, isDisabled }) {
 
   return (
     <div className="w-3xs flex flex-col justify-start gap-[10px]">
-      <h1 className="text-center text-2xl">Firm Manager</h1>
+      <h1 className="text-center text-2xl">Firm Admin</h1>
       <div className="flex flex-col h-64 justify-start items-center gap-4">
         {plans.map((ele, index) => (
           <Option

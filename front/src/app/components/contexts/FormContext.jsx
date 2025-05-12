@@ -5,7 +5,7 @@ const FormContext = createContext();
 
 export const FormProvider = ({ children }) => {
   const [formData, setFormData] = useState({
-    role: null, // 'FirmManager', 'FirmLawyer', 'IndividLawyer'
+    role:  'Firm Manager', // 'FirmManager', 'FirmLawyer', 'IndividLawyer'
     firmPlan: null,
     individPlan: null,
     firmLawyer: false,
@@ -17,6 +17,7 @@ export const FormProvider = ({ children }) => {
     password: '',
     username: '',
     confirmedPassword: '',
+    lawFirm: '',
     payment : {
       paymentMethod: 'CIB',
       CardNumber: null,
@@ -34,7 +35,7 @@ export const FormProvider = ({ children }) => {
   const updateFormData = (field, value) => {
     setFormData((prev) => {
       const updatedFormData = { ...prev, [field]: value };
-      console.log("Updated Form Data:", updatedFormData); // ✅ Logs correctly
+      console.log("Updated Form Data:", updatedFormData); 
       return updatedFormData;
     });
   };
@@ -46,5 +47,4 @@ export const FormProvider = ({ children }) => {
   );
 };
 
-// Custom Hook for easy access
 export const useForm = () => useContext(FormContext);

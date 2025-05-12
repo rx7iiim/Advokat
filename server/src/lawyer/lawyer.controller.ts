@@ -42,7 +42,9 @@ async create(
 
 
   @Delete()
-  remove(@Query('id') id: number) {
-    return this.lawyerService.deleteClient(id);
+  remove(
+    @Query('phoneNumber') phoneNumber: string) {
+    console.log(phoneNumber);
+    return this.lawyerService.deleteClient(phoneNumber);
   }
 }

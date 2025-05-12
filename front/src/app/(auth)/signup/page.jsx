@@ -23,8 +23,10 @@ dotenv.config();
 
 
 const SignUpContent = () => {
+ 
   const [step, setStep] = useState(0);
-  const { formData, updateFormData, error, setError,errorText,setErrtext } = useForm(); // ✅ Now useForm() works because it's inside FormProvider
+  const { formData, updateFormData, error, setError,errorText,setErrtext } = useForm(); 
+ const [prevUsername, setPrevUsername] = useState(null);
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   
@@ -74,6 +76,7 @@ const SignUpContent = () => {
             username: formData.username,
             role:formData.role,
           });
+          setPrevUsername(toString(formData.username) );
           console.log(response)
          } catch (error) {
            console.error("Error verifying email:", error);
@@ -87,8 +90,8 @@ const SignUpContent = () => {
         break;
   
       case 3: // Step 4 validation (if any, otherwise continue)
-      
-      if(formData.phone===""  || formData.firstName==="" || formData.lastName==="" || formData.email==="" || formData.username===""){
+   
+      if(formData.phone===""  || formData.firstName==="" || formData.lastName==="" || formData.email==="" || formData.username==="" || formData.lawFirm===""){
         setError(true);
         setErrtext("please fill all fields");
         return;
@@ -100,6 +103,43 @@ const SignUpContent = () => {
         return;
         }
         setError(false);
+        try {
+  const updateData = {
+    plan: "starter",
+    lawFirm: formData.lawFirm,
+    first_name: formData.first_name,
+    last_name: formData.last_name,
+    username: formData.username,
+    role: formData.role,
+    phoneNumber:formData.phone
+
+  };
+
+  const response = await axios.put(`${API_URL}/auth/update`, updateData, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    withCredentials: true
+  });
+
+  console.log('Update successful:', response.data);
+  // Handle success (e.g., show success message, redirect, etc.)
+} catch (error) {
+  console.error('Update error:', error);
+  
+  let errorMessage = "Update failed. Please try again.";
+  if (error.response) {
+    // Server responded with error status (4xx, 5xx)
+    errorMessage = error.response.data?.message || error.response.data?.error || errorMessage;
+  } else if (error.request) {
+    // Request was made but no response received
+    errorMessage = "No response from server. Please check your connection.";
+  }
+
+  setError(true);
+  setErrtext(errorMessage);
+  return;
+}
         break;
   
       default:
@@ -125,7 +165,7 @@ const SignUpContent = () => {
       )}
         <h1 className={`${styles.title} font-mona text-4xl font-bold`}>Create An Account</h1>
         <p className='font-mona'>
-          Already have an account?<Link href="../../login" className='font-mona underline p-1'>Log in</Link>
+          Already have an account?<Link href="../login" className='font-mona underline p-1 cursor-pointer'>Log in</Link>
         </p>
       </div>
 

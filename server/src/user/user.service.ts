@@ -53,9 +53,9 @@ export class UserService {
             });
         
            const savedUser = await this.userRepository.save(newUser);
-           if (!newUser.lawFirm){
-        
-            await this.emailService.sendVerificationEmail(createUserDto.email, confirmationCode);}
+      if (newUser.role !== "firm lawyer") {
+  await this.emailService.sendVerificationEmail(createUserDto.email, confirmationCode);
+}
           
            
             return { message: 'Verification code sent. Please check your email.' };

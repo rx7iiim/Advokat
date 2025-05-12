@@ -2,14 +2,17 @@
 import React, { useRef } from 'react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+
 import Lawyer from './lawyer';
 import LawyerModal from './createLawyer';
 import Sidebar from '@/app/components/sidebar/Sidebar';
 import Image from 'next/image';
 import * as dotenv from 'dotenv';
 import Link from 'next/link';
-import LawyerDetailsModal from './tabbemodal';
+import LawyerDetailsModal from './TabbedModal';
 import TabbedModal from './TabbedModal';
+import Chat from '@/app/components/chat/Chat';
+
 dotenv.config();
 
 function UserCards() {
@@ -57,7 +60,9 @@ function UserCards() {
     if (username) {
       const fetchLawyer = async () => {
         try {
+
           const response = await fetch(`${API_URL}/lawyers/lawyer?username=${username}`);
+
           if (!response.ok) {
             throw new Error('Failed to fetch Lawyer');
           }
@@ -93,15 +98,17 @@ function UserCards() {
   };
 
 
-  const deleteLawyer = async (id: string) => {
+  const deleteLawyer = async (phoneNumber: string) => {
     try {
-      const response = await fetch(`${API_URL}/Lawyers?id=${id}`, {
+      const response = await fetch(`${API_URL}/lawyers?phoneNumber=${phoneNumber}`, {
         method: 'DELETE',
       });
+      console.log(response);
       if (response.ok) {
-        setLawyers(Lawyers.filter((Lawyer) => Lawyer.lawyer_id !== id));
+        setLawyers(Lawyers.filter((Lawyer) => Lawyer.phoneNumber !== phoneNumber));
       } else {
         console.error('Failed to delete task');
+        
       }
     } catch (error) {
       console.error('Error deleting task:', error);
@@ -168,7 +175,7 @@ function UserCards() {
   {filteredLawyers.length > 0 ? (
     filteredLawyers.map((Lawyer) => (
       <div
-        key={Lawyer.lawyer_id}
+        key={+new Date(Date.now())}
         onClick={() => setSelectedLawyer(Lawyer)}
         className="relative cursor-pointer h-auto border border-transparent bg-gray-100 shadow-[1px_2px_10px_rgba(0,0,0,0.20)] rounded-lg flex flex-col justify-center items-center text-white p-4"
       >
@@ -177,7 +184,7 @@ function UserCards() {
           <button
             onClick={(e) => {
               e.stopPropagation();
-              // Edit logic here
+              deleteLawyer(Lawyer.phoneNumber);
             }}
             className="px-1 py-1.5 bg-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-500 hover:text-gray-900"
           >
@@ -186,7 +193,7 @@ function UserCards() {
           <button
             onClick={(e) => {
               e.stopPropagation();
-              deleteLawyer(Lawyer.lawyer_id);
+              deleteLawyer(Lawyer.phoneNumber);
             }}
             className="px-1 py-1.5 bg-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-500 hover:text-gray-900"
           >
@@ -216,7 +223,7 @@ function UserCards() {
       </div>
     ))
   ) : (
-    <p className="text-gray-500 text-lg mt-4">No lawyers found. :/</p>
+    <p className="text-gray-500 text-lg mt-4">No lawyers found.</p>
   )}
 
   {/* Add Lawyer Button */}
@@ -255,6 +262,7 @@ function UserCards() {
 
         </div>
       </div>
+      <Chat/>
     </div>
   );
 }

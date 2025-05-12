@@ -11,21 +11,11 @@ function FirmLawyer({ isFirmLawyer, handleCheckboxChange }) {
           purchase a subscription; your firm has already covered it! <br />
           Since your law firm’s account is managed by the Firm Admin, you can
           access all the tools and features under their plan without any
-          additional cost, so just{" "}
-          <span className="font-bold">check the box</span> below and click next!
+          additional cost, you'll receive an email with the credentials you need <br />to access the app
+          the moment your employment is official
+          
         </p>
-        <div className="flex justify-center gap-4 w-full items-center">
-          <input
-            type="checkbox"
-            id="firm-lawyer"
-            name="firm-lawyer"
-            value="IsFirmLawyer"
-            checked={isFirmLawyer}
-            onChange={handleCheckboxChange}
-            className="w-4 h-4"
-          />
-          <label htmlFor="firm-lawyer">i am a firm lawyer</label>
-        </div>
+        
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, JoinColumn } from 'typeorm';
 import { LawFirm } from 'src/law-firm/entities/law-firm.entity'; 
 import { User } from 'src/user/entities/user.entity';
+import { isNotEmpty } from 'class-validator';
 
 @Entity()
 export class Lawyer {
@@ -10,7 +11,8 @@ export class Lawyer {
   @Column()
   lawyerUsername: string;
 
-  @Column({ unique: true })
+  
+  @Column({ unique: true ,nullable:false})
   phoneNumber: string;
 
   @Column()

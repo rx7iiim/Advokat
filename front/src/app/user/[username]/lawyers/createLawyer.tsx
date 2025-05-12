@@ -53,7 +53,7 @@ export default function LawyerModal({ onClose, onUserCreated, username }: Lawyer
         throw new Error(await res.text());
       }
        const createdLawyer={
-        lawyer_id:"",
+        lawyer_id:+new Date (Date.now()),
         lawyerUsername :fullName,
          email: email,
          phoneNumber: phoneNumber,

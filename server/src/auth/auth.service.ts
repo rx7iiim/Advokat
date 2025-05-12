@@ -1,7 +1,9 @@
 import {
+  BadRequestException,
     forwardRef,
     Inject,
     Injectable,
+    NotFoundException,
   } from '@nestjs/common';
 import { CreateUserDto } from '../user/dto/create-user.dto';
 import { User } from '../user/entities/user.entity';
@@ -14,6 +16,7 @@ import * as crypto from 'crypto';
 import { CreateLawFirmDto } from 'src/law-firm/dto/create-law-firm.dto';
 import { LawFirmService } from 'src/law-firm/law-firm.service';
 import { LawFirm } from 'src/law-firm/entities/law-firm.entity';
+import { UpdateUserDto } from 'src/user/dto/update-user.dto';
 
 
 @Injectable()
@@ -35,6 +38,43 @@ export class AuthService {
             const user = this.userService.create(createUserDto);
             return user
           }
+
+           async updateUser(updateUserDto: UpdateUserDto): Promise<User> {
+            console.log("here0")
+            console.log(updateUserDto)
+        
+  // 1. Find the user
+  const user = await this.userRepository.findOne({ 
+    where: { username: updateUserDto.username } 
+  });
+
+  if (!user) {
+    throw new NotFoundException(`User with username ${updateUserDto.username} not found`);
+  }
+
+  // 2. Create a safe update object
+  const updates = {
+    plan: updateUserDto.plan,
+    lawFirm: updateUserDto.lawFirm,
+    firstName: updateUserDto.first_name, // Note the naming conversion
+    lastName: updateUserDto.last_name,
+    username: updateUserDto.username,
+    role: updateUserDto.role,
+    phoneNumber:updateUserDto.phoneNumber
+  };
+console.log("here")
+  
+  Object.assign(user, updates);
+  console.log("here 2")
+  
+  if (this.userRepository.hasId(user)) {
+    await this.userRepository.save(user);
+    return user;
+  }
+
+  throw new BadRequestException('No valid changes detected');
+}
+
 
           async signupLawFirm(createLawFirmDto: CreateLawFirmDto){
 

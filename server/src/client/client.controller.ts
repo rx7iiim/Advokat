@@ -42,7 +42,7 @@ async create(
 
 
   @Delete()
-  remove(@Query('id') id: number) {
-    return this.clientService.deleteClient(id);
+  remove(@Query('phoneNumber') phoneNumber: string) {
+    return this.clientService.deleteClient(phoneNumber);
   }
 }

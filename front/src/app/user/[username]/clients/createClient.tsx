@@ -46,7 +46,7 @@ export default function ClientModal({ onClose,onUserCreated, username }: ClientM
         throw new Error(await res.text()); // Show backend error
       }
       const createdClient={
-        client_id:"",
+        client_id: + new Date(Date.now()),
         fullName :fullName,
          email: email,
          phoneNumber: phoneNumber,

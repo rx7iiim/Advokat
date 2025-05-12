@@ -87,11 +87,12 @@ const password= generateRandomString(10)
  
  
  
-   async deleteClient(id: number): Promise<void> {
-     const result = await this.lawyerRepository.delete(id);
+   async deleteClient(phoneNumber: string): Promise<void> {
+     const result = await this.lawyerRepository.delete({phoneNumber});
+
  
      if (result.affected === 0) {
-       throw new NotFoundException(`Task with ID ${id} not found`);
+       throw new NotFoundException(`Task with ID ${phoneNumber} not found`);
      }
  }
 }

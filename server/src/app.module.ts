@@ -16,6 +16,10 @@ import { SessionSerializer } from 'src/auth/session.serializer';
 import { TaskModule } from 'src/task/task.module';
 import { DriveModule } from './drive/drive.module';
 import { LawyerModule } from './lawyer/lawyer.module';
+import { ChatModule } from './chat/chat.module';
+import { ProxyController } from './proxy/proxy.controller';
+import { HttpModule } from '@nestjs/axios';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -33,10 +37,12 @@ import { LawyerModule } from './lawyer/lawyer.module';
     PassportModule.register({ session: true }),
     TaskModule,
     DriveModule,
-    LawyerModule
+    LawyerModule,
+    ChatModule,
+    HttpModule
  
   ],
-  controllers: [AppController],
+  controllers: [AppController, ProxyController],
   providers: [AppService,SessionSerializer],})
 export class AppModule {}
 

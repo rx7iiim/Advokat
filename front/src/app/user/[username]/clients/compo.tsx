@@ -9,6 +9,7 @@ import Image from 'next/image';
 import * as dotenv from 'dotenv';
 import Link from 'next/link';
 import Client from './clientInterface';
+import Chat from '@/app/components/chat/Chat';
 dotenv.config();
 
 function UserCards() {
@@ -94,11 +95,12 @@ function UserCards() {
 
   const deleteclient = async (id: string) => {
     try {
-      const response = await fetch(`${API_URL}/clients?id=${id}`, {
+      console.log(id)
+      const response = await fetch(`${API_URL}/clients?phoneNumber=${id}`, {
         method: 'DELETE',
       });
       if (response.ok) {
-        setClients(clients.filter((client) => client.client_id !== id));
+        setClients(clients.filter((client) => client.phoneNumber !== id));
       } else {
         console.error('Failed to delete task');
       }
@@ -168,7 +170,7 @@ function UserCards() {
           <button
             onClick={(e) => {
               e.stopPropagation();
-              deleteclient(client.client_id);
+              deleteclient(client.phoneNumber);
             }}
             className="px-1 py-1.5 bg-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-500 hover:text-gray-900"
           >
@@ -198,7 +200,7 @@ function UserCards() {
       </div>
     ))
   ) : (
-    <p className="text-gray-500 text-lg mt-4">No lawyers found. :/</p>
+    <p className="text-gray-500 text-lg mt-4">No clients found.</p>
   )}
 
   {/* Add Lawyer Button */}
@@ -274,6 +276,7 @@ function UserCards() {
     </div>
   </dl>
 </div>
+ 
       </div>
     </div>
   )}
@@ -281,6 +284,7 @@ function UserCards() {
 
         </div>
       </div>
+      <Chat/>
     </div>
   );
 }

@@ -20,9 +20,7 @@ const Step4 = () => {
       { name: "Pro", price: "5,500" },
       { name: "Premium", price: "10,000" }
     ],
-    FirmLawyer: [
-      { name: "No plan", price: "0" }
-    ]
+    
   };
   
 
@@ -80,7 +78,7 @@ const Step4 = () => {
     <div className="w-full h-[45vh] flex flex-col justify-center md:flex-row gap-6 p-6  rounded-lg">
       <div className="flex flex-col items-stretch h-full">
   
-  <div className="flex flex-row items-center gap-[10px]  flex-[0.7]">
+  <div className="flex flex-row items-center gap-[10px]  flex-[0.7] mb-3">
     <TextField
       label="First Name"
       className="rounded-2xl w-2/5"
@@ -114,7 +112,7 @@ const Step4 = () => {
       className="rounded-2xl w-full"
       name="email"
       value={formData.email}
-      onChange={handleChange}
+      disabled
       type="email"
       required
     />
@@ -128,6 +126,17 @@ const Step4 = () => {
       onChange={handleChange}
       required
     />
+    {formData.role === 'Firm Manager' ?
+    <TextField
+      label="Firm name"
+      className="rounded-2xl w-full"
+      name="lawFirm"
+      
+      value={formData.lawFirm}
+      onChange={handleChange}
+      required
+    />
+ : null}
   </div>
 
   <div className="flex flex-row justify-center gap-[33px]  ">
@@ -140,7 +149,7 @@ const Step4 = () => {
         onChange={handleRoleChange}>
           <option value='Firm Manager'>Firm Manager</option>
           <option value='Individual Lawyer'>Individual Lawyer</option>
-          <option value='FirmLawyer'>Firm Lawyer</option>
+          
         </select>
       </div>
     </div>

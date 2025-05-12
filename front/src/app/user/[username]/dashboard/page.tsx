@@ -5,6 +5,7 @@ import Sidebar from "@/app/components/sidebar/Sidebar";
 import Tinybarchart from "../../../components/Tinybarchart/tinybarchart";
 import { useRouter } from "next/navigation";
 import * as dotenv from "dotenv";
+import Chat from "@/app/components/chat/Chat";
 dotenv.config();
 
 const Dashboard = () => {
@@ -278,6 +279,7 @@ const Dashboard = () => {
           </main>
         </div>
       </div>
+      <Chat/>
     </div>
   );
 };

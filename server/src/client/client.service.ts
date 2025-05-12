@@ -47,11 +47,11 @@ export class ClientService {
  
  
  
-   async deleteClient(id: number): Promise<void> {
-     const result = await this.clientRepository.delete(id);
+   async deleteClient(phoneNumber: string): Promise<void> {
+     const result = await this.clientRepository.delete({phoneNumber});
  
      if (result.affected === 0) {
-       throw new NotFoundException(`Task with ID ${id} not found`);
+       throw new NotFoundException(`Task with ID ${phoneNumber} not found`);
      }
  }
 }

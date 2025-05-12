@@ -9,6 +9,7 @@ import Task from "./taskInterface";
 import Client from "../clients/clientInterface";
 import * as dotenv from 'dotenv';
 import { Button } from "@mui/material";
+import Chat from "@/app/components/chat/Chat";
 dotenv.config();
 
 
@@ -77,7 +78,7 @@ function HomePage(props: Props) {
   }, [username, API_URL]);
 
 
- const deleteclient = async (id: string) => {
+ const deleteclient = async (id: number) => {
     try {
       const response = await fetch(`${API_URL}/clients?id=${id}`, {
         method: 'DELETE',
@@ -96,17 +97,17 @@ function HomePage(props: Props) {
 
 
   const datamok=[{ fullName:"abderrahim",
-    client_id:"1",
+    client_id:1,
     phoneNumber :"213558339334",
     pfp:"/Avatarsat.png",
     contactInfo:"213558339334",
     email:"a_zine@estin.dz"},{ fullName:"abderrahim",
-      client_id:"3",
+      client_id:3,
       phoneNumber :"213558339334",
       pfp:"/Avatarsat.png",
       contactInfo:"213558339334",
       email:"a_zine@estin.dz"},{ fullName:"abderrahim",
-        client_id:"2",
+        client_id:2,
         phoneNumber :"213558339334",
         pfp:"/Avatarsat.png",
         contactInfo:"213558339334",
@@ -251,7 +252,7 @@ function HomePage(props: Props) {
           className="my-2"
         />
         <div className="w-3/4 overflow-hidden">
-          <p className="font-mona my-1 w-5/6 text-gray-100 text-xs dark:text-gray-400">
+          <p className="font-mona my-1 w-5/6 text-gray-900 text-xs dark:text-gray-400">
             {client.phoneNumber}
           </p>
         </div>
@@ -266,7 +267,7 @@ function HomePage(props: Props) {
           className="mr-1 my-1"
         />
         <div className="w-3/4 overflow-hidden my-1">
-          <p className="font-mona w-5/6 text-gray-100 text-xs dark:text-gray-400 my-1">
+          <p className="font-mona w-5/6 text-gray-900 text-xs dark:text-gray-400 my-1">
             {client.contactInfo}
           </p>
         </div>
@@ -281,7 +282,7 @@ function HomePage(props: Props) {
           className="mb-2 mr-1"
         />
         <div className="w-3/4 overflow-hidden">
-          <p className="mb-2 font-mona w-5/6 text-gray-100 text-xs dark:text-gray-400 my-1">
+          <p className="mb-2 font-mona w-5/6 text-gray-900 text-xs dark:text-gray-400 my-1">
             {client.email}
           </p>
         </div>
@@ -302,6 +303,7 @@ function HomePage(props: Props) {
             {/* ✅ Wider Scrollable Task List */}
             <div className=" w-[90%] max-w-[600px] overflow-y-auto p-4 bg-white rounded-lg shadow-md">
               <TaskList tasks={tasks} setTasks={setTasks} username={props.usernamee} />
+              <Chat/>
             </div>
           </div>
         </div>

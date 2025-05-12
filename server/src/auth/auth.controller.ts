@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Req, Res, UseGuards, UnauthorizedException, Get, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, Req, Res, UseGuards, UnauthorizedException, Get, HttpStatus, Query, Put } from '@nestjs/common';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { Response, Request} from 'express';
 import { GetUser } from 'src/common/decorators/auth/get-user.decorator';
@@ -6,6 +6,7 @@ import { ResponseInterface } from 'src/types/response.interface';
 import { User } from 'src/user/entities/user.entity';
 import { AuthService } from 'src/auth/auth.service';
 import { LocalAuthGuard } from './guards/auth.guard';
+import { UpdateUserDto } from 'src/user/dto/update-user.dto';
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
@@ -14,6 +15,13 @@ export class AuthController {
   async signup( @Req() req: Request,
   @Body() createUserDto: CreateUserDto,) {
     return this.authService.signup(createUserDto);
+  }
+  @Put('update')
+  async update(@Req() req:Request ,
+ 
+  @Body() updateUserDto: UpdateUserDto, ) {
+    return this.authService.updateUser( updateUserDto);
+
   }
 
   @Post('verify-email')

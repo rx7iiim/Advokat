@@ -28,7 +28,7 @@ export class User {
   lastName: string;
 
   @Column({ nullable: true })
-  phoneNumber:number;
+  phoneNumber:string;
 
   @Column()
   firmLawyer: boolean;

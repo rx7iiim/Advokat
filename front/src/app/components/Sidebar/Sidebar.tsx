@@ -66,9 +66,10 @@ export default function Sidebar( {user}) {
         </div>
 
         {/* Profile Section */}
+          <Link href = {`profile`} >  
         <button className="flex items-center gap-3 bg-gray-100 p-3 rounded-xl mt-4">
           <Image
-            src="/sofia.png"
+            src="/user-svgrepo-com.svg"
             alt="User Avatar"
             width={35}
             height={35}
@@ -79,6 +80,7 @@ export default function Sidebar( {user}) {
             <p className="text-xs text-gray-500">{user.role}</p>
           </div>
         </button>
+        </Link>
       </aside>
     </div>
   );

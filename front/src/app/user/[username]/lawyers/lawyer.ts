@@ -1,5 +1,5 @@
 export default interface Lawyer {
-    lawyer_id: string;
+    lawyer_id: number;
     lawyerUsername: string;
     phoneNumber: string;
     contactInfo: string;

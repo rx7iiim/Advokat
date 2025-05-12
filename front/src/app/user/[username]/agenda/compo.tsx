@@ -12,6 +12,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import "./style.css"
 import Sidebar from "@/app/components/sidebar/Sidebar";
 import * as dotenv from 'dotenv';
+import Chat from "@/app/components/chat/Chat";
 dotenv.config();
 
 interface Event {
@@ -281,6 +282,7 @@ function AgendaPage() {
             </div>
           </Dialog>
         </Transition.Root>
+        <Chat/>
       </main>
     </div>
   );
