@@ -24,7 +24,7 @@ A full-stack web application for managing lawyers, clients, cases, and subscript
 ## 📁 Project Structure  
 ```
 /suits-project  
- ├── frontend/     # React + Vite (UI)  
+ ├── frontend/     # nextjs   
  ├── backend/      # NestJS (API)  
  ├── database/     # PostgreSQL Schema & Migrations  
  ├── docs/         # Documentation & ERD  
@@ -75,4 +75,4 @@ npm run migration:run
 ## 🚀 Team  
 👨‍💻 **Project Name:** Advokat  
 📌 **University Level:** 2CP (Second-Year Computer Science)  
-👥 **Team Members:** 6  
+👥 **Team Members:** 6  suits
