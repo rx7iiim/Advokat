@@ -3,10 +3,10 @@
 A full-stack web application for managing lawyers, clients, cases, and subscriptions.  
 
 ## 🚀 Tech Stack  
-- **Frontend:** React + Vite ⚛️  
+- **Frontend:** nextjs ⚛️  
 - **Backend:** NestJS 🏗️  
 - **Database:** PostgreSQL (Hosted on Neon) 🗄️  
-- **Authentication:** JWT 🔑  
+- **Authentication:** session-based-auth 🔑  
 - **Deployment:** vercel 🌍  
 
 ---
