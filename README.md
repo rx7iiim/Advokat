@@ -2,6 +2,9 @@
 
 A full-stack web application for managing lawyers, clients, cases, and subscriptions.  
 
+[Watch the demo video](https://drive.google.com/file/d/1qftSte8MIs8hNTV4EnmdFxUHUbRMxizL/view?usp=drive_link)
+
+
 ## 🚀 Tech Stack  
 - **Frontend:** nextjs ⚛️  
 - **Backend:** NestJS 🏗️  
