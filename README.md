@@ -2,7 +2,7 @@
 
 A full-stack web application for managing lawyers, clients, cases, and subscriptions.  
 
-[Watch the demo video](https://drive.google.com/file/d/1qftSte8MIs8hNTV4EnmdFxUHUbRMxizL/view?usp=drive_link)
+[![Watch the demo](Screenshot 2025-07-03 185722.png)](https://drive.google.com/file/d/1qftSte8MIs8hNTV4EnmdFxUHUbRMxizL/view?usp=drive_link)
 
 
 ## 🚀 Tech Stack  
